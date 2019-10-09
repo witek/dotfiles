@@ -1,0 +1,4 @@
+. ~/dotfiles/bashrc/aliases
+. ~/dotfiles/bashrc/prompt
+. ~/dotfiles/bashrc/path
+. ~/dotfiles/bashrc/env

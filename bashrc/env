@@ -1,0 +1,6 @@
+export EDITOR=vim
+
+#export TZ=Europe/Berlin
+
+#export HISTIGNORE="truecrypt*:ssh*"
+export HISTCONTROL=ignoreboth

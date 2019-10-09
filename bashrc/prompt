@@ -1,0 +1,60 @@
+# prompt
+PS_RESET="\[\033[m\]"
+PS_GRAY="\[\e[30;1m\]"
+PS_RET_VALUE="\`if [ \$? = 0 ]; then echo '' ; else echo \[\e[1\;41m\]  \$?  \[\e[0m\]; fi\`"
+PS_USER="\[\033[0;31m\]\u\[\033[m\]"
+PS_HOST="\[\033[0;31m\]\h\[\033[m\]"
+PS_WORKDIR="\[\033[0;33m\]\w\[\033[m\]"
+PS_HIST="\[\033[0;32m\]!\!\[\033[m\]"
+# get current branch in git repo
+
+function parse_git_branch() {
+  BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+  if [ ! "${BRANCH}" == "" ]
+  then
+    STAT=`parse_git_dirty`
+    echo "${BRANCH}${STAT}"
+  else
+    echo ""
+  fi
+}
+
+# get current status of git repo
+function parse_git_dirty {
+  status=`git status 2>&1 | tee`
+  dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+  untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
+  ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
+  newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
+  renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
+  deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+  bits=''
+  if [ "${renamed}" == "0" ]; then
+    bits=">${bits}"
+  fi
+  if [ "${ahead}" == "0" ]; then
+    bits="*${bits}"
+  fi
+  if [ "${newfile}" == "0" ]; then
+    bits="+${bits}"
+  fi
+  if [ "${untracked}" == "0" ]; then
+    bits="?${bits}"
+  fi
+  if [ "${deleted}" == "0" ]; then
+    bits="x${bits}"
+  fi
+  if [ "${dirty}" == "0" ]; then
+    bits="!${bits}"
+  fi
+  if [ ! "${bits}" == "" ]; then
+    echo " ${bits}"
+  else
+    echo ""
+  fi
+}
+
+PS_GIT="\[\033[0;31m\]\`parse_git_branch\`"
+export PS1="$PS_RET_VALUE
+  $PS_GRAY($PS_USER$PS_GRAY@$PS_HOST$PS_GRAY)-($PS_WORKDIR$PS_GRAY)-($PS_GIT$PS_GRAY)
+  ($PS_HIST$PS_GRAY)->\[\033[m\] "
