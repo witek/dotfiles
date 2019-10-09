@@ -1,0 +1,61 @@
+[user]
+	name = Witoslaw Koczewski
+	email = wi@koczewski.de
+[status]
+	showUntrackedFiles = all
+[commit]
+    gpgSign = false
+[branch]
+	autosetuprebase = always
+[push]
+	default = simple
+	followTags = true
+[pull]
+	rebase = true
+[diff]
+	tool = icdiff
+[difftool]
+	prompt = false
+[difftool "icdiff"]
+	cmd = /usr/bin/icdiff --line-numbers $LOCAL $REMOTE
+[color]
+	pager = true
+	ui = auto
+[alias]
+	lol = log --graph --all --decorate --oneline
+	graph = log --graph -10 --branches --remotes --tags --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
+	precommit = diff --cached --diff-algorithm=minimal -w
+	rom = rebase origin/master
+	com = checkout master
+	puff = pull --ff-only
+	pure = pull --rebase
+	sync = !. ~/bin/git-sync
+	ci = commit --verbose
+	cia = commit -a --verbose
+	co = checkout
+	di = diff
+	df = diff --cached
+	amend = commit --amend
+	aa = add --all
+	ff = merge --ff-only
+	fa = fetch --all
+	pom = push origin master
+	b = branch
+	ds = diff --stat=160,120
+	dh1 = diff HEAD-1
+	branches = branch -a
+	tags = tag
+	stashes = stash list
+	unstage = reset -q HEAD --
+	discard = checkout --
+	uncommit = reset --mixed HEAD~
+	amend = commit --amend
+
+	nevermind = !git reset --hard HEAD && git clean -d -f
+	head = !git r -1
+	h = !git head
+	hp = !. ~/.githelpers && show_git_head
+	r = !GIT_NO_PAGER=1 git l -30
+	ra = !git r --all
+	l = !. ~/.githelpers && pretty_git_log
+	la = !git l --all
