@@ -1,1 +1,0 @@
-clojure -Sdeps "{kunagi-toolbox {:local/root \"/p/kunagi-toolbox\"}}" --main toolbox.main $1 $2 $3 $4 $5

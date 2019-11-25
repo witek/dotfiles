@@ -1,3 +1,4 @@
+alias ktb='clojure -A:kunagi-toolbox'
 
 alias l='ls -latrh --color'
 
