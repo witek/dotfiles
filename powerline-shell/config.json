@@ -1,0 +1,21 @@
+{
+  "segments": [
+	"newline",
+	"set_term_title",
+    "virtual_env",
+    "username",
+    "hostname",
+    "ssh",
+    "cwd",
+    "git",
+    "hg",
+    "jobs",
+    "root",
+	"exit_code"
+  ],
+
+  "hostname": {
+  	"colorize": false
+  }
+
+}
