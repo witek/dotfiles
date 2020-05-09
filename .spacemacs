@@ -231,7 +231,7 @@ values."
    dotspacemacs-helm-use-fuzzy 'always
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-transient-state nil
+   dotspacemacs-enable-paste-transient-state t
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -375,6 +375,7 @@ you should place your code here."
 
    auto-completion-enable-help-tooltip t
 
+
    ;; prevent creating lockfiles, whicht triggers compilation
    create-lockfiles nil
 
@@ -382,34 +383,68 @@ you should place your code here."
    auto-save-default nil
    super-save-auto-save-when-idle t
 
+   ;; CIDER test ns is same as source ns
+   ;; cider-test-infer-test-ns (lambda (ns) ns)
+
+
    ;; activate super-save-mode
    super-save-mode +1)
+
+
 
   ;; toggle lisp state
   (evil-leader/set-key "." 'lisp-state-toggle-lisp-state)
 
+
+  ;; jumping forward and backward
+  (define-key evil-normal-state-map (kbd "C-h") 'evil-jump-backward)
+  (define-key evil-normal-state-map (kbd "C-l") 'evil-jump-forward)
+
+
+  ;; scrolling
+  (define-key evil-normal-state-map (kbd "C-k") 'scroll-up)
+  (define-key evil-normal-state-map (kbd "C-j") 'scroll-down)
+
+
   ;; shifting indentation
-  (define-key evil-normal-state-map (kbd "C-l") 'parinfer-shift-right)
-  (define-key evil-normal-state-map (kbd "C-h") 'parinfer-shift-left)
-  (define-key evil-visual-state-map (kbd "C-l") 'parinfer-shift-right)
   (define-key evil-visual-state-map (kbd "C-h") 'parinfer-shift-left)
-  (define-key evil-insert-state-map (kbd "C-l") 'parinfer-shift-right)
+  (define-key evil-visual-state-map (kbd "C-l") 'parinfer-shift-right)
   (define-key evil-insert-state-map (kbd "C-h") 'parinfer-shift-left)
+  (define-key evil-insert-state-map (kbd "C-l") 'parinfer-shift-right)
+
+
+  ;; gotos
+  (define-key evil-normal-state-map (kbd "g d") 'spacemacs/helm-jump-in-buffer)
+  (define-key evil-normal-state-map (kbd "g D") 'helm-imenu-in-all-buffers)
+  (define-key evil-normal-state-map (kbd "g f") 'helm-projectile-find-file)
+  (define-key evil-normal-state-map (kbd "g F") 'helm-recentf)
+  (define-key evil-normal-state-map (kbd "g r") 'cider-switch-to-repl-buffer)
+
 
   ;; symbol highlighting
   (spacemacs/toggle-automatic-symbol-highlight-on)
 
+
+  ;; kebab-case in lisp mode
+  (modify-syntax-entry ?- "w" lisp--mode-syntax-table)
+
+
   ;; clojure mode hooks
   (add-hook 'clojure-mode-hook 'parinfer-mode)
   (add-hook 'clojure-mode-hook #'(lambda ()
-                                   (modify-syntax-entry ?- "w")
+
+                                   (spacemacs/toggle-highlight-indentation-current-column-on)
+
+                                   ;; kebab-case in clojure mode
+                                   (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
+                                   (modify-syntax-entry ?_ "w" clojure-mode-syntax-table)
 
                                    ;; line wrap !!! does not work :-()
                                    (spacemacs/toggle-truncate-lines-off)
                                    (setq truncate-lines nil)
 
                                    ;; indent guide
-                                   (spacemacs/toggle-indent-guide-on)
+                                   ;;(spacemacs/toggle-indent-guide-on)
 
                                    ;; column indicator
                                    (spacemacs/toggle-fill-column-indicator-on))))
@@ -456,10 +491,25 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cider-auto-select-error-buffer nil)
+ '(cider-font-lock-dynamically (quote (macro function var deprecated core)))
+ '(cider-font-lock-reader-conditionals nil)
+ '(cider-jack-in-default (quote clojure-cli))
+ '(cider-mode-line-show-connection nil)
+ '(cider-offer-to-open-cljs-app-in-browser nil)
+ '(cider-preferred-build-tool (quote clojure-cli))
  '(cider-save-file-on-load t)
+ '(cljr-hotload-dependencies t)
+ '(cljr-warn-on-eval nil)
  '(package-selected-packages
    (quote
-    (csv-mode typescript-mode flycheck diminish cider seq clojure-mode paredit smartparens magit magit-popup git-commit with-editor f evil company helm helm-core yasnippet avy markdown-mode async alert projectile js2-mode s yaml-mode zeal-at-point ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump define-word company-web company-tern company-statistics column-enforce-mode color-identifiers-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (csv-mode typescript-mode flycheck diminish cider seq clojure-mode paredit smartparens magit magit-popup git-commit with-editor f evil company helm helm-core yasnippet avy markdown-mode async alert projectile js2-mode s yaml-mode zeal-at-point ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump define-word company-web company-tern company-statistics column-enforce-mode color-identifiers-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(safe-local-variable-values
+   (quote
+    ((cider-shadow-default-options . ":browserapp")
+     (cider-default-cljs-repl . shadow)
+     (javascript-backend . tern)
+     (javascript-backend . lsp)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
