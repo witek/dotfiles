@@ -30,7 +30,9 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(csv
+   '(
+     themes-megapack
+     ;; csv
      php
      yaml
      ;; ----------------------------------------------------------------
@@ -40,16 +42,17 @@ values."
      ;; ----------------------------------------------------------------
      helm
      (auto-completion :variables
-                      auto-completion-enable-help-tooltip t
-                      auto-completion-enable-snippets-in-popup t
+                      ;auto-completion-enable-help-tooltip t
+                      ;auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-sort-by-usage t)
      colors
      ;; dash
      ;; better-defaults
      (clojure :variables
+              cider-auto-test-mode nil
               clojure-enable-linters 'clj-kondo
               clojure-enable-clj-refactor t)
-     parinfer
+     ;parinfer
      emacs-lisp
      ;; evil-cleverparens
      (git :variables
@@ -59,7 +62,7 @@ values."
      html
      javascript
      markdown
-     org
+     ;; org
      ranger
      (shell :variables
             shell-default-shell 'eshell
@@ -149,6 +152,7 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         gruvbox-dark-medium
                          spacemacs-dark
                          monokai
                          leuven
@@ -157,10 +161,15 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
+   ;; dotspacemacs-default-font '("Source Code Pro"
+   ;;                             :size 13
+   ;;                             :weight normal
+   ;;                             :width normal
+   ;;                             :powerline-scale 1.0)
+   dotspacemacs-default-font '("Fira Code"
                                :size 13
-                               :weight normal
-                               :width normal
+                               :weight light
+                               :width condensed
                                :powerline-scale 1.0)
 
    ;; The leader key
@@ -390,7 +399,12 @@ you should place your code here."
    ;; activate super-save-mode
    super-save-mode +1)
 
+  ;; activate evil safe structural editing
+  (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hooks)
 
+
+  ;; Fira Code Font Ligatures
+  
 
   ;; toggle lisp state
   (evil-leader/set-key "." 'lisp-state-toggle-lisp-state)
@@ -402,23 +416,34 @@ you should place your code here."
 
 
   ;; scrolling
-  (define-key evil-normal-state-map (kbd "C-k") 'scroll-up)
-  (define-key evil-normal-state-map (kbd "C-j") 'scroll-down)
+  ;; (define-key evil-normal-state-map (kbd "C-k") 'scroll-up)
+  ;; (define-key evil-normal-state-map (kbd "C-j") 'scroll-down)
 
+  (define-key evil-normal-state-map (kbd "C-h") 'evil-cp-<)
+  (define-key evil-normal-state-map (kbd "C-l") 'evil-cp->)
 
   ;; shifting indentation
-  (define-key evil-visual-state-map (kbd "C-h") 'parinfer-shift-left)
-  (define-key evil-visual-state-map (kbd "C-l") 'parinfer-shift-right)
-  (define-key evil-insert-state-map (kbd "C-h") 'parinfer-shift-left)
-  (define-key evil-insert-state-map (kbd "C-l") 'parinfer-shift-right)
+  ;; (define-key evil-visual-state-map (kbd "C-h") 'parinfer-shift-left)
+  ;; (define-key evil-visual-state-map (kbd "C-l") 'parinfer-shift-right)
+  ;; (define-key evil-insert-state-map (kbd "C-h") 'parinfer-shift-left)
+  ;; (define-key evil-insert-state-map (kbd "C-l") 'parinfer-shift-right)
 
+  ;; paredit /parinfer
+  ;; (define-key evil-normal-state-map (kbd "H") 'paredit-backward-slurp-sexp)
+  ;; (define-key evil-normal-state-map (kbd "L") 'paredit-backward-barf-sexp)
+  ;; (define-key evil-normal-state-map (kbd "C-h") 'paredit-forward-barf-sexp)
+  ;; (define-key evil-normal-state-map (kbd "C-l") 'paredit-forward-slurp-sexp)
+  ;; (define-key evil-normal-state-map (kbd "C-p") 'spacemacs/toggle-parinfer-indent)
 
   ;; gotos
-  (define-key evil-normal-state-map (kbd "g d") 'spacemacs/helm-jump-in-buffer)
-  (define-key evil-normal-state-map (kbd "g D") 'helm-imenu-in-all-buffers)
+  (define-key evil-normal-state-map (kbd "g d") 'spacemacs/clj-find-var)
+  (define-key evil-normal-state-map (kbd "g v") 'cider-find-var)
+  ;; (define-key evil-normal-state-map (kbd "g D") 'helm-imenu-in-all-buffers)
+  (define-key evil-normal-state-map (kbd "g D") 'spacemacs/helm-jump-in-buffer)
   (define-key evil-normal-state-map (kbd "g f") 'helm-projectile-find-file)
   (define-key evil-normal-state-map (kbd "g F") 'helm-recentf)
   (define-key evil-normal-state-map (kbd "g r") 'cider-switch-to-repl-buffer)
+  (define-key evil-normal-state-map (kbd "g t") 'projectile-toggle-between-implementation-and-test)
 
 
   ;; symbol highlighting
@@ -430,8 +455,11 @@ you should place your code here."
 
 
   ;; clojure mode hooks
-  (add-hook 'clojure-mode-hook 'parinfer-mode)
+  ;; (add-hook 'clojure-mode-hook 'parinfer-mode)
   (add-hook 'clojure-mode-hook #'(lambda ()
+
+                                   (define-key evil-normal-state-map (kbd "I") 'evil-cp-insert-at-beginning-of-form)
+                                   (define-key evil-normal-state-map (kbd "A") 'evil-cp-insert-at-end-of-form)
 
                                    (spacemacs/toggle-highlight-indentation-current-column-on)
 
@@ -494,10 +522,8 @@ This function is called at the very end of Spacemacs initialization."
  '(cider-auto-select-error-buffer nil)
  '(cider-font-lock-dynamically (quote (macro function var deprecated core)))
  '(cider-font-lock-reader-conditionals nil)
- '(cider-jack-in-default (quote clojure-cli))
  '(cider-mode-line-show-connection nil)
  '(cider-offer-to-open-cljs-app-in-browser nil)
- '(cider-preferred-build-tool (quote clojure-cli))
  '(cider-save-file-on-load t)
  '(cljr-hotload-dependencies t)
  '(cljr-warn-on-eval nil)
@@ -506,8 +532,8 @@ This function is called at the very end of Spacemacs initialization."
     (csv-mode typescript-mode flycheck diminish cider seq clojure-mode paredit smartparens magit magit-popup git-commit with-editor f evil company helm helm-core yasnippet avy markdown-mode async alert projectile js2-mode s yaml-mode zeal-at-point ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump define-word company-web company-tern company-statistics column-enforce-mode color-identifiers-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(safe-local-variable-values
    (quote
-    ((cider-shadow-default-options . ":browserapp")
-     (cider-default-cljs-repl . shadow)
+    ((cider-default-cljs-repl . shadow)
+     (javascript-backend . tide)
      (javascript-backend . tern)
      (javascript-backend . lsp)))))
 (custom-set-faces
