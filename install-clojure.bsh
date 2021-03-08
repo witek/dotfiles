@@ -1,0 +1,34 @@
+#!/bin/bash -e
+
+#
+# clojure
+#
+# https://clojure.org/guides/getting_started#_installation_on_linux
+
+CLOJURE_VERSION="1.10.2.796"
+
+CLOJURE_INSTALLER=/tmp/clojure-installer.sh
+curl -o "$CLOJURE_INSTALLER" "https://download.clojure.org/install/linux-install-$CLOJURE_VERSION.sh"
+chmod +x $CLOJURE_INSTALLER
+sudo $CLOJURE_INSTALLER
+
+
+#
+# clj-kondo
+#
+# https://github.com/clj-kondo/clj-kondo/blob/master/doc/install.md
+CLJ_KONDO_INSTALLER=/tmp/clj-kondo-installer
+curl -sL -o $CLJ_KONDO_INSTALLER https://raw.githubusercontent.com/clj-kondo/clj-kondo/master/script/install-clj-kondo
+chmod +x $CLJ_KONDO_INSTALLER
+sudo $CLJ_KONDO_INSTALLER
+
+
+#
+# babashka
+#
+# https://github.com/babashka/babashka#installation
+
+BB_INSTALLER=/tmp/babashka-installer
+curl -sL -o $BB_INSTALLER https://raw.githubusercontent.com/babashka/babashka/master/install
+chmod +x $BB_INSTALLER
+sudo $BB_INSTALLER

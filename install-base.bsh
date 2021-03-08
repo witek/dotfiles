@@ -1,0 +1,31 @@
+#!/bin/bash -e
+
+function echo-task {
+    echo ""
+    echo "$(tput rev)[ $1 ] $(tput sgr0)"
+    echo ""
+}
+
+echo-task "essential utils"
+sudo apt -y -q install stow exa htop vim emacs curl
+
+
+echo-task "git"
+sudo apt -y -q install git
+stow -v git
+
+
+echo-task "fish"
+sudo apt -y -q install fish
+stow -v fish
+
+
+echo-task "java"
+sudo apt -y -q install openjdk-15-jdk
+
+
+#echo-task "clojure"
+#stow -v clojure
+
+echo-task "spacemacs"
+stow -v spacemacs
