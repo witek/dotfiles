@@ -23,6 +23,9 @@ echo-task "git"
 sudo apt -y -q install git
 stow -v git
 
+echo-task "alacritty"
+#sudo apt -y -q install git
+stow -v alacritty
 
 echo-task "java"
 sudo apt -y -q install openjdk-15-jdk
