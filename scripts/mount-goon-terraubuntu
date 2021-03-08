@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+
+#sshfs ad@192.168.14.79:/ /home/witek/inbox/goon/terraubuntu
+sshfs -o uid=1000 -o gid=1000 ad@192.168.14.79:/ /mnt/goon-terraubuntu

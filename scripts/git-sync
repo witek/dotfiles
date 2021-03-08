@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+statusoutput=$(git status --short)
+if [[ -n $statusoutput ]]; then
+	git status
+	exit 1
+fi
+echo "Directory status ok"
+
+git fetch --all
+git rebase HEAD
+
+git push
+
+git status
+

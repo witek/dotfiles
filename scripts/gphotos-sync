@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+PHOTOS_DIR=/mnt/data/gphotos-sync
+
+cd ~/gphotos-sync
+pipenv run gphotos-sync $PHOTOS_DIR
+

@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+sshfs witek@h2819407.stratoserver.net:/ /mnt/fs1

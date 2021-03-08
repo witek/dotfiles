@@ -1,0 +1,5 @@
+
+sleep 1
+/usr/bin/xmodmap -e "clear lock"
+/usr/bin/xmodmap -e "keysym Caps_Lock = Escape"
+
