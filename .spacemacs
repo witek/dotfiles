@@ -30,7 +30,9 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(shell-scripts
+     lua
+     asciidoc
      themes-megapack
      ;; csv
      php
@@ -51,7 +53,9 @@ values."
      (clojure :variables
               cider-auto-test-mode nil
               clojure-enable-linters 'clj-kondo
-              clojure-enable-clj-refactor t)
+              clojure-enable-clj-refactor t
+              ;; clojure-enable-fancify-symbols t
+              )
      ;parinfer
      emacs-lisp
      ;; evil-cleverparens
@@ -62,7 +66,7 @@ values."
      html
      javascript
      markdown
-     ;; org
+     org
      ranger
      (shell :variables
             shell-default-shell 'eshell
@@ -128,14 +132,14 @@ values."
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
-   dotspacemacs-verbose-loading nil
+   dotspacemacs-verbose-loading t
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
    ;; banner, `random' chooses a random text banner in `core/banners'
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner 'random
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -152,10 +156,19 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         gruvbox-dark-medium
+                         badwolf
+                         gruvbox
                          spacemacs-dark
                          monokai
-                         leuven
+                         ample-zen
+                         birds-of-paradise-plus
+                         flatland
+                         graham
+                         jazz
+                         junio
+                         lush
+                         django
+                         flatland
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -270,7 +283,7 @@ values."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 60
    ;; If non nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
    ;; If non nil show the color guide hint for transient state keys. (default t)
@@ -343,13 +356,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 
 
-
-
-
-
-
-
-
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -357,63 +363,86 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  (setq scroll-conservatively 101
+        scroll-margin 12
+        scroll-preserve-screen-position 't)
+
+  (setq magit-repository-directories '("/p/" "/home/witek/eclipse/default/")
+        global-git-commit-mode t  )
+
+  (setq web-mode-code-indent-offset 2
+        web-mode-markup-indent-offset 2
+        css-indent-offset 2)
+
   (setq
-
-   ;; magit
-   magit-repository-directories '("/p/" "/home/witek/eclipse/default/")
-   global-git-commit-mode t
-
-   ;; clojure-enable-fancify-symbols t
-
    x-select-enable-clipboard t
-
-   web-mode-code-indent-offset 2
-
-   web-mode-markup-indent-offset 2
-
-   css-indent-offset 2
-
    powerline-default-separator 'arrow
-
-   neo-theme 'nerd
+   ;; neo-theme 'nerd
 
    ;; prevent auto-switch to lisp state
    evil-lisp-state-enter-lisp-state-on-command nil
 
    dotspacemacs-enable-paste-transient-state nil
-
    auto-completion-enable-help-tooltip t
+   )
 
+  (setq create-lockfiles nil)
 
-   ;; prevent creating lockfiles, whicht triggers compilation
-   create-lockfiles nil
+  ;; auto save
+  (setq auto-save-default nil
+        super-save-auto-save-when-idle t
+        super-save-mode +1)
 
-   ;; auto save
-   auto-save-default nil
-   super-save-auto-save-when-idle t
+  ;; Persist Undo tree
+  ;; (setq undo-tree-auto-save-history t
+  ;;       undo-tree-history-directory-alist `(("." . ,(concat spacemacs-cache-directory "undo"))))
+  ;; (unless (file-exists-p (concat spacemacs-cache-directory "undo"))
+  ;;   (make-directory (concat spacemacs-cache-directory "undo")))
 
-   ;; CIDER test ns is same as source ns
-   ;; cider-test-infer-test-ns (lambda (ns) ns)
+  (setq default-frame-alist '((undecorated . t)))
+  (setq frame-resize-pixelwise t)
 
-
-   ;; activate super-save-mode
-   super-save-mode +1)
+  (spacemacs/toggle-transparency)
 
   ;; activate evil safe structural editing
   (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hooks)
 
+  (load "/home/witek/myfiles/misc.el")
 
-  ;; Fira Code Font Ligatures
-  
+  ;; Space Menu
+
+  (spacemacs/set-leader-keys ";" 'evilnc-comment-or-uncomment-lines)
+
+  (spacemacs|forall-clojure-modes m
+    (spacemacs/set-leader-keys-for-major-mode m "==" 'cider-format-defun)
+    (spacemacs/set-leader-keys-for-major-mode m "=f" 'cider-format-buffer)
+    (spacemacs/set-leader-keys-for-major-mode m "(" 'sp-wrap-round)
+    (spacemacs/set-leader-keys-for-major-mode m "i" 'evil-cp-insert-at-beginning-of-form)
+    (spacemacs/set-leader-keys-for-major-mode m "a" 'evil-cp-insert-at-end-of-form)
+    (spacemacs/set-leader-keys-for-major-mode m "#" 'cider-toggle-ignore-next-form))
+
 
   ;; toggle lisp state
   (evil-leader/set-key "." 'lisp-state-toggle-lisp-state)
 
+  (define-key evil-normal-state-map (kbd "#") 'cider-toggle-ignore-next-form)
 
   ;; jumping forward and backward
-  (define-key evil-normal-state-map (kbd "C-h") 'evil-jump-backward)
-  (define-key evil-normal-state-map (kbd "C-l") 'evil-jump-forward)
+  (define-key evil-normal-state-map (kbd "M-<left>") 'evil-prev-buffer)
+  (define-key evil-normal-state-map (kbd "M-<right>") 'evil-next-buffer)
+  (define-key evil-normal-state-map (kbd "C-<left>") 'evil-jump-backward)
+  (define-key evil-normal-state-map (kbd "C-<right>") 'evil-jump-forward)
 
+  ;; moving in insert mode
+  ;; disabled because it interfers with code completion suggestion selection
+  ;; (define-key evil-insert-state-map (kbd "C-l") 'right-char)
+  ;; (define-key evil-insert-state-map (kbd "C-h") 'left-char)
+  ;; (define-key evil-insert-state-map (kbd "C-k") 'evil-previous-line)
+  ;; (define-key evil-insert-state-map (kbd "C-j") 'evil-next-line)
+
+  ;; evil-easymotion
+  (define-key evil-normal-state-map (kbd "C-j") 'evilem-motion-find-char)
 
   ;; scrolling
   ;; (define-key evil-normal-state-map (kbd "C-k") 'scroll-up)
@@ -421,6 +450,9 @@ you should place your code here."
 
   (define-key evil-normal-state-map (kbd "C-h") 'evil-cp-<)
   (define-key evil-normal-state-map (kbd "C-l") 'evil-cp->)
+
+  (define-key evil-normal-state-map (kbd ";") 'evilnc-comment-or-uncomment-lines)
+  (define-key evil-visual-state-map (kbd ";") 'evilnc-comment-or-uncomment-lines)
 
   ;; shifting indentation
   ;; (define-key evil-visual-state-map (kbd "C-h") 'parinfer-shift-left)
@@ -444,7 +476,7 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "g F") 'helm-recentf)
   (define-key evil-normal-state-map (kbd "g r") 'cider-switch-to-repl-buffer)
   (define-key evil-normal-state-map (kbd "g t") 'projectile-toggle-between-implementation-and-test)
-
+  ;; (define-key evil-normal-state-map (kbd "=") 'cider-format-defun)
 
   ;; symbol highlighting
   (spacemacs/toggle-automatic-symbol-highlight-on)
@@ -458,8 +490,8 @@ you should place your code here."
   ;; (add-hook 'clojure-mode-hook 'parinfer-mode)
   (add-hook 'clojure-mode-hook #'(lambda ()
 
-                                   (define-key evil-normal-state-map (kbd "I") 'evil-cp-insert-at-beginning-of-form)
-                                   (define-key evil-normal-state-map (kbd "A") 'evil-cp-insert-at-end-of-form)
+                                   ;; (define-key evil-normal-state-map (kbd "I") 'evil-cp-insert-at-beginning-of-form)
+                                   ;; (define-key evil-normal-state-map (kbd "A") 'evil-cp-insert-at-end-of-form)
 
                                    (spacemacs/toggle-highlight-indentation-current-column-on)
 
@@ -527,12 +559,31 @@ This function is called at the very end of Spacemacs initialization."
  '(cider-save-file-on-load t)
  '(cljr-hotload-dependencies t)
  '(cljr-warn-on-eval nil)
+ '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (csv-mode typescript-mode flycheck diminish cider seq clojure-mode paredit smartparens magit magit-popup git-commit with-editor f evil company helm helm-core yasnippet avy markdown-mode async alert projectile js2-mode s yaml-mode zeal-at-point ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump define-word company-web company-tern company-statistics column-enforce-mode color-identifiers-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (insert-shebang helm-gtags ggtags flycheck-bashate fish-mode counsel-gtags counsel swiper ivy company-shell xterm-color powerline shell-pop org-category-capture log4e gntp multi-term skewer-mode simple-httpd json-snatcher json-reformat parent-mode request haml-mode gitignore-mode flx highlight transient iedit anzu goto-chg eshell-z eshell-prompt-extras esh-help web-completion-data dash-functional tern hydra inflections edn multiple-cursors peg lv eval-sexp-fu sesman parseedn parseclj a bind-map bind-key packed auto-complete popup pos-tip pkg-info epl dash super-save phpunit phpcbf php-extras php-auto-yasnippets org-mime drupal-mode php-mode csv-mode company-quickhelp typescript-mode flycheck diminish cider seq clojure-mode paredit smartparens magit magit-popup git-commit with-editor f evil company helm helm-core yasnippet avy markdown-mode async alert projectile js2-mode s yaml-mode zeal-at-point ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump define-word company-web company-tern company-statistics column-enforce-mode color-identifiers-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(safe-local-variable-values
    (quote
-    ((cider-default-cljs-repl . shadow)
+    ((elisp-lint-indent-specs
+      (if-let* . 2)
+      (when-let* . 1)
+      (let* . defun)
+      (nrepl-dbind-response . 2)
+      (cider-save-marker . 1)
+      (cider-propertize-region . 1)
+      (cider-map-repls . 1)
+      (cider--jack-in . 1)
+      (cider--make-result-overlay . 1)
+      (insert-label . defun)
+      (insert-align-label . defun)
+      (insert-rect . defun)
+      (cl-defun . 2)
+      (with-parsed-tramp-file-name . 2)
+      (thread-first . 1)
+      (thread-last . 1))
+     (checkdoc-package-keywords-flag)
+     (cider-default-cljs-repl . shadow)
      (javascript-backend . tide)
      (javascript-backend . tern)
      (javascript-backend . lsp)))))
