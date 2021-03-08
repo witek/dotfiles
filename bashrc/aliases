@@ -1,6 +1,5 @@
-alias ktb='clojure -A:kunagi-toolbox'
 
-alias l='ls -latrh --color'
+#alias l='ls -latrh --color'
 
 alias '..'='cd ..'
 alias '...'='cd ../..'
