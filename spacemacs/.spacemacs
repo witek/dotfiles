@@ -157,16 +157,32 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          badwolf
-                         gruvbox
                          spacemacs-dark
+                         afternoon
+                         ample
+                         brin
+                         cyberpunk
+                         dakrone
+                         deeper-blue
+                         farmhouse-dark
+                         heroku
+                         hickey
+                         material
+                         misterioso
+                         reverse
+                         spacegray
+                         subatomic
+                         subatomic256
+                         gruvbox
                          monokai
                          graham
                          junio
                          lush
                          flatland
                          gruber-darker
-                         occidental
-                         tsdh-light
+                         spacemacs-light
+                         leuven
+                         twilight-bright
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -177,11 +193,20 @@ values."
    ;;                             :weight normal
    ;;                             :width normal
    ;;                             :powerline-scale 1.0)
+   ;; dotspacemacs-default-font '("Ubuntu Mono"
+   ;;                             :size 15
+   ;;                             :weight light
+   ;;                             :width condensed
+   ;;                             :powerline-scale 1.0)
+   ;; dotspacemacs-default-font '("Roboto Mono"
+   ;;                             :size 14
+   ;;                             :weight normal
+   ;;                             :powerline-scale 0.8)
    dotspacemacs-default-font '("Fira Code"
                                :size 13
-                               :weight light
-                               :width condensed
-                               :powerline-scale 1.0)
+                               ;; :weight light
+                               ;; :width condensed
+                               :powerline-scale 0.75)
 
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -273,7 +298,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
