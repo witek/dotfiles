@@ -66,7 +66,9 @@ values."
      html
      javascript
      markdown
-     org
+     (org :variables
+          org-want-todo-bindings t
+          )
      ranger
      (shell :variables
             shell-default-shell 'eshell
@@ -157,6 +159,7 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          badwolf
+                         solarized-dark
                          spacemacs-dark
                          afternoon
                          ample
@@ -203,7 +206,7 @@ values."
    ;;                             :weight normal
    ;;                             :powerline-scale 0.8)
    dotspacemacs-default-font '("Fira Code"
-                               :size 13
+                               :size 14
                                ;; :weight light
                                ;; :width condensed
                                :powerline-scale 0.75)
@@ -387,6 +390,22 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;;;
+  ;;; Common
+  ;;;
+
+  ;; zooming
+  (define-key global-map (kbd "C-+") 'text-scale-increase)
+  (define-key global-map (kbd "C--") 'text-scale-decrease)
+  (define-key global-map (kbd "C-0") 'spacemacs/reset-font-size)
+
+  ;; browser
+  (setq browse-url-browser-function 'browse-url-chrome)
+
+  ;;;
+  ;;; TODO cleanup
+  ;;;
+
   (setq scroll-conservatively 101
         scroll-margin 12
         scroll-preserve-screen-position 't)
@@ -477,19 +496,6 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd ";") 'evilnc-comment-or-uncomment-lines)
   (define-key evil-visual-state-map (kbd ";") 'evilnc-comment-or-uncomment-lines)
 
-  ;; shifting indentation
-  ;; (define-key evil-visual-state-map (kbd "C-h") 'parinfer-shift-left)
-  ;; (define-key evil-visual-state-map (kbd "C-l") 'parinfer-shift-right)
-  ;; (define-key evil-insert-state-map (kbd "C-h") 'parinfer-shift-left)
-  ;; (define-key evil-insert-state-map (kbd "C-l") 'parinfer-shift-right)
-
-  ;; paredit /parinfer
-  ;; (define-key evil-normal-state-map (kbd "H") 'paredit-backward-slurp-sexp)
-  ;; (define-key evil-normal-state-map (kbd "L") 'paredit-backward-barf-sexp)
-  ;; (define-key evil-normal-state-map (kbd "C-h") 'paredit-forward-barf-sexp)
-  ;; (define-key evil-normal-state-map (kbd "C-l") 'paredit-forward-slurp-sexp)
-  ;; (define-key evil-normal-state-map (kbd "C-p") 'spacemacs/toggle-parinfer-indent)
-
   ;; gotos
   (define-key evil-normal-state-map (kbd "g d") 'spacemacs/clj-find-var)
   (define-key evil-normal-state-map (kbd "g v") 'cider-find-var)
@@ -509,28 +515,75 @@ you should place your code here."
   (modify-syntax-entry ?- "w" lisp--mode-syntax-table)
 
 
-  ;; clojure mode hooks
-  ;; (add-hook 'clojure-mode-hook 'parinfer-mode)
-  (add-hook 'clojure-mode-hook #'(lambda ()
+  ;;;
+  ;;; clojure
+  ;;;
 
-                                   ;; (define-key evil-normal-state-map (kbd "I") 'evil-cp-insert-at-beginning-of-form)
-                                   ;; (define-key evil-normal-state-map (kbd "A") 'evil-cp-insert-at-end-of-form)
+  (add-hook 'clojure-mode-hook
+            #'(lambda ()
+                (spacemacs/toggle-highlight-indentation-current-column-on)
 
-                                   (spacemacs/toggle-highlight-indentation-current-column-on)
+                ;; kebab-case in clojure mode
+                (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
+                (modify-syntax-entry ?_ "w" clojure-mode-syntax-table)
 
-                                   ;; kebab-case in clojure mode
-                                   (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
-                                   (modify-syntax-entry ?_ "w" clojure-mode-syntax-table)
+                ;; line wrap !!! does not work :-()
+                (spacemacs/toggle-truncate-lines-off)
 
-                                   ;; line wrap !!! does not work :-()
-                                   (spacemacs/toggle-truncate-lines-off)
-                                   (setq truncate-lines nil)
+                (setq truncate-lines nil)
 
-                                   ;; indent guide
-                                   ;;(spacemacs/toggle-indent-guide-on)
+                ;; indent guide
+                ;;(spacemacs/toggle-indent-guide-on)
 
-                                   ;; column indicator
-                                   (spacemacs/toggle-fill-column-indicator-on))))
+                ;; column indicator
+                (spacemacs/toggle-fill-column-indicator-on)
+
+                ))
+
+  ;;;
+  ;;; org
+  ;;;
+
+  (with-eval-after-load 'org
+    (setq org-agenda-files '("~/Dropbox/org"))
+    (setq org-default-notes-file '("~/Dropbox/org/gtd.org"))
+    ;; (setq org-startup-indented t)
+    (setq org-reverse-note-order t)
+
+    (setq org-agenda-ndays 7)
+    (setq org-agenda-show-all-dates t)
+    (setq org-deadline-warning-days 14)
+    (setq org-agenda-skip-scheduled-if-done t)
+    (setq org-agenda-start-on-weekday nil)
+
+    (spacemacs/set-leader-keys "oc" 'org-capture)
+    (spacemacs/set-leader-keys "oa" 'org-agenda)
+
+    ;; auto-add uniquie ids for captured entries
+    (add-hook 'org-cnapture-prepare-finalize-hook 'org-id-get-create)
+
+    (setq org-capture-templates
+          '(
+            ("t" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "INBOX")
+             "** TODO [#C]  %?\n\n%i\n\nCreated On: %u\nCreated From: file:%F"
+             :prepend t
+             :empty-lines 1
+             :clock-in nil
+             :clock-resume nil
+             )))
+    )
+
+
+  ;;;
+  ;;; dired
+  ;;;
+  ;; (define-key dired-mode-map (kbd "h") 'dired-up-direcotry)
+  ;; (define-key dired-mode-map (kbd "l") 'dired-find-file)
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "h" 'dired-up-directory
+    "l" 'dired-find-file)
+
+  )
 
 
 
