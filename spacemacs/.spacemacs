@@ -158,15 +158,19 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         doom-dracula
                          badwolf
-                         solarized-dark
+                         flatland
+                         gruvbox
                          spacemacs-dark
+                         melancholy
+                         dakrone
+                         solarized-dark
                          afternoon
+                         deeper-blue
                          ample
                          brin
                          cyberpunk
-                         dakrone
-                         deeper-blue
                          farmhouse-dark
                          heroku
                          hickey
@@ -176,19 +180,17 @@ values."
                          spacegray
                          subatomic
                          subatomic256
-                         gruvbox
                          monokai
                          graham
                          junio
                          lush
-                         flatland
                          gruber-darker
                          spacemacs-light
                          leuven
                          twilight-bright
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
-   dotspacemacs-colorize-cursor-according-to-state t
+   dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    ;; dotspacemacs-default-font '("Source Code Pro"
@@ -417,10 +419,9 @@ you should place your code here."
         web-mode-markup-indent-offset 2
         css-indent-offset 2)
 
+  (setq x-select-enable-clipboard t)
+
   (setq
-   x-select-enable-clipboard t
-   powerline-default-separator 'arrow
-   ;; neo-theme 'nerd
 
    ;; prevent auto-switch to lisp state
    evil-lisp-state-enter-lisp-state-on-command nil
@@ -546,7 +547,8 @@ you should place your code here."
 
   (with-eval-after-load 'org
     (setq org-agenda-files '("~/Dropbox/org"))
-    (setq org-default-notes-file '("~/Dropbox/org/gtd.org"))
+    (setq org-default-notes-file '("~/Dropbox/org/inbox.org"
+                                   "~/Dropbox/org/gtd.org"))
     ;; (setq org-startup-indented t)
     (setq org-reverse-note-order t)
 
@@ -555,6 +557,8 @@ you should place your code here."
     (setq org-deadline-warning-days 14)
     (setq org-agenda-skip-scheduled-if-done t)
     (setq org-agenda-start-on-weekday nil)
+    (setq org-agenda-start-with-log-mode t)
+    (setq org-agenda-use-time-grid t)
 
     (spacemacs/set-leader-keys "oc" 'org-capture)
     (spacemacs/set-leader-keys "oa" 'org-agenda)
@@ -564,7 +568,7 @@ you should place your code here."
 
     (setq org-capture-templates
           '(
-            ("t" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "INBOX")
+            ("t" "TODO" entry (file+headline "~/Dropbox/org/inbox.org" "INBOX")
              "** TODO [#C]  %?\n\n%i\n\nCreated On: %u\nCreated From: file:%F"
              :prepend t
              :empty-lines 1
@@ -577,8 +581,9 @@ you should place your code here."
   ;;;
   ;;; dired
   ;;;
-  ;; (define-key dired-mode-map (kbd "h") 'dired-up-direcotry)
-  ;; (define-key dired-mode-map (kbd "l") 'dired-find-file)
+
+ ;; (setq dired-listing-switches "--agho --group-direcotries-first")
+
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-up-directory
     "l" 'dired-find-file)
@@ -635,10 +640,15 @@ This function is called at the very end of Spacemacs initialization."
  '(cider-save-file-on-load t)
  '(cljr-hotload-dependencies t)
  '(cljr-warn-on-eval nil)
+ '(custom-safe-themes
+   (quote
+    ("3c2f28c6ba2ad7373ea4c43f28fcf2eed14818ec9f0659b1c97d4e89c99e091e" "8f5a7a9a3c510ef9cbb88e600c0b4c53cdcdb502cfe3eb50040b7e13c6f4e78e" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "0d75aa06198c4245ac2a8877bfc56503d5d8199cc85da2c65a6791b84afb9024" "7a994c16aa550678846e82edc8c9d6a7d39cc6564baaaacc305a3fdc0bd8725f" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "d6603a129c32b716b3d3541fc0b6bfe83d0e07f1954ee64517aa62c9405a3441" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" default)))
+ '(dired-listing-switches "-logahrt --group-directories-first --time-style=long-iso")
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
     (insert-shebang helm-gtags ggtags flycheck-bashate fish-mode counsel-gtags counsel swiper ivy company-shell xterm-color powerline shell-pop org-category-capture log4e gntp multi-term skewer-mode simple-httpd json-snatcher json-reformat parent-mode request haml-mode gitignore-mode flx highlight transient iedit anzu goto-chg eshell-z eshell-prompt-extras esh-help web-completion-data dash-functional tern hydra inflections edn multiple-cursors peg lv eval-sexp-fu sesman parseedn parseclj a bind-map bind-key packed auto-complete popup pos-tip pkg-info epl dash super-save phpunit phpcbf php-extras php-auto-yasnippets org-mime drupal-mode php-mode csv-mode company-quickhelp typescript-mode flycheck diminish cider seq clojure-mode paredit smartparens magit magit-popup git-commit with-editor f evil company helm helm-core yasnippet avy markdown-mode async alert projectile js2-mode s yaml-mode zeal-at-point ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump define-word company-web company-tern company-statistics column-enforce-mode color-identifiers-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(powerline-default-separator (quote arrow-fade))
  '(safe-local-variable-values
    (quote
     ((elisp-lint-indent-specs
