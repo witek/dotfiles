@@ -31,28 +31,37 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(shell-scripts
-     lua
      asciidoc
      themes-megapack
      ;; csv
-     php
-     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
+     (helm :variables
+           helm-follow-mode-persistent t)
+
      (auto-completion :variables
-                      ;auto-completion-enable-help-tooltip t
-                      ;auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-sort-by-usage t)
+
      colors
      ;; dash
      ;; better-defaults
      (clojure :variables
+              ;; clojure-backend 'cier
+              ;; clojure-enable-linters 'clj-kondo
+              cider-repl-display-help-banner nil
+              cider-pprint-fn 'fipp
+              clojure-indent-style 'align-arguments
+              clojure-align-forms-automatically t
+              clojure-toplevel-inside-comment-form t
+              cider-result-overlay-position 'at-point
+              cider-overlays-use-font-lock t
+              cider-repl-buffer-size-limit 100
               cider-auto-test-mode nil
-              clojure-enable-linters 'clj-kondo
               clojure-enable-clj-refactor t
               ;; clojure-enable-fancify-symbols t
               )
@@ -61,23 +70,74 @@ values."
      ;; evil-cleverparens
      (git :variables
           git-magit-status-fullscreen t
+          magit-diff-refine-hunk t
           git-enable-github-support t
           git-gutter-use-fringe t)
      html
      javascript
-     markdown
+     json
+
+     (lsp :variables
+
+          ;; Disable some features - use CIDER instead
+          lsp-enable-on-type-formatting nil
+          lsp-enable-indentation nil
+
+          lsp-enable-symbol-highlighting t
+          lsp-modeline-diagnostics-enable t
+          lsp-ui-doc-show-with-cursor nil
+          lsp-ui-doc-delay 2
+          lsp-ui-sideline-enable nil
+          lsp-lens-enable t
+          treemacs-space-between-root-nodes nil
+          lsp-file-watch-threshold 10000
+
+          )
+
+     lua
+
+     (markdown :variables
+               markdown-live-preview-engine 'vmd)
+
      (org :variables
           org-want-todo-bindings t
           )
+
+     php
+
      ranger
+
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 30
             shell-default-position 'bottom)
+
+     (spacemacs-modeline :variables
+                         doom-modeline-height 12
+                         doom-modeline-major-mode-color-icon t
+                         doom-modeline-buffer-file-name-style 'relative-to-project
+                         doom-modeline-display-default-persp-name t
+                         doom-modeline-minor-modes nil
+                         doom-modeline-modal-icon nil)
+
      ;; spell-checking
      semantic
      smex
-     syntax-checking)
+     syntax-checking
+
+     theming
+
+     (unicode-fonts :variables
+                    unicode-fonts-enable-ligatures t
+                    unicode-fonts-ligature-modes '(prog-mode))
+
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-global-margin t)
+
+     yaml
+
+     )
    ;; version-control
    ;; typescript)
 
@@ -376,6 +436,21 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+
+
+  ;; custom theme modification
+  ;; spacemacs - overriding default height of modeline
+  ;; doom-gruvbox - subtle lsp symbol highlight
+  (setq-default
+   theming-modifications
+   '((doom-dracula
+      ;; (mode-line :height 0.92)
+      ;; (mode-line-inactive :height 0.92)
+      (lsp-face-highlight-read :background nil :weight bold)
+      (command-log-command :foreground "firebrick")
+      (command-log-key :foreground "dark magenta")
+      )))
+
 
   (setq-default git-magit-status-fullscreen t))
 
