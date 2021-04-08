@@ -55,7 +55,7 @@ values."
               ;; clojure-enable-linters 'clj-kondo
               cider-repl-display-help-banner nil
               cider-pprint-fn 'fipp
-              clojure-indent-style 'align-arguments
+              ;; clojure-indent-style 'align-arguments
               clojure-align-forms-automatically t
               clojure-toplevel-inside-comment-form t
               cider-result-overlay-position 'at-point
@@ -88,7 +88,7 @@ values."
           lsp-ui-doc-show-with-cursor nil
           lsp-ui-doc-delay 2
           lsp-ui-sideline-enable nil
-          lsp-lens-enable t
+          lsp-lens-enable nil
           treemacs-space-between-root-nodes nil
           lsp-file-watch-threshold 10000
 
@@ -468,13 +468,37 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;;;
+  ;;; Theme
+  ;;;
+
+  (defun practicalli/setup-custom-doom-modeline ()
+    (doom-modeline-set-modeline 'practicalli-modeline 'default))
+  ;;
+  (with-eval-after-load 'doom-modeline
+    (doom-modeline-def-modeline 'practicalli-modeline
+                                '(workspace-name window-number modals persp-name buffer-info matches remote-host vcs)
+                                '(misc-info repl lsp))
+    (practicalli/setup-custom-doom-modeline))
+
+
+  ;;;
   ;;; Common
   ;;;
+
+  (setq-default bidi-paragraph-direction 'left-to-right)
 
   ;; zooming
   (define-key global-map (kbd "C-+") 'text-scale-increase)
   (define-key global-map (kbd "C--") 'text-scale-decrease)
   (define-key global-map (kbd "C-0") 'spacemacs/reset-font-size)
+
+  ;;;
+  ;;; History
+  ;;;
+
+  (setq history-delete-duplicates t)
+  (setq extended-command-history
+        (delq nil (delete-dups extended-command-history)))
 
   ;; browser
   (setq browse-url-browser-function 'browse-url-chrome)
@@ -574,12 +598,13 @@ you should place your code here."
 
   ;; gotos
   (define-key evil-normal-state-map (kbd "g d") 'spacemacs/clj-find-var)
+  ;; (define-key evil-normal-state-map (kbd "g d") 'evil-goto-definition)
   (define-key evil-normal-state-map (kbd "g v") 'cider-find-var)
   ;; (define-key evil-normal-state-map (kbd "g D") 'helm-imenu-in-all-buffers)
   (define-key evil-normal-state-map (kbd "g D") 'spacemacs/helm-jump-in-buffer)
   (define-key evil-normal-state-map (kbd "g f") 'helm-projectile-find-file)
   (define-key evil-normal-state-map (kbd "g F") 'helm-recentf)
-  (define-key evil-normal-state-map (kbd "g r") 'cider-switch-to-repl-buffer)
+  (define-key evil-normal-state-map (kbd "g r") 'lsp-find-references)
   (define-key evil-normal-state-map (kbd "g t") 'projectile-toggle-between-implementation-and-test)
   ;; (define-key evil-normal-state-map (kbd "=") 'cider-format-defun)
 
@@ -592,29 +617,35 @@ you should place your code here."
 
 
   ;;;
-  ;;; clojure
+  ;;; Clojure
   ;;;
 
+  (setq nrepl-use-ssh-fallback-for-remote-hosts t)
+
   (add-hook 'clojure-mode-hook
-            #'(lambda ()
-                (spacemacs/toggle-highlight-indentation-current-column-on)
+            '(lambda ()
+               (setq-local comment-column 0)
 
-                ;; kebab-case in clojure mode
-                (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
-                (modify-syntax-entry ?_ "w" clojure-mode-syntax-table)
+               (spacemacs/toggle-highlight-indentation-current-column-on)
 
-                ;; line wrap !!! does not work :-()
-                (spacemacs/toggle-truncate-lines-off)
+               ;; kebab-case in clojure mode
+               (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
+               (modify-syntax-entry ?_ "w" clojure-mode-syntax-table)
 
-                (setq truncate-lines nil)
+               ;; line wrap !!! does not work :-()
+               (spacemacs/toggle-truncate-lines-off)
 
-                ;; indent guide
-                ;;(spacemacs/toggle-indent-guide-on)
+               (setq truncate-lines nil)
 
-                ;; column indicator
-                (spacemacs/toggle-fill-column-indicator-on)
+               ;; indent guide
+               ;;(spacemacs/toggle-indent-guide-on)
 
-                ))
+               ;; column indicator
+               (spacemacs/toggle-fill-column-indicator-on)
+
+               ))
+
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
 
   ;;;
   ;;; org
