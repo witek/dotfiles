@@ -633,8 +633,8 @@ you should place your code here."
   (define-key evil-visual-state-map (kbd ";") 'evilnc-comment-or-uncomment-lines)
 
   ;; gotos
-  (define-key evil-normal-state-map (kbd "g d") 'spacemacs/clj-find-var)
-  ;; (define-key evil-normal-state-map (kbd "g d") 'evil-goto-definition)
+  ;; (define-key evil-normal-state-map (kbd "g d") 'spacemacs/clj-find-var)
+  (define-key evil-normal-state-map (kbd "g d") 'evil-goto-definition)
   (define-key evil-normal-state-map (kbd "g v") 'cider-find-var)
   ;; (define-key evil-normal-state-map (kbd "g D") 'helm-imenu-in-all-buffers)
   (define-key evil-normal-state-map (kbd "g D") 'spacemacs/helm-jump-in-buffer)
@@ -656,13 +656,18 @@ you should place your code here."
   ;;; clojure
   ;;;
 
-  (spacemacs|forall-clojure-modes m
-    (spacemacs/set-leader-keys-for-major-mode m "==" 'cider-format-defun)
-    (spacemacs/set-leader-keys-for-major-mode m "=f" 'cider-format-buffer)
-    (spacemacs/set-leader-keys-for-major-mode m "(" 'sp-wrap-round)
-    (spacemacs/set-leader-keys-for-major-mode m "i" 'evil-cp-insert-at-beginning-of-form)
-    (spacemacs/set-leader-keys-for-major-mode m "a" 'evil-cp-insert-at-end-of-form)
-    (spacemacs/set-leader-keys-for-major-mode m "#" 'cider-toggle-ignore-next-form))
+  (defun witek/setup-clojure-mode (m)
+    (spacemacs/declare-prefix-for-mode m "," "witek's")
+    (spacemacs/set-leader-keys-for-major-mode m
+      ",a" 'evil-cp-insert-at-end-of-form
+      ",i" 'evil-cp-insert-at-beginning-of-form
+      ;; "==" 'lsp-format-buffer
+      "(" 'sp-wrap-round
+      "#" 'cider-toggle-ignore-next-form
+      ))
+  (witek/setup-clojure-mode 'clojure-mode)
+  (witek/setup-clojure-mode 'clojurescript-mode)
+  (witek/setup-clojure-mode 'clojurec-mode)
 
 
   (add-hook 'clojure-mode-hook
