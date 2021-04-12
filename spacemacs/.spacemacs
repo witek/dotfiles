@@ -30,26 +30,27 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(shell-scripts
-     asciidoc
-     themes-megapack
-     ;; csv
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     (helm :variables
-           helm-follow-mode-persistent t)
+   '(
 
      (auto-completion :variables
                       auto-completion-enable-help-tooltip t
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-sort-by-usage t)
 
-     colors
-     ;; dash
+     asciidoc
+
+     ;; csv
+     ;; ----------------------------------------------------------------
+     ;; Example of useful layers you may want to use right away.
+     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
+     ;; <M-m f e R> (Emacs style) to install them.
+     ;; ----------------------------------------------------------------
+
+     (helm :variables
+           helm-follow-mode-persistent t)
+
      ;; better-defaults
+
      (clojure :variables
               ;; clojure-backend 'cier
               ;; clojure-enable-linters 'clj-kondo
@@ -64,17 +65,27 @@ values."
               cider-auto-test-mode nil
               clojure-enable-clj-refactor t
               ;; clojure-enable-fancify-symbols t
+              nrepl-use-ssh-fallback-for-remote-hosts t
               )
-     ;parinfer
+
+     colors
+
+     ;; dash
+
      emacs-lisp
+
      ;; evil-cleverparens
+
      (git :variables
           git-magit-status-fullscreen t
           magit-diff-refine-hunk t
           git-enable-github-support t
           git-gutter-use-fringe t)
+
      html
+
      javascript
+
      json
 
      (lsp :variables
@@ -90,7 +101,7 @@ values."
           lsp-ui-sideline-enable nil
           lsp-lens-enable nil
           treemacs-space-between-root-nodes nil
-          lsp-file-watch-threshold 10000
+          lsp-file-watch-threshold 1000
 
           )
 
@@ -101,16 +112,42 @@ values."
 
      (org :variables
           org-want-todo-bindings t
+          org-agenda-files '("~/Dropbox/org")
+          org-default-notes-file '("~/Dropbox/org/inbox.org"
+                                         "~/Dropbox/org/gtd.org")
+          ;; setq org-startup-indented t
+          org-reverse-note-order t
+          org-agenda-ndays 7
+          org-agenda-show-all-dates t
+          org-deadline-warning-days 14
+          org-agenda-skip-scheduled-if-done t
+          org-agenda-start-on-weekday nil
+          org-agenda-start-with-log-mode t
+          org-agenda-use-time-grid t
+          org-capture-templates
+                '(
+                  ("t" "TODO" entry (file+headline "~/Dropbox/org/inbox.org" "INBOX")
+                   "** TODO [#C]  %?\n\n%i\n\nCreated On: %u\nCreated From: file:%F"
+                   :prepend t
+                   :empty-lines 1
+                   :clock-in nil
+                   :clock-resume nil
+                   ))
           )
+
+    ;parinfer
 
      php
 
-     ranger
+     ;; ranger
 
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 30
             shell-default-position 'bottom)
+
+     shell-scripts
+
 
      (spacemacs-modeline :variables
                          doom-modeline-height 12
@@ -122,8 +159,12 @@ values."
 
      ;; spell-checking
      semantic
+
      smex
+
      syntax-checking
+
+     themes-megapack
 
      theming
 
@@ -181,7 +222,7 @@ values."
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
-   dotspacemacs-check-for-update t
+   dotspacemacs-check-for-update nil
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
@@ -209,7 +250,8 @@ values."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+                                (projects . 7)
+                                (agenda . 10))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -219,10 +261,10 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          doom-dracula
+                         spacemacs-dark
                          badwolf
                          flatland
                          gruvbox
-                         spacemacs-dark
                          melancholy
                          dakrone
                          solarized-dark
@@ -271,7 +313,8 @@ values."
                                :size 14
                                ;; :weight light
                                ;; :width condensed
-                               :powerline-scale 0.75)
+                               :powerline-scale 0.75
+                               )
 
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -473,7 +516,7 @@ you should place your code here."
 
   (defun practicalli/setup-custom-doom-modeline ()
     (doom-modeline-set-modeline 'practicalli-modeline 'default))
-  ;;
+
   (with-eval-after-load 'doom-modeline
     (doom-modeline-def-modeline 'practicalli-modeline
                                 '(workspace-name window-number modals persp-name buffer-info matches remote-host vcs)
@@ -556,13 +599,6 @@ you should place your code here."
 
   (spacemacs/set-leader-keys ";" 'evilnc-comment-or-uncomment-lines)
 
-  (spacemacs|forall-clojure-modes m
-    (spacemacs/set-leader-keys-for-major-mode m "==" 'cider-format-defun)
-    (spacemacs/set-leader-keys-for-major-mode m "=f" 'cider-format-buffer)
-    (spacemacs/set-leader-keys-for-major-mode m "(" 'sp-wrap-round)
-    (spacemacs/set-leader-keys-for-major-mode m "i" 'evil-cp-insert-at-beginning-of-form)
-    (spacemacs/set-leader-keys-for-major-mode m "a" 'evil-cp-insert-at-end-of-form)
-    (spacemacs/set-leader-keys-for-major-mode m "#" 'cider-toggle-ignore-next-form))
 
 
   ;; toggle lisp state
@@ -617,10 +653,17 @@ you should place your code here."
 
 
   ;;;
-  ;;; Clojure
+  ;;; clojure
   ;;;
 
-  (setq nrepl-use-ssh-fallback-for-remote-hosts t)
+  (spacemacs|forall-clojure-modes m
+    (spacemacs/set-leader-keys-for-major-mode m "==" 'cider-format-defun)
+    (spacemacs/set-leader-keys-for-major-mode m "=f" 'cider-format-buffer)
+    (spacemacs/set-leader-keys-for-major-mode m "(" 'sp-wrap-round)
+    (spacemacs/set-leader-keys-for-major-mode m "i" 'evil-cp-insert-at-beginning-of-form)
+    (spacemacs/set-leader-keys-for-major-mode m "a" 'evil-cp-insert-at-end-of-form)
+    (spacemacs/set-leader-keys-for-major-mode m "#" 'cider-toggle-ignore-next-form))
+
 
   (add-hook 'clojure-mode-hook
             '(lambda ()
@@ -641,7 +684,8 @@ you should place your code here."
                ;;(spacemacs/toggle-indent-guide-on)
 
                ;; column indicator
-               (spacemacs/toggle-fill-column-indicator-on)
+               ;; !!! breaks modeline
+               ;; (spacemacs/toggle-fill-column-indicator-on)
 
                ))
 
@@ -652,35 +696,10 @@ you should place your code here."
   ;;;
 
   (with-eval-after-load 'org
-    (setq org-agenda-files '("~/Dropbox/org"))
-    (setq org-default-notes-file '("~/Dropbox/org/inbox.org"
-                                   "~/Dropbox/org/gtd.org"))
-    ;; (setq org-startup-indented t)
-    (setq org-reverse-note-order t)
-
-    (setq org-agenda-ndays 7)
-    (setq org-agenda-show-all-dates t)
-    (setq org-deadline-warning-days 14)
-    (setq org-agenda-skip-scheduled-if-done t)
-    (setq org-agenda-start-on-weekday nil)
-    (setq org-agenda-start-with-log-mode t)
-    (setq org-agenda-use-time-grid t)
-
     (spacemacs/set-leader-keys "oc" 'org-capture)
     (spacemacs/set-leader-keys "oa" 'org-agenda)
 
-    ;; auto-add uniquie ids for captured entries
-    (add-hook 'org-cnapture-prepare-finalize-hook 'org-id-get-create)
-
-    (setq org-capture-templates
-          '(
-            ("t" "TODO" entry (file+headline "~/Dropbox/org/inbox.org" "INBOX")
-             "** TODO [#C]  %?\n\n%i\n\nCreated On: %u\nCreated From: file:%F"
-             :prepend t
-             :empty-lines 1
-             :clock-in nil
-             :clock-resume nil
-             )))
+    (add-hook 'org-capture-prepare-finalize-hook 'org-id-get-create)
     )
 
 
@@ -741,7 +760,7 @@ This function is called at the very end of Spacemacs initialization."
  '(cider-auto-select-error-buffer nil)
  '(cider-font-lock-dynamically (quote (macro function var deprecated core)))
  '(cider-font-lock-reader-conditionals nil)
- '(cider-mode-line-show-connection nil)
+ '(cider-mode-line-show-connection t)
  '(cider-offer-to-open-cljs-app-in-browser nil)
  '(cider-save-file-on-load t)
  '(cljr-hotload-dependencies t)
