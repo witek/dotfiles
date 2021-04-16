@@ -52,8 +52,8 @@ values."
      ;; better-defaults
 
      (clojure :variables
-              ;; clojure-backend 'cier
-              ;; clojure-enable-linters 'clj-kondo
+              clojure-backend 'cider
+              clojure-enable-linters 'clj-kondo
               cider-repl-display-help-banner nil
               cider-pprint-fn 'fipp
               ;; clojure-indent-style 'align-arguments
@@ -88,22 +88,22 @@ values."
 
      json
 
-     (lsp :variables
+     ;; (lsp :variables
 
-          ;; Disable some features - use CIDER instead
-          lsp-enable-on-type-formatting nil
-          lsp-enable-indentation nil
+     ;;      ;; Disable some features - use CIDER instead
+     ;;      lsp-enable-on-type-formatting nil
+     ;;      lsp-enable-indentation nil
 
-          lsp-enable-symbol-highlighting t
-          lsp-modeline-diagnostics-enable t
-          lsp-ui-doc-show-with-cursor nil
-          lsp-ui-doc-delay 2
-          lsp-ui-sideline-enable nil
-          lsp-lens-enable nil
-          treemacs-space-between-root-nodes nil
-          lsp-file-watch-threshold 1000
+     ;;      lsp-enable-symbol-highlighting t
+     ;;      lsp-modeline-diagnostics-enable t
+     ;;      lsp-ui-doc-show-with-cursor nil
+     ;;      lsp-ui-doc-delay 2
+     ;;      lsp-ui-sideline-enable nil
+     ;;      lsp-lens-enable nil
+     ;;      treemacs-space-between-root-nodes nil
+     ;;      lsp-file-watch-threshold 1000
 
-          )
+     ;;      )
 
      lua
 
@@ -633,8 +633,8 @@ you should place your code here."
   (define-key evil-visual-state-map (kbd ";") 'evilnc-comment-or-uncomment-lines)
 
   ;; gotos
-  ;; (define-key evil-normal-state-map (kbd "g d") 'spacemacs/clj-find-var)
-  (define-key evil-normal-state-map (kbd "g d") 'evil-goto-definition)
+  (define-key evil-normal-state-map (kbd "g d") 'spacemacs/clj-find-var)
+  ;; (define-key evil-normal-state-map (kbd "g d") 'evil-goto-definition)
   (define-key evil-normal-state-map (kbd "g v") 'cider-find-var)
   ;; (define-key evil-normal-state-map (kbd "g D") 'helm-imenu-in-all-buffers)
   (define-key evil-normal-state-map (kbd "g D") 'spacemacs/helm-jump-in-buffer)
