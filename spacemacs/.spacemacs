@@ -2,6 +2,10 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+;; * .spacemacs
+
+;; ** layers
+
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -133,7 +137,9 @@ values."
                    :clock-in nil
                    :clock-resume nil
                    ))
-          )
+                )
+
+     outshine
 
     ;parinfer
 
@@ -199,6 +205,8 @@ values."
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
    dotspacemacs-install-packages 'used-only))
+
+;; ** init
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -472,6 +480,8 @@ values."
    dotspacemacs-whitespace-cleanup 'changed
    ))
 
+;; ** user-init
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
@@ -497,10 +507,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq-default git-magit-status-fullscreen t))
 
-
-
-
-
+;; ** user-config
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -720,21 +727,7 @@ you should place your code here."
 
   )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+;; ** customize
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
