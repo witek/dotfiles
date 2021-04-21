@@ -525,11 +525,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   )
 
 ;; *** global
-(defun witek/user-config-global ()
-;;;
-  ;;; Common
-  ;;;
 
+(defun witek/user-config-global ()
+
+  ;; improves performance, they said
   (setq-default bidi-paragraph-direction 'left-to-right)
 
   ;; zooming
@@ -537,17 +536,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (define-key global-map (kbd "C--") 'text-scale-decrease)
   (define-key global-map (kbd "C-0") 'spacemacs/reset-font-size)
 
-  ;;;
-  ;;; History
-  ;;;
-
+  ;; History
   (setq history-delete-duplicates t)
   (setq extended-command-history
         (delq nil (delete-dups extended-command-history)))
 
   ;; browser
   (setq browse-url-browser-function 'browse-url-chrome)
+
   )
+
 ;; *** clojure
 
 (defun witek/user-config-clojure ()
