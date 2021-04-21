@@ -510,7 +510,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq-default git-magit-status-fullscreen t))
 
 ;; ** user-config
+
 ;; *** theming
+
 (defun witek/user-config-theming ()
 
   (defun practicalli/setup-custom-doom-modeline ()
@@ -544,6 +546,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; browser
   (setq browse-url-browser-function 'browse-url-chrome)
 
+  ;; disable minor mode indicators (which cause modeline crashes)
+  (spaceline-toggle-minor-modes-off)
+
+  ;; indent guide
+  (spacemacs/toggle-indent-guide-globally-on)
+
   )
 
 ;; *** clojure
@@ -559,10 +567,33 @@ before packages are loaded. If you are unsure, you should try in setting them in
       "(" 'sp-wrap-round
       "#" 'cider-toggle-ignore-next-form
       ))
-
   (witek/setup-clojure-mode 'clojure-mode)
   (witek/setup-clojure-mode 'clojurescript-mode)
   (witek/setup-clojure-mode 'clojurec-mode)
+
+  (defun witek/clojure-mode-hook ()
+    (setq-local comment-column 0)
+
+    (spacemacs/toggle-highlight-indentation-current-column-off)
+
+    ;; kebab-case in clojure mode
+    (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
+    (modify-syntax-entry ?_ "w" clojure-mode-syntax-table)
+
+    (spacemacs/toggle-truncate-lines-off)
+
+    ;; indent guide
+    (spacemacs/toggle-indent-guide-on)
+    (spacemacs/toggle-indent-guide-globally-on)
+
+    ;; column indicator
+    (spacemacs/toggle-fill-column-indicator-on)
+
+    )
+  (add-hook 'clojure-mode-hook 'witek/clojure-mode-hook)
+  (add-hook 'clojurescript-mode-hook 'witek/clojure-mode-hook)
+  (add-hook 'clojurec-mode-hook 'witek/clojure-mode-hook)
+
 
   )
 ;; *** TEMPLATE
@@ -693,29 +724,7 @@ you should place your code here."
 
 
 
-  (add-hook 'clojure-mode-hook
-            '(lambda ()
-               (setq-local comment-column 0)
 
-               (spacemacs/toggle-highlight-indentation-current-column-on)
-
-               ;; kebab-case in clojure mode
-               (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
-               (modify-syntax-entry ?_ "w" clojure-mode-syntax-table)
-
-               ;; line wrap !!! does not work :-()
-               (spacemacs/toggle-truncate-lines-off)
-
-               (setq truncate-lines nil)
-
-               ;; indent guide
-               ;;(spacemacs/toggle-indent-guide-on)
-
-               ;; column indicator
-               ;; !!! breaks modeline
-               ;; (spacemacs/toggle-fill-column-indicator-on)
-
-               ))
 
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
 
