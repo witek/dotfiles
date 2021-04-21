@@ -268,36 +268,38 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         doom-dracula
+                         modus-vivendi
+                         modus-operandi
                          spacemacs-dark
-                         badwolf
-                         flatland
-                         gruvbox
-                         melancholy
-                         dakrone
-                         solarized-dark
-                         afternoon
-                         deeper-blue
-                         ample
-                         brin
-                         cyberpunk
-                         farmhouse-dark
-                         heroku
-                         hickey
-                         material
-                         misterioso
-                         reverse
-                         spacegray
-                         subatomic
-                         subatomic256
-                         monokai
-                         graham
-                         junio
-                         lush
-                         gruber-darker
                          spacemacs-light
-                         leuven
-                         twilight-bright
+                         doom-dracula
+
+                         ;; molokai
+                         ;; badwolf
+                         ;; flatland
+                         ;; gruvbox
+                         ;; melancholy
+                         ;; dakrone
+                         ;; solarized-dark
+                         ;; afternoon
+                         ;; deeper-blue
+                         ;; ample
+                         ;; brin
+                         ;; cyberpunk
+                         ;; farmhouse-dark
+                         ;; heroku
+                         ;; hickey
+                         ;; material
+                         ;; misterioso
+                         ;; reverse
+                         ;; spacegray
+                         ;; subatomic
+                         ;; subatomic256
+                         ;; monokai
+                         ;; graham
+                         ;; junio
+                         ;; lush
+                         ;; gruber-darker
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state nil
@@ -318,10 +320,10 @@ values."
    ;;                             :weight normal
    ;;                             :powerline-scale 0.8)
    dotspacemacs-default-font '("Fira Code"
-                               :size 14
+                               :size 13
                                ;; :weight light
                                ;; :width condensed
-                               :powerline-scale 0.75
+                               :powerline-scale 1.0
                                )
 
    ;; The leader key
@@ -418,11 +420,11 @@ values."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 100
+   dotspacemacs-active-transparency 70
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 80
+   dotspacemacs-inactive-transparency 50
    ;; If non nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
    ;; If non nil show the color guide hint for transient state keys. (default t)
@@ -508,18 +510,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq-default git-magit-status-fullscreen t))
 
 ;; ** user-config
-
-(defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
-
-  ;;;
-  ;;; Theme
-  ;;;
+;; *** theming
+(defun witek/user-config-theming ()
 
   (defun practicalli/setup-custom-doom-modeline ()
     (doom-modeline-set-modeline 'practicalli-modeline 'default))
@@ -530,8 +522,11 @@ you should place your code here."
                                 '(misc-info repl lsp))
     (practicalli/setup-custom-doom-modeline))
 
+  )
 
-  ;;;
+;; *** global
+(defun witek/user-config-global ()
+;;;
   ;;; Common
   ;;;
 
@@ -552,6 +547,44 @@ you should place your code here."
 
   ;; browser
   (setq browse-url-browser-function 'browse-url-chrome)
+  )
+;; *** clojure
+
+(defun witek/user-config-clojure ()
+
+  (defun witek/setup-clojure-mode (m)
+    (spacemacs/declare-prefix-for-mode m "," "witek's")
+    (spacemacs/set-leader-keys-for-major-mode m
+      ",a" 'evil-cp-insert-at-end-of-form
+      ",i" 'evil-cp-insert-at-beginning-of-form
+      ;; "==" 'lsp-format-buffer
+      "(" 'sp-wrap-round
+      "#" 'cider-toggle-ignore-next-form
+      ))
+
+  (witek/setup-clojure-mode 'clojure-mode)
+  (witek/setup-clojure-mode 'clojurescript-mode)
+  (witek/setup-clojure-mode 'clojurec-mode)
+
+  )
+;; *** TEMPLATE
+(defun witek/user-config-TEMPLATE ()
+
+  )
+
+;; *** user-config
+
+(defun dotspacemacs/user-config ()
+  "Configuration function for user code.
+This function is called at the very end of Spacemacs initialization after
+layers configuration.
+This is the place where most of your configurations should be done. Unless it is
+explicitly specified that a variable should be set before a package is loaded,
+you should place your code here."
+
+  (witek/user-config-theming)
+  (witek/user-config-global)
+
 
   ;;;
   ;;; TODO cleanup
@@ -604,14 +637,13 @@ you should place your code here."
 
   ;; Space Menu
 
-  (spacemacs/set-leader-keys ";" 'evilnc-comment-or-uncomment-lines)
+  ;; (spacemacs/set-leader-keys ";" 'evilnc-comment-or-uncomment-lines)
 
 
 
   ;; toggle lisp state
   (evil-leader/set-key "." 'lisp-state-toggle-lisp-state)
 
-  (define-key evil-normal-state-map (kbd "#") 'cider-toggle-ignore-next-form)
 
   ;; jumping forward and backward
   (define-key evil-normal-state-map (kbd "M-<left>") 'evil-prev-buffer)
@@ -659,22 +691,8 @@ you should place your code here."
   (modify-syntax-entry ?- "w" lisp--mode-syntax-table)
 
 
-  ;;;
-  ;;; clojure
-  ;;;
+  (witek/user-config-clojure)
 
-  (defun witek/setup-clojure-mode (m)
-    (spacemacs/declare-prefix-for-mode m "," "witek's")
-    (spacemacs/set-leader-keys-for-major-mode m
-      ",a" 'evil-cp-insert-at-end-of-form
-      ",i" 'evil-cp-insert-at-beginning-of-form
-      ;; "==" 'lsp-format-buffer
-      "(" 'sp-wrap-round
-      "#" 'cider-toggle-ignore-next-form
-      ))
-  (witek/setup-clojure-mode 'clojure-mode)
-  (witek/setup-clojure-mode 'clojurescript-mode)
-  (witek/setup-clojure-mode 'clojurec-mode)
 
 
   (add-hook 'clojure-mode-hook
@@ -771,7 +789,7 @@ This function is called at the very end of Spacemacs initialization."
  '(package-selected-packages
    (quote
     (insert-shebang helm-gtags ggtags flycheck-bashate fish-mode counsel-gtags counsel swiper ivy company-shell xterm-color powerline shell-pop org-category-capture log4e gntp multi-term skewer-mode simple-httpd json-snatcher json-reformat parent-mode request haml-mode gitignore-mode flx highlight transient iedit anzu goto-chg eshell-z eshell-prompt-extras esh-help web-completion-data dash-functional tern hydra inflections edn multiple-cursors peg lv eval-sexp-fu sesman parseedn parseclj a bind-map bind-key packed auto-complete popup pos-tip pkg-info epl dash super-save phpunit phpcbf php-extras php-auto-yasnippets org-mime drupal-mode php-mode csv-mode company-quickhelp typescript-mode flycheck diminish cider seq clojure-mode paredit smartparens magit magit-popup git-commit with-editor f evil company helm helm-core yasnippet avy markdown-mode async alert projectile js2-mode s yaml-mode zeal-at-point ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tide tagedit stickyfunc-enhance srefactor spaceline smex smeargle slim-mode scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode popwin persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu emmet-mode elisp-slime-nav dumb-jump define-word company-web company-tern company-statistics column-enforce-mode color-identifiers-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
- '(powerline-default-separator (quote arrow-fade))
+ '(powerline-default-separator nil)
  '(safe-local-variable-values
    (quote
     ((elisp-lint-indent-specs
