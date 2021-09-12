@@ -1,1 +1,1 @@
-/home/witek/.local/share/omf/themes/budspencer/fish_prompt.fish
+/home/witek/.local/share/omf/themes/slacker/fish_prompt.fish
