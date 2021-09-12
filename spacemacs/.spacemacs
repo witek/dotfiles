@@ -61,14 +61,14 @@ values."
               cider-repl-display-help-banner nil
               cider-pprint-fn 'fipp
               ;; clojure-indent-style 'align-arguments
-              clojure-align-forms-automatically t
+              ;; clojure-align-forms-automatically t
               clojure-toplevel-inside-comment-form t
               cider-result-overlay-position 'at-point
               cider-overlays-use-font-lock t
               cider-repl-buffer-size-limit 100
               cider-auto-test-mode nil
               clojure-enable-clj-refactor t
-              ;; clojure-enable-fancify-symbols t
+              clojure-enable-fancify-symbols t
               nrepl-use-ssh-fallback-for-remote-hosts t
               )
 
@@ -273,11 +273,11 @@ values."
                          spacemacs-dark
                          spacemacs-light
                          doom-dracula
+                         badwolf
+                         gruvbox
 
                          ;; molokai
-                         ;; badwolf
                          ;; flatland
-                         ;; gruvbox
                          ;; melancholy
                          ;; dakrone
                          ;; solarized-dark
@@ -320,7 +320,7 @@ values."
    ;;                             :weight normal
    ;;                             :powerline-scale 0.8)
    dotspacemacs-default-font '("Fira Code"
-                               :size 13
+                               :size 14
                                ;; :weight light
                                ;; :width condensed
                                :powerline-scale 1.0
@@ -420,11 +420,11 @@ values."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 70
+   dotspacemacs-active-transparency 90
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 50
+   dotspacemacs-inactive-transparency 60
    ;; If non nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
    ;; If non nil show the color guide hint for transient state keys. (default t)
@@ -484,6 +484,88 @@ values."
 
 ;; ** user-init
 
+;; *** modus themes
+
+(defun witek/user-init-modus-themes ()
+  (setq modus-themes-slanted-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-no-mixed-fonts nil
+        modus-themes-subtle-line-numbers nil
+
+        modus-themes-fringes 'intense ; {nil,'subtle,'intense}
+
+        ;; Options for `modus-themes-lang-checkers': nil,
+        ;; 'straight-underline, 'subtle-foreground,
+        ;; 'subtle-foreground-straight-underline, 'intense-foreground,
+        ;; 'intense-foreground-straight-underline, 'colored-background
+        modus-themes-lang-checkers 'intense-foreground-straight-underline
+
+        ;; Options for `modus-themes-mode-line': nil, '3d, 'moody,
+        ;; 'borderless, 'borderless-3d, 'borderless-moody, 'accented,
+        ;; 'accented-3d, 'accented-moody
+        modus-themes-mode-line 'accented
+
+        ;; Options for `modus-themes-syntax': nil, 'faint,
+        ;; 'yellow-comments, 'green-strings,
+        ;; 'yellow-comments-green-strings, 'alt-syntax,
+        ;; 'alt-syntax-yellow-comments, 'faint-yellow-comments
+        modus-themes-syntax 'alt-syntax-yellow-comments
+
+        ;; Options for `modus-themes-hl-line': nil, 'intense-background,
+        ;; 'accented-background, 'underline-neutral,
+        ;; 'underline-accented, 'underline-only-neutral,
+        ;; 'underline-only-accented
+        modus-themes-hl-line 'underline-accented
+
+        modus-themes-paren-match 'intense-bold ; {nil,'subtle-bold,'intense,'intense-bold}
+
+        ;; Options for `modus-themes-links': nil, 'faint,
+        ;; 'neutral-underline, 'faint-neutral-underline, 'no-underline,
+        ;; 'underline-only, 'neutral-underline-only
+        modus-themes-links 'neutral-underline
+
+        ;; Options for `modus-themes-prompts': nil, 'subtle-accented,
+        ;; 'intense-accented, 'subtle-gray, 'intense-gray
+        modus-themes-prompts 'intense-accented
+
+        modus-themes-completions 'opinionated ; {nil,'moderate,'opinionated}
+
+        ;; Options for `modus-themes-region': nil, 'no-extend, 'bg-only,
+        ;; 'bg-only-no-extend, 'accent, 'accent-no-extend
+        modus-themes-region 'accent
+
+        ;; Options for `modus-themes-diffs': nil, 'desaturated,
+        ;; 'bg-only, 'deuteranopia, 'fg-only-deuteranopia
+        modus-themes-diffs 'fg-only-deuteranopia
+
+        modus-themes-org-blocks 'rainbow ; {nil,'grayscale,'rainbow}
+        modus-themes-org-habit nil ; {nil,'simplified,'traffic-light}
+
+        modus-themes-headings ; this is an alist: read the manual or its doc string
+        '((1 . line)
+          (2 . rainbow-line-no-bold)
+          (t . no-bold))
+
+        modus-themes-variable-pitch-ui t
+        modus-themes-variable-pitch-headings t
+        modus-themes-scale-headings t
+
+        ;; modus-themes-scale-1 1.1
+        ;; modus-themes-scale-2 1.15
+        ;; modus-themes-scale-3 1.21
+        ;; modus-themes-scale-4 1.27
+        ;; modus-themes-scale-5 1.33
+
+        modus-themes-scale-1 1.1
+        modus-themes-scale-2 1.15
+        modus-themes-scale-3 1.21
+        modus-themes-scale-4 1.28
+        modus-themes-scale-5 1.36
+        )
+  )
+
+;; *** dotspacemacs/user-init
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
@@ -492,6 +574,7 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
+  (witek/user-init-modus-themes)
 
   ;; custom theme modification
   ;; spacemacs - overriding default height of modeline
@@ -553,6 +636,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spacemacs/toggle-indent-guide-globally-on)
 
   )
+
+
 
 ;; *** clojure
 
@@ -654,7 +739,7 @@ you should place your code here."
   ;; (unless (file-exists-p (concat spacemacs-cache-directory "undo"))
   ;;   (make-directory (concat spacemacs-cache-directory "undo")))
 
-  (setq default-frame-alist '((undecorated . t)))
+  ;; (setq default-frame-alist '((undecorated . t)))
   (setq frame-resize-pixelwise t)
 
   (spacemacs/toggle-transparency)
