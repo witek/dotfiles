@@ -10,11 +10,8 @@ Examples:
 
 Tangle with command 'org-babel-tangle'
 
-** TODO Commands on SPC SPC
-** TODO Don't ask on quit
-** TODO Update Table of Contents
+** TODO Update Table of Contents in this file
 ** TODO How to eval codeblocks?
-** TODO Limit file watchers for happygast project
 
 * Table of Contents
 :PROPERTIES:
@@ -42,8 +39,6 @@ Tangle with command 'org-babel-tangle'
       user-mail-address "wi@koczewski.de")
 
 (setq doom-localleader-key ",")
-
-(print "!!! doom")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -85,8 +80,6 @@ This determines the style of line numbers in effect. If set to `nil', line numbe
 
 #+BEGIN_SRC elisp
 
-(print "!!! line numbers")
-
 (setq display-line-numbers-type nil)
 
 #+END_SRC
@@ -108,8 +101,6 @@ available. You can either set `doom-theme' or manually load a theme with the
 `load-theme' function. This is the default:
 
 #+BEGIN_SRC elisp
-
-(print "!!! theme")
 
 (setq doom-theme 'doom-one)
 ;; (setq doom-theme 'doom-dracula)
@@ -217,5 +208,30 @@ available. You can either set `doom-theme' or manually load a theme with the
         )
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\firebase\\'")
   )
+
+#+END_SRC
+
+* Clojure
+
+#+BEGIN_SRC elisp
+
+(print "[config.org] Clojure")
+
+(map! :localleader
+      :mode clojure-mode
+      ;; "==" 'lsp-format-buffer
+      ;; "(" 'sp-wrap-round
+      ;; "#" 'cider-toggle-ignore-next-form
+      "ev" #'cider-eval-sexp-at-point)
+
+(map! :localleader
+      :mode clojurescript-mode
+      ",a" 'evil-cp-insert-at-end-of-form
+      ",i" 'evil-cp-insert-at-beginning-of-form
+      "ev" #'cider-eval-sexp-at-point)
+
+(map! :localleader
+      :mode clojurec-mode
+      "ev" #'cider-eval-sexp-at-point)
 
 #+END_SRC

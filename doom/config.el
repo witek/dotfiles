@@ -14,8 +14,6 @@
 
 (setq doom-localleader-key ",")
 
-(print "!!! doom")
-
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -49,15 +47,11 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(print "!!! line numbers")
-
 (setq display-line-numbers-type nil)
 
 (setq scroll-conservatively 101
       scroll-margin 12
       scroll-preserve-screen-position 't)
-
-(print "!!! theme")
 
 (setq doom-theme 'doom-one)
 ;; (setq doom-theme 'doom-dracula)
@@ -112,3 +106,22 @@
         )
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\firebase\\'")
   )
+
+(print "[config.org] Clojure")
+
+(map! :localleader
+      :mode clojure-mode
+      ;; "==" 'lsp-format-buffer
+      ;; "(" 'sp-wrap-round
+      ;; "#" 'cider-toggle-ignore-next-form
+      "ev" #'cider-eval-sexp-at-point)
+
+(map! :localleader
+      :mode clojurescript-mode
+      ",a" 'evil-cp-insert-at-end-of-form
+      ",i" 'evil-cp-insert-at-beginning-of-form
+      "ev" #'cider-eval-sexp-at-point)
+
+(map! :localleader
+      :mode clojurec-mode
+      "ev" #'cider-eval-sexp-at-point)
