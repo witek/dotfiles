@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+$DIR/switch-emacs doom
+#~/.config/emacs/bin/doom sync
+/usr/bin/emacs $*
+

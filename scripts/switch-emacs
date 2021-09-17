@@ -1,0 +1,33 @@
+#!/bin/bash -e
+
+
+function echo-error {
+    echo ""
+    echo "Error"
+    echo ""
+    echo "    $(tput setab 1)$(tput setaf 7) $1 $(tput sgr0)"
+    echo ""
+}
+
+function echo-usage {
+    echo "Usage: switch-emacs <profile>"
+    echo ""
+}
+
+
+if [ $# -eq 0 ]
+then
+    echo-error "Missing argument."
+    echo-usage
+    exit 1
+fi
+
+
+PROFILE=$1
+
+echo "Switching Emacs profile to $(tput rev)$PROFILE$(tput sgr0)"
+
+cd ~/.config
+rm emacs
+ln -s emacs.$PROFILE emacs
+
