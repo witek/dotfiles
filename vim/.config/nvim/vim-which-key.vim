@@ -1,4 +1,3 @@
-
 nnoremap <silent> <leader> :silent WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
 
@@ -10,7 +9,7 @@ vnoremap <silent> <localleader> :silent <c-u> :silent WhichKeyVisual ','<CR>
 let g:which_key_map =  {}
 " Define a separator
 let g:which_key_sep = '→'
-set timeoutlen=100
+set timeoutlen=500
 
 
 " Not a fan of floating windows for this
@@ -35,20 +34,16 @@ let g:which_key_map['/'] = [ ':Telescope live_grep'  , 'search' ]
 let g:which_key_map['e'] = [ ':CocCommand explorer'       , 'explorer' ]
 "let g:which_key_map['f'] = [ ':Files'                     , 'search files' ]
 let g:which_key_map['h'] = [ '<C-W>s'                     , 'split below']
-let g:which_key_map['r'] = [ ':Ranger'                    , 'ranger' ]
 let g:which_key_map['S'] = [ ':Startify'                  , 'start screen' ]
-let g:which_key_map['T'] = [ ':Rg'                        , 'search text' ]
-let g:which_key_map['z'] = [ 'Goyo'                       , 'zen' ]
 
 
 let g:which_key_map.f = {
       \ 'name' : '+files' ,
       \ 'n' : [':NERDTree' , 'NerdTree'],
-      \ 'f' : [':Files'    , 'search...'],
+      \ 'f' : [':CtrlP'    , 'search...'],
       \ 's' : [':w'        , 'save'],
       \ 't' : [':Telescope find_files'   , 'Telescope'],
       \ }
-
 
 let g:which_key_map.s = {
       \ 'name' : '+search' ,
@@ -85,7 +80,8 @@ let g:which_key_map.t = {
 
 let g:which_key_map.v = {
       \ 'name' : '+vim' ,
-      \ '.' : [':so %'   , 'source buffer'],
+      \ '.' : [':so %'         , 'source buffer'],
+      \ 'i' : [':e $MYVIMRC'   , 'open init.vim'],
       \ }
 
 let g:which_key_map.v.p = {
@@ -104,3 +100,4 @@ let g:which_key_map.w = {
 
 " Register which key map
 call which_key#register('<Space>', "g:which_key_map")
+

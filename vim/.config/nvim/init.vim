@@ -1,78 +1,41 @@
+call plug#begin(stdpath('data') . '/plugged')
 
-call plug#begin('~/.config/nvim/plugged')
-  Plug 'nvim-lua/popup.nvim'
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'gruvbox-community/gruvbox'
 
-  Plug 'nvim-telescope/telescope.nvim'
-  "Plug 'francoiscabrol/ranger.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
-  Plug 'tpope/vim-vinegar'
-  Plug 'airblade/vim-rooter'
-  "Plug 'qpkorr/vim-renamer'
-  Plug 'mhinz/vim-startify'
-  "Plug 'dracula/vim'
-  Plug 'gruvbox-community/gruvbox'
-  Plug 'scrooloose/nerdtree'
-  Plug 'rbgrouleff/bclose.vim'
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
-  Plug 'guns/vim-sexp',    {'for': 'clojure'}
-  Plug 'bakpakin/fennel.vim'
-  Plug 'mbbill/undotree'
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'Olical/conjure', {'tag': 'v4.14.1'}
-  "Plug 'liquidz/vim-iced', {'for': 'clojure'}
-  Plug 'liuchengxu/vim-which-key'
+Plug 'Olical/aniseed', {'tag': 'v3.16.0'}
+Plug 'Olical/conjure', {'tag': 'v4.17.0'}
+Plug 'Olical/fennel.vim'
+"TODO nvim-local-fennel
+"
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Olical/coc-conjure'
+
+Plug 'liuchengxu/vim-which-key' 
+
+Plug 'tpope/vim-surround'
+
+Plug 'tpope/vim-vinegar'
+Plug 'ryanoasis/vim-devicons'
+Plug 'mbbill/undotree'
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-fugitive'
+
+
+
 call plug#end()
 
 
-" tabs and indentation
-set tabstop=2 softtabstop=2
-set shiftwidth=2
-set expandtab
-set smartindent
+" Load Defaults
+source $HOME/.config/nvim/defaults.vim
 
 
-" use system clipboard
-set clipboard=unnamedplus
-
-" misc
-set relativenumber
-set nohlsearch
-"set ignorecase
-"set smartcase
-set noswapfile
-set nobackup
-set incsearch
-set termguicolors
-set scrolloff=12
-set signcolumn=yes
-set colorcolumn=80
-set hidden
-set cmdheight=2
-
-" leader keys
-let g:mapleader = "\<Space>"
-let g:maplocalleader = ','
-
-
-" colors and syntax highlighting
-if (has("termguicolors"))
- set termguicolors
-endif
-syntax enable
-colorscheme gruvbox
-"highlight Normal guibg=none
-
-
-" font with ligatures
-set guifont=Fira\ Code:h10
-
-" plugins
-source $HOME/.config/nvim/nerdtree.vim
-source $HOME/.config/nvim/vim-iced.vim
-source $HOME/.config/nvim/undotree.vim
+" Plugins Configuration
 source $HOME/.config/nvim/vim-which-key.vim
+source $HOME/.config/nvim/ctrlp.vim
+source $HOME/.config/nvim/coc.vim
+source $HOME/.config/nvim/aniseed.vim
+
 
