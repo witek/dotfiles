@@ -28,8 +28,6 @@
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 
-
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -46,6 +44,10 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(setq-default custom-file (expand-file-name "custom.el" doom-private-dir))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 (setq-default
  ;; ad-redefinition-action 'accept         ; Silence warnings for redefinition
@@ -132,8 +134,12 @@
 (map! :map global-map
       :nv ";" #'evilnc-comment-or-uncomment-lines)
 
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+
 (defadvice! prompt-for-buffer (&rest _)
-  :after 'window-split (switch-to-buffer))
+  :after '(evil-window-split evil-window-vsplit)
+  (consult-buffer))
 
 (print "[config.org] Org")
 
@@ -154,8 +160,8 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\firebase\\'")
   )
 
-(after! emacs-lisp-mode
-  (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table))
+(after! lisp-mode
+  (modify-syntax-entry ?- "w" lisp-mode-syntax-table))
 
 
 ;; (map! :localleader

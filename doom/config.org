@@ -54,8 +54,6 @@ Tangle with command 'org-babel-tangle'
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 
-
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -73,6 +71,18 @@ Tangle with command 'org-babel-tangle'
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 #+END_SRC
+
+** Auto-customizations
+
+By default changes made via a customisation interface are added to init.el. I prefer the idea of using a separate file for this. We just need to change a setting, and load it if it exists.
+
+#+BEGIN_SRC elisp
+
+(setq-default custom-file (expand-file-name "custom.el" doom-private-dir))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+ #+END_SRC
 
 ** Better Defaults
 
@@ -221,12 +231,18 @@ available. You can either set `doom-theme' or manually load a theme with the
 
 #+end_src
 
-** Window Management
+** Windows
+
+I find it rather handy to be asked which buffer I want to see after splitting the window.
 
 #+begin_src elisp
 
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+
 (defadvice! prompt-for-buffer (&rest _)
-  :after 'window-split (switch-to-buffer))
+  :after '(evil-window-split evil-window-vsplit)
+  (consult-buffer))
 
 #+end_src
 
@@ -267,8 +283,8 @@ available. You can either set `doom-theme' or manually load a theme with the
 
 #+BEGIN_SRC elisp
 
-(after! emacs-lisp-mode
-  (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table))
+(after! lisp-mode
+  (modify-syntax-entry ?- "w" lisp-mode-syntax-table))
 
 
 ;; (map! :localleader
