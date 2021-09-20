@@ -47,13 +47,56 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+(setq-default
+ ;; ad-redefinition-action 'accept         ; Silence warnings for redefinition
+ auto-save-list-file-prefix nil         ; Prevent tracking for auto-saves
+ cursor-in-non-selected-windows nil     ; Hide the cursor in inactive windows
+ cursor-type '(hbar . 2)                ; Underline-shaped cursor
+ custom-unlispify-menu-entries nil      ; Prefer kebab-case for titles
+ custom-unlispify-tag-names nil         ; Prefer kebab-case for symbols
+ delete-by-moving-to-trash t            ; Delete files to trash
+ fill-column 80                         ; Set width for automatic line breaks
+ gc-cons-threshold (* 8 1024 1024)      ; We're not using Game Boys anymore
+ help-window-select t                   ; Focus new help windows when opened
+ indent-tabs-mode nil                   ; Stop using tabs to indent
+ inhibit-startup-screen t               ; Disable start-up screen
+ initial-scratch-message ""             ; Empty the initial *scratch* buffer
+ mouse-yank-at-point t                  ; Yank at point rather than pointer
+ read-process-output-max (* 1024 1024)  ; Increase read size per process
+ recenter-positions '(5 top bottom)     ; Set re-centering positions
+ scroll-conservatively 101              ; Avoid recentering when scrolling far
+ scroll-margin 12                       ; Add a margin when scrolling vertically
+ select-enable-clipboard t              ; Merge system's and Emacs' clipboard
+ scroll-preserve-screen-position 't
+ sentence-end-double-space nil          ; Use a single space after dots
+ ;; show-help-function nil                 ; Disable help text everywhere
+ tab-always-indent 'complete            ; Tab indents first then tries completions
+ tab-width 4                            ; Smaller width for tab characters
+ uniquify-buffer-name-style 'forward    ; Uniquify buffer names
+ ;; warning-minimum-level :error           ; Skip warning buffers
+ window-combination-resize t            ; Resize windows proportionally
+ x-stretch-cursor t)                    ; Stretch cursor to the glyph width
+
+;; (blink-cursor-mode 0)                   ; Prefer a still cursor
+(delete-selection-mode 1)               ; Replace region when inserting text
+(fset 'yes-or-no-p 'y-or-n-p)           ; Replace yes/no prompts with y/n
+(global-subword-mode 1)                 ; Iterate through CamelCase words
+(mouse-avoidance-mode 'exile)           ; Avoid collision of mouse with point
+(put 'downcase-region 'disabled nil)    ; Enable downcase-region
+(put 'upcase-region 'disabled nil)      ; Enable upcase-region
+(set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
+
+;; Change a few indenting behaviors.
+(put 'add-function 'lisp-indent-function 2)
+(put 'advice-add 'lisp-indent-function 2)
+(put 'plist-put 'lisp-indent-function 2)
+
 (setq display-line-numbers-type nil)
 
-(setq scroll-conservatively 101
-      scroll-margin 12
-      scroll-preserve-screen-position 't)
-
 (setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one-light)
+;; (setq doom-theme 'doom-vibrant)
+;; (setq doom-theme 'doom-gruvbox)
 ;; (setq doom-theme 'doom-dracula)
 
 (setq doom-font (font-spec :family "Fira Code" :size 14)
@@ -61,6 +104,17 @@
       ivy-posframe-font (font-spec :family "Fira Code" :size 17))
 
 (setq confirm-kill-emacs nil)
+
+(add-hook 'smartparens-enabled-hook #'smartparens-strict-mode)
+(add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
+(add-hook 'smartparens-enabled-hook #'evil-cleverparens-mode)
+
+(map! :map global-map
+      :mode evil-cleverparens-mode
+      :n "M-l" #'evil-cp->)
+(map! :map global-map
+      :mode evil-cleverparens-mode
+      :n "M-h" #'evil-cp-<)
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
@@ -78,15 +132,8 @@
 (map! :map global-map
       :nv ";" #'evilnc-comment-or-uncomment-lines)
 
-(map! :map global-map
-      :n "M-h"  #'paredit-forward-barf-sexp)
-(map! :map global-map
-      :n "M-l"  #'paredit-forward-slurp-sexp)
-
-;; (map! :localleader
-      ;; ",a"  #'evil-cp-insert-at-end-of-form
-      ;; ",i" 'evil-cp-insert-at-beginning-of-form
-      ;; "(" #'sp-wrap-round)
+(defadvice! prompt-for-buffer (&rest _)
+  :after 'window-split (switch-to-buffer))
 
 (print "[config.org] Org")
 
@@ -107,7 +154,25 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\firebase\\'")
   )
 
+(after! emacs-lisp-mode
+  (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table))
+
+
+;; (map! :localleader
+      ;; ",a"  #'evil-cp-insert-at-end-of-form
+      ;; ",i" 'evil-cp-insert-at-beginning-of-form
+      ;; "(" #'sp-wrap-round)
+
 (print "[config.org] Clojure")
+
+(after! clojure-mode
+  (modify-syntax-entry ?- "w" clojure-mode-syntax-table))
+
+(after! clojurescript-mode
+  (modify-syntax-entry ?- "w" clojure-mode-syntax-table))
+
+(after! clojurec-mode
+  (modify-syntax-entry ?- "w" clojure-mode-syntax-table))
 
 (map! :localleader
       :mode clojure-mode
