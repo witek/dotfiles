@@ -11,7 +11,10 @@ Examples:
 Tangle with command 'org-babel-tangle'
 
 ** TODO Update Table of Contents in this file
+** TODO Autosave on eval
 ** TODO How to eval codeblocks?
+** TODO out-org
+** TODO highlight occurences
 
 * Table of Contents
 :PROPERTIES:
@@ -157,6 +160,8 @@ available. You can either set `doom-theme' or manually load a theme with the
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'doom-gruvbox)
 ;; (setq doom-theme 'doom-dracula)
+
+;; test ->
 
 (setq doom-font (font-spec :family "Fira Code" :size 14)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
