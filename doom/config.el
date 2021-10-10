@@ -75,7 +75,7 @@
  sentence-end-double-space nil          ; Use a single space after dots
  ;; show-help-function nil                 ; Disable help text everywhere
  tab-always-indent 'complete            ; Tab indents first then tries completions
- tab-width 4                            ; Smaller width for tab characters
+ tab-width 2                            ; Smaller width for tab characters
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
  ;; warning-minimum-level :error           ; Skip warning buffers
  window-combination-resize t            ; Resize windows proportionally
@@ -162,23 +162,22 @@
 
 (setq org-directory "~/org/")
 
-(after! org
-  ;; (print "[config.org] (after! org)")
-  (map! :map org-mode-map
+(map! :after org
+      :map org-mode-map
       :localleader
       "e" nil
       (:prefix-map ("e" . "edit / eval / export")
        "e" #'eval-last-sexp
        "E" #'org-export-dispatch
        "s" #'org-edit-special
-       )
-      ))
+       ))
 
-(map! :map org-src-mode-map
+;; none of these works :-(
+(map! :after org
+      :map org-src-mode-map
       :localleader
       "," #'org-edit-src-exit)
-
-;; (define-key org-src-mode-map (kbd ", ,") #'org-edit-src-exit)
+(define-key org-src-mode-map (kbd ", ,") #'org-edit-src-exit)
 
 (print "[config.org] LSP")
 
