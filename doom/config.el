@@ -45,6 +45,8 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+(print "[config.org] Auto-customizations")
+
 (setq-default custom-file (expand-file-name "custom.el" doom-private-dir))
 (when (file-exists-p custom-file)
   (load custom-file))
@@ -143,11 +145,46 @@
   :after '(evil-window-split evil-window-vsplit)
   (consult-buffer))
 
-(print "[config.org] Org")
+(print "[config.org] Git")
+
+(map! :localleader
+      :mode git-commit-mode
+      :n :desc "Commit" "," #'with-editor-finish
+      :n :desc "Quit commit" "q" #'with-editor-cancel)
+
+(map! :leader
+      (:prefix-map ("g" . "git")
+       :desc "Magit status" "s" #'magit-status
+       :desc "Magit status here" "S"   #'magit-status-here
+       :desc "Git stage hunk" "g"   #'git-gutter:stage-hunk
+       :desc "Git stage file" "G"   #'magit-stage-file
+      ))
 
 (setq org-directory "~/org/")
 
+(after! org
+  ;; (print "[config.org] (after! org)")
+  (map! :map org-mode-map
+      :localleader
+      "e" nil
+      (:prefix-map ("e" . "edit / eval / export")
+       "e" #'eval-last-sexp
+       "E" #'org-export-dispatch
+       "s" #'org-edit-special
+       )
+      ))
+
+(map! :map org-src-mode-map
+      :localleader
+      "," #'org-edit-src-exit)
+
+;; (define-key org-src-mode-map (kbd ", ,") #'org-edit-src-exit)
+
 (print "[config.org] LSP")
+
+(map! :localleader
+      :mode lsp-mode
+      :n "=" #'lsp-format-buffer)
 
 (with-eval-after-load 'lsp-mode
   (print "[config.org] with-eval-after-load lsp-mode")
