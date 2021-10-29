@@ -14,6 +14,7 @@ Tangle with command 'org-babel-tangle'
 ** TODO Autosave on eval
 ** TODO out-org
 ** TODO highlight occurences
+** TODO configure conflicts between CIDER and LSP
 
 * Table of Contents
 :PROPERTIES:
@@ -132,11 +133,20 @@ setting, and load it if it exists.
 (put 'downcase-region 'disabled nil)    ; Enable downcase-region
 (put 'upcase-region 'disabled nil)      ; Enable upcase-region
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
+(global-display-fill-column-indicator-mode t)
 
 ;; Change a few indenting behaviors.
 (put 'add-function 'lisp-indent-function 2)
 (put 'advice-add 'lisp-indent-function 2)
 (put 'plist-put 'lisp-indent-function 2)
+
+#+END_SRC
+
+Allow configuration via .dir-locals.el
+
+#+BEGIN_SRC elisp
+
+(setq-default enable-local-variables t)
 
 #+END_SRC
 
@@ -256,6 +266,21 @@ splitting the window.
 
 #+end_src
 
+* Projectile
+
+#+begin_src elisp
+
+(setq projectile-project-root-files-functions '(projectile-root-local
+                                                 projectile-root-top-down
+                                                 projectile-root-top-down-recurring
+                                                 projectile-root-bottom-up))
+;; (setq projectile-project-root-files-functions '(projectile-root-local
+;;                                                 projectile-root-top-down
+;;                                                 projectile-root-top-down-recurring
+;;                                                 projectile-root-bottom-up))
+
+#+end_src
+
 * Git (MaGit)
 
 #+begin_src elisp
@@ -297,8 +322,7 @@ splitting the window.
       :map org-src-mode-map
       :localleader
       "," #'org-edit-src-exit)
-(define-key org-src-mode-map (kbd ", ,") #'org-edit-src-exit)
-
+;; (define-key org-src-mode-map (kbd ", ,") #'org-edit-src-exit)
 #+END_SRC
 
 * LSP

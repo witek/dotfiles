@@ -89,11 +89,14 @@
 (put 'downcase-region 'disabled nil)    ; Enable downcase-region
 (put 'upcase-region 'disabled nil)      ; Enable upcase-region
 (set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
+(global-display-fill-column-indicator-mode t)
 
 ;; Change a few indenting behaviors.
 (put 'add-function 'lisp-indent-function 2)
 (put 'advice-add 'lisp-indent-function 2)
 (put 'plist-put 'lisp-indent-function 2)
+
+(setq-default enable-local-variables t)
 
 (setq display-line-numbers-type nil)
 
@@ -145,6 +148,15 @@
   :after '(evil-window-split evil-window-vsplit)
   (consult-buffer))
 
+(setq projectile-project-root-files-functions '(projectile-root-local
+                                                 projectile-root-top-down
+                                                 projectile-root-top-down-recurring
+                                                 projectile-root-bottom-up))
+;; (setq projectile-project-root-files-functions '(projectile-root-local
+;;                                                 projectile-root-top-down
+;;                                                 projectile-root-top-down-recurring
+;;                                                 projectile-root-bottom-up))
+
 (print "[config.org] Git")
 
 (map! :localleader
@@ -177,7 +189,7 @@
       :map org-src-mode-map
       :localleader
       "," #'org-edit-src-exit)
-(define-key org-src-mode-map (kbd ", ,") #'org-edit-src-exit)
+;; (define-key org-src-mode-map (kbd ", ,") #'org-edit-src-exit)
 
 (print "[config.org] LSP")
 
