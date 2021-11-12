@@ -2,5 +2,4 @@
 
 cd $HOME/.config
 
-git clone https://github.com/hlissner/doom-emacs
-
+git clone https://github.com/hlissner/doom-emacs emacs.doom
