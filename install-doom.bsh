@@ -3,3 +3,7 @@
 cd $HOME/.config
 
 git clone https://github.com/hlissner/doom-emacs emacs.doom
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+$DIR/switch-emacs doom
+emacs/bin/doom sync
