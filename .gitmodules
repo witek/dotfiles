@@ -1,3 +1,0 @@
-[submodule "clojure/.clojure"]
-	path = clojure/.clojure
-	url = git@github.com:witek/clojure-deps-edn.git
