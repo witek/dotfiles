@@ -1,3 +1,8 @@
+alias ls='ls --color=auto'
+alias grep='grep --colour=auto'
+alias egrep='egrep --colour=auto'
+alias fgrep='fgrep --colour=auto'
+
 alias l="ls -latr --color=auto"
 
 alias ...="cd ../.."
