@@ -1,0 +1,4 @@
+alias l="ls -latr"
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
