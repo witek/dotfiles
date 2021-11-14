@@ -108,9 +108,12 @@
 
 ;; test ->
 
-(setq doom-font (font-spec :family "Fira Code" :size 14)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
-      ivy-posframe-font (font-spec :family "Fira Code" :size 17))
+(setq doom-font (font-spec :family "Fira Code" :size 28)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30)
+      ivy-posframe-font (font-spec :family "Fira Code" :size 34))
+;; (setq doom-font (font-spec :family "Fira Code" :size 14)
+;;       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
+;;       ivy-posframe-font (font-spec :family "Fira Code" :size 17))
 
 (setq confirm-kill-emacs nil)
 
