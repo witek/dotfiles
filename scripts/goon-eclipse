@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+export UBUNTU_MENUPROXY=
+export SWT_GTK3=0 
+eclipse -data ~/eclipse/default
+
