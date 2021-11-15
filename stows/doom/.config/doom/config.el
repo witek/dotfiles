@@ -106,14 +106,19 @@
 ;; (setq doom-theme 'doom-gruvbox)
 ;; (setq doom-theme 'doom-dracula)
 
-;; test ->
+(print (> (x-display-pixel-height) 1600))
 
-(setq doom-font (font-spec :family "Fira Code" :size 28)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30)
-      ivy-posframe-font (font-spec :family "Fira Code" :size 34))
-;; (setq doom-font (font-spec :family "Fira Code" :size 14)
-;;       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
-;;       ivy-posframe-font (font-spec :family "Fira Code" :size 17))
+(cond
+
+ ((> (x-display-pixel-height) 1600)
+  (setq doom-font (font-spec :family "Fira Code" :size 28)
+        doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30)
+        ivy-posframe-font (font-spec :family "Fira Code" :size 34)))
+
+ (t
+  (setq doom-font (font-spec :family "Fira Code" :size 14)
+          doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
+          ivy-posframe-font (font-spec :family "Fira Code" :size 17))))
 
 (setq confirm-kill-emacs nil)
 
