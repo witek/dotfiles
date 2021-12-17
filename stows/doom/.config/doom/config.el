@@ -79,7 +79,9 @@
  uniquify-buffer-name-style 'forward    ; Uniquify buffer names
  ;; warning-minimum-level :error           ; Skip warning buffers
  window-combination-resize t            ; Resize windows proportionally
- x-stretch-cursor t)                    ; Stretch cursor to the glyph width
+ x-stretch-cursor t                    ; Stretch cursor to the glyph width
+
+ )
 
 ;; (blink-cursor-mode 0)                   ; Prefer a still cursor
 (delete-selection-mode 1)               ; Replace region when inserting text
@@ -201,38 +203,38 @@
 
 (print "[config.org] LSP")
 
-(map! :localleader
-      :mode lsp-mode
-      :n "=" #'lsp-format-buffer)
+(use-package! lsp-ui
+  :config
 
-(with-eval-after-load 'lsp-mode
-  (print "[config.org] with-eval-after-load lsp-mode")
-  (setq ;;
-        lsp-ui-imenu-enable t
-
-        lsp-ui-doc-enable t
-        lsp-ui-doc-show-with-cursor t
-        lsp-ui-doc-include-signature t
-        lsp-ui-doc-position 'bottom
-        lsp-ui-doc-delay 2
-
-        lsp-ui-sideline-enable nil
-        lsp-ui-sideline-show-code-actions nil
-
-        lsp-lens-enable t
-
-        lsp-enable-symbol-highlighting t
-        lsp-enable-on-type-formatting t
-        lsp-enable-indentation t
-        lsp-enable-snippet t
-
-        lsp-modeline-diagnostics-enable t
-        lsp-file-watch-threshold 10000
-        lsp-log-io nil
-        ;; lsp-enable-file-watchers nil
-        ;; +lsp-prompt-to-install-server 'quiet
-        )
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\firebase\\'")
+
+  (setq
+   lsp-ui-imenu-enable t
+
+   lsp-ui-doc-enable nil
+   lsp-ui-doc-show-with-cursor t
+   lsp-ui-doc-include-signature t
+   lsp-ui-doc-position 'bottom
+   ;; lsp-ui-doc-delay 3
+
+   lsp-ui-sideline-enable nil
+   lsp-ui-sideline-show-code-actions nil
+
+   lsp-lens-enable t
+
+   lsp-enable-symbol-highlighting t
+   lsp-enable-on-type-formatting t
+   lsp-enable-indentation t
+   lsp-enable-snippet t
+
+   lsp-modeline-diagnostics-enable t
+   lsp-file-watch-threshold 10000
+   lsp-log-io nil
+   )
+
+  (map! :localleader
+        :mode lsp-mode
+        :n "=" #'lsp-format-buffer)
   )
 
 (after! lisp-mode
