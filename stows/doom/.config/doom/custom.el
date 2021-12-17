@@ -4,7 +4,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(safe-local-variable-values
-   '((projectile-project-root . "/p/my-project/")
+   '((projectile-project-root . "/p/conco/")
+     (cider-default-cljs-repl . shadow)
+     (projectile-project-root . "/p/my-project/")
      (projectile-project-root . "/p/happygast")
      (projectile-project-root . "../")
      (projectile-project-root . "/p/happygast/"))))
