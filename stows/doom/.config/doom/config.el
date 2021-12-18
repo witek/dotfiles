@@ -159,9 +159,9 @@
   (consult-buffer))
 
 (setq projectile-project-root-files-functions '(projectile-root-local
-                                                 projectile-root-top-down
-                                                 projectile-root-top-down-recurring
-                                                 projectile-root-bottom-up))
+                                                projectile-root-top-down
+                                                projectile-root-top-down-recurring
+                                                projectile-root-bottom-up))
 ;; (setq projectile-project-root-files-functions '(projectile-root-local
 ;;                                                 projectile-root-top-down
 ;;                                                 projectile-root-top-down-recurring
@@ -248,31 +248,36 @@
 
 (print "[config.org] Clojure")
 
-(setq clojure-ident-style 'align-arguments)
-(setq clojure-align-forms-automatically 't)
+(use-package! clojure-mode
+  :config
+  (setq
+   clojure-ident-style 'align-arguments
+   clojure-align-forms-automatically 't
+   )
+  (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
+  )
 
-(after! clojure-mode
-  (modify-syntax-entry ?- "w" clojure-mode-syntax-table))
 
-(after! clojurescript-mode
-  (modify-syntax-entry ?- "w" clojure-mode-syntax-table))
-
-(after! clojurec-mode
-  (modify-syntax-entry ?- "w" clojure-mode-syntax-table))
+(use-package! cider
+  :config
+  (map! :localleader
+        :map (clojure-mode-map clojurescript-mode-map)
+        "ev" #'cider-eval-sexp-at-point
+        ))
 
 (map! :localleader
       :mode clojure-mode
       ;; "==" 'lsp-format-buffer
       ;; "(" 'sp-wrap-round
       ;; "#" 'cider-toggle-ignore-next-form
-      "ev" #'cider-eval-sexp-at-point)
+      )
 
 (map! :localleader
       :mode clojurescript-mode
       ",a" 'evil-cp-insert-at-end-of-form
       ",i" 'evil-cp-insert-at-beginning-of-form
-      "ev" #'cider-eval-sexp-at-point)
+      )
 
 (map! :localleader
       :mode clojurec-mode
-      "ev" #'cider-eval-sexp-at-point)
+      )
