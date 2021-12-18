@@ -69,7 +69,7 @@
  read-process-output-max (* 1024 1024)  ; Increase read size per process
  recenter-positions '(5 top bottom)     ; Set re-centering positions
  scroll-conservatively 101              ; Avoid recentering when scrolling far
- scroll-margin 12                       ; Add a margin when scrolling vertically
+ scroll-margin 35                       ; Add a margin when scrolling vertically
  select-enable-clipboard t              ; Merge system's and Emacs' clipboard
  scroll-preserve-screen-position 't
  sentence-end-double-space nil          ; Use a single space after dots
@@ -240,11 +240,12 @@
 (after! lisp-mode
   (modify-syntax-entry ?- "w" lisp-mode-syntax-table))
 
-
-;; (map! :localleader
-      ;; ",a"  #'evil-cp-insert-at-end-of-form
-      ;; ",i" 'evil-cp-insert-at-beginning-of-form
-      ;; "(" #'sp-wrap-round)
+(map! :localleader
+      :map (lisp-mode-map)
+      ",a"  #'evil-cp-insert-at-end-of-form
+      ",i" 'evil-cp-insert-at-beginning-of-form
+      "(" #'sp-wrap-round
+      )
 
 (print "[config.org] Clojure")
 
@@ -264,6 +265,7 @@
         "ev" #'cider-eval-sexp-at-point
         ",a" 'evil-cp-insert-at-end-of-form
         ",i" 'evil-cp-insert-at-beginning-of-form
+        "(" 'sp-wrap-round
+        "[" 'sp-wrap-square
         ;; "==" 'lsp-format-buffer
-        ;; "(" 'sp-wrap-round
         ))
