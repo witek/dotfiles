@@ -259,6 +259,18 @@ available. You can either set `doom-theme' or manually load a theme with the
 
 #+end_src
 
+*** Files
+
+#+begin_src elisp
+
+(map! :leader
+      (:prefix-map ("f" . "file")
+       :desc "Save some..." "S" #'save-some-buffers
+      ))
+
+#+end_src
+
+
 ** Windows
 
 I find it rather handy to be asked which buffer I want to see after

@@ -151,6 +151,11 @@
 (map! :map global-map
       :nv ";" #'evilnc-comment-or-uncomment-lines)
 
+(map! :leader
+      (:prefix-map ("f" . "file")
+       :desc "Save some..." "S" #'save-some-buffers
+      ))
+
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
 
