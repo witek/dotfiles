@@ -257,27 +257,13 @@
   (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
   )
 
-
 (use-package! cider
   :config
   (map! :localleader
         :map (clojure-mode-map clojurescript-mode-map)
         "ev" #'cider-eval-sexp-at-point
+        ",a" 'evil-cp-insert-at-end-of-form
+        ",i" 'evil-cp-insert-at-beginning-of-form
+        ;; "==" 'lsp-format-buffer
+        ;; "(" 'sp-wrap-round
         ))
-
-(map! :localleader
-      :mode clojure-mode
-      ;; "==" 'lsp-format-buffer
-      ;; "(" 'sp-wrap-round
-      ;; "#" 'cider-toggle-ignore-next-form
-      )
-
-(map! :localleader
-      :mode clojurescript-mode
-      ",a" 'evil-cp-insert-at-end-of-form
-      ",i" 'evil-cp-insert-at-beginning-of-form
-      )
-
-(map! :localleader
-      :mode clojurec-mode
-      )
