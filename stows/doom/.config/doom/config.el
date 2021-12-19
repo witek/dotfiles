@@ -80,7 +80,15 @@
  ;; warning-minimum-level :error           ; Skip warning buffers
  window-combination-resize t            ; Resize windows proportionally
  x-stretch-cursor t                    ; Stretch cursor to the glyph width
+ )
 
+(setq
+ undo-limit 80000000  ; Raise undo-limit to 80Mb
+ evil-want-fine-undo t ; By default while in insert all changes are one big blob. Be more granular
+      auto-save-default t ; Nobody likes to loose work, I certainly don't
+      truncate-string-ellipsis "…" ; Unicode ellispis are nicer than "...", and also save /precious/ space
+      password-cache-expiry nil ; I can trust my computers ... can't I?
+      ;; scroll-preserve-screen-position 'always     ; Don't have `point' jump around
  )
 
 ;; (blink-cursor-mode 0)                   ; Prefer a still cursor
@@ -113,16 +121,47 @@
 (cond
 
  ((> (x-display-pixel-height) 1600)
-  (setq doom-font (font-spec :family "Fira Code" :size 28)
-        doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30)
-        ivy-posframe-font (font-spec :family "Fira Code" :size 34)))
+  (setq
+   doom-font (font-spec :family "Fira Code" :size 28 :weight 'light)
+   doom-big-font (font-spec :family "JetBrains Mono" :size 36)
+   doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30)
+   doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light)
+   ))
 
  (t
-  (setq doom-font (font-spec :family "Fira Code" :size 14)
-          doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
-          ivy-posframe-font (font-spec :family "Fira Code" :size 17))))
+  (setq
+   doom-font (font-spec :family "Fira Code" :size 14 :weight 'light)
+   doom-big-font (font-spec :family "JetBrains Mono" :size 18)
+   doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
+   doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light)
+   )))
 
 (setq confirm-kill-emacs nil)
+
+;; (setq default-frame-alist
+;;       (append (list
+;; 	           '(min-height . 1)
+;;                '(height     . 45)
+;; 	           '(min-width  . 1)
+;;                '(width      . 81)
+;;                '(vertical-scroll-bars . nil)
+;;                '(internal-border-width . 24)
+;;                '(left-fringe    . 1)
+;;                '(right-fringe   . 1)
+;;                '(tool-bar-lines . 0)
+;;                '(menu-bar-lines . 0))))
+
+
+;; Vertical window divider
+;; (setq window-divider-default-right-width 24)
+;; (setq window-divider-default-places 'right-only)
+;; (window-divider-mode 1)
+
+(use-package! smartparens
+  :config
+  (setq sp-autoskip-closing-pair nil) ; does not work :-(
+  )
+
 
 (add-hook 'smartparens-enabled-hook #'smartparens-strict-mode)
 (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
