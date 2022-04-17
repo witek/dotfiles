@@ -21,6 +21,7 @@
 
        :completion
        (company +childframe) ; the ultimate code completion backend
+       (company-box +childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
@@ -35,8 +36,9 @@
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
-       ;; (ligatures +fira)   ; ligatures and symbols to make your code pretty again
-       (ligatures +extra)   ; ligatures and symbols to make your code pretty again
+       (ligatures +fira)   ; ligatures and symbols to make your code pretty again
+       ;; (ligatures +extra)   ; ligatures and symbols to make your code pretty again
+       ;; (ligatures +extra +fira)   ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
@@ -114,6 +116,7 @@
        ;;agda              ; types of types of types of types...
        ;;beancount         ; mind the GAAP
        ;;cc                ; C > C++ == 1
+       ;; clojure           ; java with a lisp
        (clojure +lsp)           ; java with a lisp
        common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs

@@ -84,11 +84,11 @@
 
 (setq
  undo-limit 80000000  ; Raise undo-limit to 80Mb
- evil-want-fine-undo t ; By default while in insert all changes are one big blob. Be more granular
-      auto-save-default t ; Nobody likes to loose work, I certainly don't
-      truncate-string-ellipsis "…" ; Unicode ellispis are nicer than "...", and also save /precious/ space
-      password-cache-expiry nil ; I can trust my computers ... can't I?
-      ;; scroll-preserve-screen-position 'always     ; Don't have `point' jump around
+ ;; evil-want-fine-undo t ; By default while in insert all changes are one big blob. Be more granular
+ auto-save-default t ; Nobody likes to loose work, I certainly don't
+ truncate-string-ellipsis "…" ; Unicode ellispis are nicer than "...", and also save /precious/ space
+ password-cache-expiry nil ; I can trust my computers ... can't I?
+ ;; scroll-preserve-screen-position 'always     ; Don't have `point' jump around
  )
 
 ;; (blink-cursor-mode 0)                   ; Prefer a still cursor
@@ -111,6 +111,8 @@
 (setq display-line-numbers-type nil)
 
 (setq doom-theme 'doom-one)
+;; (setq doom-theme 'modus-operandi)
+;; (setq doom-theme 'modus-vivendi)
 ;; (setq doom-theme 'doom-one-light)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'doom-gruvbox)
@@ -118,10 +120,13 @@
 
 (print (> (x-display-pixel-height) 1600))
 
+;; TEST:// (-> what?)
+
 (cond
 
  ((> (x-display-pixel-height) 1600)
   (setq
+
    doom-font (font-spec :family "Fira Code" :size 28 :weight 'light)
    doom-big-font (font-spec :family "JetBrains Mono" :size 36)
    doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30)
@@ -157,6 +162,8 @@
 ;; (setq window-divider-default-places 'right-only)
 ;; (window-divider-mode 1)
 
+(setq which-key-idle-delay 0.5)
+
 (use-package! smartparens
   :config
   (setq sp-autoskip-closing-pair nil) ; does not work :-(
@@ -185,6 +192,7 @@
       :n "C-l" #'evil-next-buffer
       :n "C-j" #'evil-jump-forward
       :n "C-k" #'evil-jump-backward
+      :n "ö" #'evil-avy-goto-char-timer
       )
 
 (map! :map global-map
@@ -201,6 +209,9 @@
 (defadvice! prompt-for-buffer (&rest _)
   :after '(evil-window-split evil-window-vsplit)
   (consult-buffer))
+
+(use-package! evil-easymotion
+  )
 
 (setq projectile-project-root-files-functions '(projectile-root-local
                                                 projectile-root-top-down
@@ -301,6 +312,9 @@
    )
   (modify-syntax-entry ?- "w" clojure-mode-syntax-table)
   )
+
+;; (after! clojure-mode ; in this case the major mode and package named the same thing
+;;   (set-ligatures! 'clojure-mode))
 
 (use-package! cider
   :config
