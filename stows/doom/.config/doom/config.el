@@ -318,6 +318,8 @@
 
 (use-package! cider
   :config
+  (setq
+   cider-font-lock-reader-conditionals nil)
   (map! :localleader
         :map (clojure-mode-map clojurescript-mode-map)
         "ev" #'cider-eval-sexp-at-point
