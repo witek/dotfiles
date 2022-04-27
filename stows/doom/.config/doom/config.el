@@ -210,6 +210,9 @@
   :after '(evil-window-split evil-window-vsplit)
   (consult-buffer))
 
+(setq evil-move-cursor-back nil)
+(setq +evil-want-o/O-to-continue-comments nil)
+
 (use-package! evil-easymotion
   )
 
@@ -217,10 +220,8 @@
                                                 projectile-root-top-down
                                                 projectile-root-top-down-recurring
                                                 projectile-root-bottom-up))
-;; (setq projectile-project-root-files-functions '(projectile-root-local
-;;                                                 projectile-root-top-down
-;;                                                 projectile-root-top-down-recurring
-;;                                                 projectile-root-bottom-up))
+
+(setq projectile-sort-order 'recently-active)
 
 (print "[config.org] Git")
 
@@ -318,8 +319,8 @@
 
 (use-package! cider
   :config
-  (setq
-   cider-font-lock-reader-conditionals nil)
+  (setq cider-font-lock-reader-conditionals nil)
+  (setq cider-auto-inspect-after-eval t)
   (map! :localleader
         :map (clojure-mode-map clojurescript-mode-map)
         "ev" #'cider-eval-sexp-at-point
