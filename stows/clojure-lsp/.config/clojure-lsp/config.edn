@@ -1,0 +1,3 @@
+{
+ :hover {:arity-on-same-line? true} 
+ }
