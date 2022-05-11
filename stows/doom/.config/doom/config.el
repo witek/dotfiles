@@ -216,10 +216,11 @@
 (use-package! evil-easymotion
   )
 
-(setq projectile-project-root-files-functions '(projectile-root-local
-                                                projectile-root-top-down
-                                                projectile-root-top-down-recurring
-                                                projectile-root-bottom-up))
+;; (setq projectile-git-submodule-command "git submodule --quiet foreach 'echo $displaypath' | tr '\\n' '\\0'")
+;; (setq projectile-git-command "git ls-files --recurse-submodules")
+
+;; (setq projectile-project-root-functions '(projectile-root-local))
+;; (setq projectile-project-root-functions '(projectile-root-top-down))
 
 (setq projectile-sort-order 'recently-active)
 
@@ -321,6 +322,7 @@
   :config
   (setq cider-font-lock-reader-conditionals nil)
   (setq cider-auto-inspect-after-eval t)
+  (setq cider-save-file-on-load t)
   (map! :localleader
         :map (clojure-mode-map clojurescript-mode-map)
         "ev" #'cider-eval-sexp-at-point
