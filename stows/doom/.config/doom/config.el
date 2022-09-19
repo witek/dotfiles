@@ -210,6 +210,16 @@
   :after '(evil-window-split evil-window-vsplit)
   (consult-buffer))
 
+(use-package! embark
+  :defer t
+  :init
+  (map! [remap describe-bindings] #'embark-bindings
+        "C-,"               #'embark-act  ; to be moved to :config default if accepted
+        (:map minibuffer-local-map
+         "C-,"               #'embark-act
+         "C-e"               #'embark-export
+         :desc "Export to writable buffer" "C-E" #'+vertico/embark-export-write)))
+
 (setq evil-move-cursor-back nil)
 (setq +evil-want-o/O-to-continue-comments nil)
 
@@ -291,8 +301,11 @@
 
   (map! :localleader
         :mode lsp-mode
+        :n "a" #'lsp-execute-code-action
         :n "=" #'lsp-format-buffer)
   )
+
+(defun lsp-find-session-folder (session file-name) "/p/all-clj")
 
 (after! lisp-mode
   (modify-syntax-entry ?- "w" lisp-mode-syntax-table))

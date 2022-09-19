@@ -335,7 +335,6 @@ From https://github.com/rougier/nano-emacs/blob/master/nano-layout.el
 
 #+end_src
 
-
 ** Windows
 
 I find it rather handy to be asked which buffer I want to see after
@@ -349,6 +348,22 @@ splitting the window.
 (defadvice! prompt-for-buffer (&rest _)
   :after '(evil-window-split evil-window-vsplit)
   (consult-buffer))
+
+#+end_src
+
+** Vertico / Embark
+
+#+begin_src elisp
+
+(use-package! embark
+  :defer t
+  :init
+  (map! [remap describe-bindings] #'embark-bindings
+        "C-,"               #'embark-act  ; to be moved to :config default if accepted
+        (:map minibuffer-local-map
+         "C-,"               #'embark-act
+         "C-e"               #'embark-export
+         :desc "Export to writable buffer" "C-E" #'+vertico/embark-export-write)))
 
 #+end_src
 
@@ -467,8 +482,11 @@ splitting the window.
 
   (map! :localleader
         :mode lsp-mode
+        :n "a" #'lsp-execute-code-action
         :n "=" #'lsp-format-buffer)
   )
+
+(defun lsp-find-session-folder (session file-name) "/p/all-clj")
 
 #+END_SRC
 
