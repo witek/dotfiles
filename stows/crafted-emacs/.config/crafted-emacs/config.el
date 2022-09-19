@@ -119,11 +119,12 @@
   "w h" 'evil-window-left
   "w l" 'evil-window-right
 
-  "h k" 'describe-key
-  "h v" 'describe-variable
-  "h f" 'describe-function
-  "h m" 'describe-mode
-  "h K" 'describe-keymap
+  "d k" 'describe-key
+  "d c" 'describe-command
+  "d v" 'describe-variable
+  "d f" 'describe-function
+  "d m" 'describe-mode
+  "d K" 'describe-keymap
 
   "t s" 'smartparens-mode
   "t S" 'smartparens-strict-mode
@@ -136,9 +137,11 @@
   :states (list 'normal 'visual)
   :prefix ",")
 
-;;(general-define-key
-;; :prefix ","
-;; "f" 'find-file)
+(my-local-leader-def
+  :keymaps (list 'with-editor-mode-map)
+  "," 'sp-wrap-round
+  "q" 'with-editor-cancel
+  )
 
 ;; *** Restart Emacs
 
@@ -167,6 +170,8 @@
 
 (my-leader-def
   "g s" 'magit-status)
+
+
 
 ;; ** Editing
 
