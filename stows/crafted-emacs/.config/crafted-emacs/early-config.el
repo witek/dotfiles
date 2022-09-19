@@ -1,0 +1,2 @@
+;; Theme
+;; (load-theme 'wombat)
