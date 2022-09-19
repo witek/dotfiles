@@ -1,7 +1,0 @@
-#!/bin/sh -e
-
-MOUNTPOINT=/mnt/goon-dateiablage
-SSH_PATH=goon@192.168.14.10:/
-
-sshfs -o uid=1000 -o gid=1000 $SSH_PATH $MOUNTPOINT
-
