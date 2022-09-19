@@ -139,7 +139,7 @@
 
 (my-local-leader-def
   :keymaps (list 'with-editor-mode-map)
-  "," 'sp-wrap-round
+  "," 'with-editor-finish
   "q" 'with-editor-cancel
   )
 
