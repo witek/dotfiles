@@ -1,2 +1,2 @@
 ;; Theme
-;; (load-theme 'wombat)
+(load-theme 'modus-vivendi)

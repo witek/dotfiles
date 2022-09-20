@@ -7,10 +7,6 @@
 
 (require 'crafted-defaults)    ; Sensible default settings for Emacs
 ;(require 'crafted-compile)     ; Set up automatic compilation for some emacs-lisp files
-(require 'crafted-ui)          ; Better UI experience (modeline etc.)
-(require 'crafted-completion)  ; selection framework based on `vertico`
-(require 'crafted-speedbar)    ; built-in file-tree
-(require 'crafted-windows)     ; Window management configuration
 
 ;; Prevent loading custom.el
 (setq crafted-load-custom-file nil)
@@ -23,6 +19,12 @@
 
 ;; Save Cursor Positions
 (save-place-mode 1)
+
+;; Don’t warn for following symlinked files
+(setq vc-follow-symlinks t)
+
+;; Don’t warn when advice is added for functions
+(setq ad-redefinition-action 'accept)
 
 ;; *** Auto Save
 
@@ -49,13 +51,16 @@
 
 ;; ** UI
 
-;; *** Basic Usage
+(require 'crafted-ui)          ; Better UI experience (modeline etc.)
+(require 'crafted-windows)     ; Window management configuration
+(require 'crafted-completion)  ; selection framework based on `vertico`
+(require 'crafted-speedbar)    ; built-in file-tree
 
-;; Don’t warn for following symlinked files
-(setq vc-follow-symlinks t)
+;; *** consult
 
-;; Don’t warn when advice is added for functions
-(setq ad-redefinition-action 'accept)
+;; Use Consult to select xref locations with preview
+(setq xref-show-xrefs-function #'consult-xref
+      xref-show-definitions-function #'consult-xref)
 
 ;; *** which-key
 (crafted-package-install-package 'which-key)
@@ -72,7 +77,7 @@
       doom-themes-enable-italic t
       doom-themes-padded-modeline t
       )
-(load-theme 'doom-spacegrey t)
+(load-theme 'spacegray t)
 (doom-themes-visual-bell-config)
 (doom-themes-neotree-config)
 (setq doom-themes-treemacs-theme "doom-atom")
@@ -93,7 +98,7 @@
 
  ((> (x-display-pixel-height) 1600)
   (customize-set-variable 'crafted-ui-default-font
-                          '(:font "Fira Code" :height 220)))
+                          '(:font "Fira Code" :height 110)))
 
  (:else
   (customize-set-variable 'crafted-ui-default-font
@@ -216,13 +221,13 @@
 
 ;; *** Margins
 
-(customize-set-variable 'fill-column 80)
+;; (customize-set-variable 'fill-column 80)
 
-(crafted-package-install-package 'visual-fill-column)
-(require 'visual-fill-column)
-(custom-set-variables
- '(global-visual-fill-column-mode t)
- '(visual-fill-column-width 80))
+;; (crafted-package-install-package 'visual-fill-column)
+;; (require 'visual-fill-column)
+;; (custom-set-variables
+;;  '(global-visual-fill-column-mode t)
+;;  '(visual-fill-column-width 80))
 
 ;; *** Commenting / Uncommenting
 
@@ -275,6 +280,10 @@
 (require 'crafted-ide)
 (require 'eglot)
 
+;; ** lsp-mode - IDE
+
+;; (crafted-package-install-package 'lsp-mode)
+
 ;; ** Lisp
 
 (require 'crafted-lisp)
@@ -316,16 +325,17 @@
 
 ;; *** eglot
 
-(add-to-list 'eglot-server-programs `((clojure-mode clojurescript-mode clojurec-mode) . ("clojure-lsp")))
-;; (add-to-list 'eglot-server-programs `(clojure-mode . ("clojure-lsp")))
-;; (add-to-list 'eglot-server-programs `(clojurescript-mode . ("clojure-lsp")))
-;; (add-to-list 'eglot-server-programs `(clojurec-mode . ("clojure-lsp")))
+(add-to-list 'eglot-server-programs `(clojurescript-mode . ("clojure-lsp")))
+
+;; ;; (add-to-list 'eglot-server-programs `(clojure-mode . ("clojure-lsp")))
+;; ;; (add-to-list 'eglot-server-programs `(clojurescript-mode . ("clojure-lsp")))
+;; ;; (add-to-list 'eglot-server-programs `(clojurec-mode . ("clojure-lsp")))
 
 (add-hook 'clojure-mode-hook #'eglot-ensure)
 
-;; *** /p/clj/ as eglot root
+;; ;; *** /p/clj/ as eglot root
 
-;; **** TODO use defadvice
+;; ;; **** TODO use defadvice
 (defun eglot--current-project ()
   "Witek's custom impl. Always /p/clj/"
   (message "eglot--current-project: witek's hack returns /p/clj/")
@@ -345,6 +355,21 @@
 (add-hook 'emacs-lisp-mode-hook 'outshine-mode)
 
 ;; ** Witek's extensions
+
+;; *** witek-make-frame-with-messages
+
+(defun witek-make-frame-with-messages ()
+  "Make a new frame with *Messages* buffer."
+  (interactive)
+  ;; (view-buffer-other-frame "*Messages*")
+  (make-frame)
+  (view-buffer "*Messages*")
+  ;; (let ((current-frame (selected-frame)))
+  ;;   (select-frame current-frame))
+  )
+
+(my-leader-def
+  "e m" 'witek-make-frame-with-messages)
 
 ;; *** witek-delete-file
 
