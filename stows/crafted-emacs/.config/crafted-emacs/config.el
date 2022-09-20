@@ -3,7 +3,7 @@
 
 ;; https://github.com/daviwil/dotfiles/blob/master/Emacs.org
 
-;; ** Basics
+;; ** Defaults
 
 (require 'crafted-defaults)    ; Sensible default settings for Emacs
 ;(require 'crafted-compile)     ; Set up automatic compilation for some emacs-lisp files
@@ -11,17 +11,26 @@
 (require 'crafted-completion)  ; selection framework based on `vertico`
 (require 'crafted-speedbar)    ; built-in file-tree
 (require 'crafted-windows)     ; Window management configuration
-;(require `crafted-ide)
-;(require `crafted-org)
 
 ;; Prevent loading custom.el
 (setq crafted-load-custom-file nil)
 
-;; Start Emacs server (for emacsclient)
+;; *** TODO Start Emacs server (for emacsclient)
 ;;(server-start)
 
 ;; ESC Cancels All
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+;; Save Cursor Positions
+(save-place-mode 1)
+
+;; *** Auto Save
+
+(let ((witek-auto-save-directory (concat crafted-config-var-directory "witek-auto-save/")))
+  (setq backup-directory-alist
+        `((".*" . ,witek-auto-save-directory)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,witek-auto-save-directory t))))
 
 
 ;; *** Let's be Evil
@@ -29,7 +38,10 @@
 (require 'crafted-evil)
 
 ;; Use C-h as usual
-(customize-set-variable 'evil-want-C-h-delete nil)
+(customize-set-variable 'evil-want-C-u-delete nil)
+(customize-set-variable 'evil-want-C-u-scroll t)
+(customize-set-variable 'evil-want-C-i-jump t)
+(customize-set-variable 'evil-want-C-d-scroll t)
 
 ;; ** UI
 
@@ -54,7 +66,7 @@
 
 (setq doom-themes-enable-bold t
       doom-themes-enable-italic t
-      doom-themes-padded-modeline nil
+      doom-themes-padded-modeline t
       )
 (load-theme 'doom-gruvbox t)
 (doom-themes-visual-bell-config)
@@ -85,7 +97,7 @@
   ))
 
 
-;; *** general - Keybindings
+;; *** general - Leader Keybindings
 ;; general.el for prefixed key bindings
 ;; https://github.com/noctuid/general.el
 (crafted-package-install-package 'general)
@@ -100,6 +112,11 @@
 
 (my-leader-def
   "SPC" 'execute-extended-command
+
+  "e q" 'save-buffers-kill-terminal
+  "e Q" 'save-buffers-kill-emacs
+  "e e" 'eval-expression
+  "e f" 'make-frame
 
   "q q" 'save-buffers-kill-terminal
   "q Q" 'save-buffers-kill-emacs
@@ -204,10 +221,6 @@
  :states 'visual
  ";" 'evilnc-comment-or-uncomment-lines)
 
-;; ** Lisp
-
-(require 'crafted-lisp)
-
 ;; *** smartparens - Structural Editing
 ;; [[https://github.com/Fuco1/smartparens]]
 ;; [[https://github.com/expez/evil-smartparens]]
@@ -236,6 +249,16 @@
   "=" 'indent-sexp
   )
 
+;; ** eglot - IDE
+
+(require 'crafted-ide)
+(require 'eglot)
+
+;; ** Lisp
+
+(require 'crafted-lisp)
+
+
 ;; ** Emacs Lisp
 
 (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
@@ -247,9 +270,27 @@
 
 ;; ** Clojure
 
+;; *** smartparens
+
 (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
 (add-hook 'clojure-mode-hook #'evil-smartparens-mode)
 
+;; *** eglot
+
+(add-to-list 'eglot-server-programs `((clojure-mode clojurescript-mode clojurec-mode) . ("clojure-lsp")))
+;; (add-to-list 'eglot-server-programs `(clojure-mode . ("clojure-lsp")))
+;; (add-to-list 'eglot-server-programs `(clojurescript-mode . ("clojure-lsp")))
+;; (add-to-list 'eglot-server-programs `(clojurec-mode . ("clojure-lsp")))
+
+(add-hook 'clojure-mode-hook #'eglot-ensure)
+
+;; *** /p/clj/ as eglot root
+
+(defun eglot--current-project ()
+  "Witek's custom impl. Always /p/clj/"
+  (message "eglot--current-project: witek's hack returns /p/clj/")
+  (project-current nil "/p/clj/")
+  )
 
 ;; ** Org
 
@@ -260,3 +301,22 @@
 ;; [[https://orgmode.org/guide/Hyperlinks.html]]
 (crafted-package-install-package 'outshine)
 (add-hook 'emacs-lisp-mode-hook 'outshine-mode)
+
+;; ** Witek's extensions
+
+;; *** witek-delete-file
+
+(defun witek-delete-current-file ()
+  "Delete the current buffer and file."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (when filename
+      (if (vc-backend filename)
+          (vc-delete-file filename)
+        (progn
+          (delete-file filename)
+          (message "Deleted file %s" filename)
+          (kill-buffer))))))
+
+(my-leader-def
+  "f d" 'witek-delete-current-file)
