@@ -42,6 +42,10 @@
 (customize-set-variable 'evil-want-C-u-scroll t)
 (customize-set-variable 'evil-want-C-i-jump t)
 (customize-set-variable 'evil-want-C-d-scroll t)
+(customize-set-variable 'evil-want-Y-yank-to-eol nil) ; does not work
+(customize-set-variable 'evil-regexp-search nil) ; does not work
+(customize-set-variable 'evil-cross-lines t)
+;; alskdjf löaskdjf ölaksjd flökasjdflöksj dflkjsd alskjdf laskdjf aösldk aslködjf aslkdjf alskdjf
 
 ;; ** UI
 
@@ -68,7 +72,7 @@
       doom-themes-enable-italic t
       doom-themes-padded-modeline t
       )
-(load-theme 'doom-gruvbox t)
+(load-theme 'doom-spacegrey t)
 (doom-themes-visual-bell-config)
 (doom-themes-neotree-config)
 (setq doom-themes-treemacs-theme "doom-atom")
@@ -112,6 +116,7 @@
 
 (my-leader-def
   "SPC" 'execute-extended-command
+  "/" 'consult-git-grep
 
   "e q" 'save-buffers-kill-terminal
   "e Q" 'save-buffers-kill-emacs
@@ -148,6 +153,12 @@
 
   )
 
+(general-define-key
+ :keymaps 'vertico-map
+ :prefix "C-,"
+ "e" 'embark-export
+ "a" 'embark-act)
+
 ;; **** Local Leader
 
 (general-create-definer my-local-leader-def
@@ -165,7 +176,8 @@
 (crafted-package-install-package 'restart-emacs)
 (require 'restart-emacs)
 (my-leader-def
-  "q r" 'restart-emacs)
+  "q r" 'restart-emacs
+  "e r" 'restart-emacs)
 
 
 ;; ** project
@@ -179,7 +191,8 @@
 
 (my-leader-def
   "p p" 'project-switch-project
-  "p f" 'project-find-file)
+  "p f" 'project-find-file
+  "p /" 'consult-git-grep)
 
 ;; ** magit - git Version Control
 
@@ -233,6 +246,12 @@
 
 (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
 
+;; *** cleverparens
+
+(crafted-package-install-package 'evil-cleverparens)
+
+(add-hook 'smartparens-enabled-hook #'evil-cleverparens-mode)
+
 ;; *** symex - Structural Editing
 ;; [[https://github.com/countvajhula/symex.el]]
 
@@ -247,6 +266,8 @@
   "[" 'sp-wrap-square
   "{" 'sp-wrap-curly
   "=" 'indent-sexp
+  ", i" 'evil-cp-insert-at-beginning-of-form
+  ", a" 'evil-cp-insert-at-end-of-form
   )
 
 ;; ** eglot - IDE
@@ -275,6 +296,24 @@
 (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
 (add-hook 'clojure-mode-hook #'evil-smartparens-mode)
 
+;; *** defaults
+
+(setq
+   clojure-ident-style 'align-arguments
+   clojure-align-forms-automatically 't
+   )
+
+(setq cider-font-lock-reader-conditionals nil)
+(setq cider-auto-inspect-after-eval t)
+(setq cider-save-file-on-load t)
+
+;; *** Keybindings
+
+(my-local-leader-def
+  :keymaps 'clojure-mode-map
+  "e v" #'cider-eval-sexp-at-point
+  )
+
 ;; *** eglot
 
 (add-to-list 'eglot-server-programs `((clojure-mode clojurescript-mode clojurec-mode) . ("clojure-lsp")))
@@ -286,6 +325,7 @@
 
 ;; *** /p/clj/ as eglot root
 
+;; **** TODO use defadvice
 (defun eglot--current-project ()
   "Witek's custom impl. Always /p/clj/"
   (message "eglot--current-project: witek's hack returns /p/clj/")
@@ -295,6 +335,8 @@
 ;; ** Org
 
 (require 'crafted-org)         ; org-appear, clickable hyperlinks etc.
+
+(setq org-directory "~/org/")
 
 ;; *** outshine - Org features in code files
 ;; [[https://github.com/alphapapa/outshine]]
