@@ -214,6 +214,8 @@
 
 (crafted-package-install-package 'evil-smartparens)
 
+(require 'smartparens-config)
+
 ;; (smartparens-global-strict-mode)
 
 (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
