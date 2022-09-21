@@ -5,6 +5,8 @@
 
 ;; ** Defaults
 
+(straight-use-package 'use-package)
+
 (require 'crafted-defaults)    ; Sensible default settings for Emacs
 ;(require 'crafted-compile)     ; Set up automatic compilation for some emacs-lisp files
 
@@ -91,6 +93,10 @@
 (require 'crafted-completion)  ; selection framework based on `vertico`
 (require 'crafted-speedbar)    ; built-in file-tree
 
+;; (setq-default left-fringe-width  16)
+;; (setq-default right-fringe-width  16)
+(set-frame-parameter nil 'internal-border-width 8)
+
 ;; *** windows
 
 (setq evil-vsplit-window-right t
@@ -107,36 +113,35 @@
       xref-show-definitions-function #'consult-xref)
 
 ;; *** which-key
-(crafted-package-install-package 'which-key)
-(require 'which-key)
-(which-key-mode)
-(setq which-key-idle-delay 0.5)
+(use-package which-key
+  :straight t
+  :config
+  (which-key-mode)
+  (setq which-key-idle-delay 0.5))
 
 ;; *** Theme
 ;; also loaded in early-config.el
-(crafted-package-install-package 'spacegray-theme)
-(crafted-package-install-package 'doom-themes)
-
-(setq doom-themes-enable-bold t
-      doom-themes-enable-italic t
-      doom-themes-padded-modeline t
-      )
-(load-theme 'spacegray t)
-(doom-themes-visual-bell-config)
-(doom-themes-neotree-config)
-(setq doom-themes-treemacs-theme "doom-atom")
-(doom-themes-treemacs-config)
-(doom-themes-org-config)
+(use-package spacegray-theme
+  :straight t)
+(use-package doom-themes
+  :straight t
+  :config
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t
+        doom-themes-padded-modeline t)
+  (load-theme 'spacegray t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-neotree-config)
+  (setq doom-themes-treemacs-theme "doom-atom")
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config))
 
 ;; *** Font
 
-(crafted-package-install-package 'fira-code-mode)
-;; (require 'fira-code-mode)
-(global-fira-code-mode)
-;; (fira-code-mode)
-;; (add-hook 'prog-mode-hook 'fira-code-mode )
-;; ->
-
+(use-package fira-code-mode
+  :straight t
+  :config
+  (global-fira-code-mode))
 
 (cond
 
@@ -153,9 +158,10 @@
 ;; *** general - Leader Keybindings
 ;; general.el for prefixed key bindings
 ;; https://github.com/noctuid/general.el
-(crafted-package-install-package 'general)
-(require 'general)
-(general-evil-setup)
+(use-package general
+  :straight t
+  :config
+  (general-evil-setup))
 
 ;; **** Leader
 
@@ -222,11 +228,12 @@
 
 ;; *** Restart Emacs
 
-(crafted-package-install-package 'restart-emacs)
-(require 'restart-emacs)
-(my-leader-def
-  "q r" 'restart-emacs
-  "e r" 'restart-emacs)
+(use-package restart-emacs
+  :straight t
+  :config
+  (my-leader-def
+    "q r" 'restart-emacs
+    "e r" 'restart-emacs))
 
 
 ;; ** project
@@ -245,12 +252,11 @@
 
 ;; ** magit - git Version Control
 
-(crafted-package-install-package 'magit)
-
-(my-leader-def
-  "g s" 'magit-status)
-
-
+(use-package magit
+  :straight t
+  :config
+  (my-leader-def
+    "g s" 'magit-status))
 
 ;; ** Editing
 
@@ -263,9 +269,13 @@
 ;; Use spaces instead of tabs for indentation
 (setq-default indent-tabs-mode nil)
 
-;; *** Margins
-
 (customize-set-variable 'fill-column 80)
+
+(use-package clean-kill-ring
+  :straight (clean-kill-ring :type git :host github :repo "NicholasBHubbard/clean-kill-ring.el")
+  :config
+  (clean-kill-ring-mode 1))
+
 
 ;; (crafted-package-install-package 'visual-fill-column)
 ;; (require 'visual-fill-column)
@@ -283,7 +293,8 @@
 ;; [[https://github.com/Fuco1/smartparens]]
 ;; [[https://github.com/expez/evil-smartparens]]
 
-(crafted-package-install-package 'evil-smartparens)
+(use-package evil-smartparens
+  :straight t)
 
 (require 'smartparens-config)
 
@@ -293,17 +304,16 @@
 
 ;; *** cleverparens
 
-(crafted-package-install-package 'evil-cleverparens)
-
-(add-hook 'smartparens-enabled-hook #'evil-cleverparens-mode)
-
-
-
-(general-define-key
- :keymaps 'evil-cleverparens-mode-map
- :states 'normal
- "M-l" 'evil-cp->
- "M-h" 'evil-cp-<)
+(use-package evil-cleverparens
+  :straight t
+  :init
+  (add-hook 'smartparens-enabled-hook #'evil-cleverparens-mode)
+  :config
+  (general-define-key
+   :keymaps 'evil-cleverparens-mode-map
+   :states 'normal
+   "M-l" 'evil-cp->
+   "M-h" 'evil-cp-<))
 
 ;; (general-define-key
 ;;  :states '(normal visual)
@@ -405,7 +415,8 @@
 ;; *** outshine - Org features in code files
 ;; [[https://github.com/alphapapa/outshine]]
 ;; [[https://orgmode.org/guide/Hyperlinks.html]]
-(crafted-package-install-package 'outshine)
+(use-package outshine
+  :straight t)
 
 (defun witek-activate-outshine ()
   (outshine-mode 1)
