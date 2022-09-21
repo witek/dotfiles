@@ -17,14 +17,49 @@
 ;; ESC Cancels All
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;; Save Cursor Positions
 (save-place-mode 1)
 
-;; Don’t warn for following symlinked files
 (setq vc-follow-symlinks t)
 
-;; Don’t warn when advice is added for functions
 (setq ad-redefinition-action 'accept)
+
+(setq cursor-in-non-selected-windows nil)
+
+(setq x-stretch-cursor t)
+
+(setq undo-limit 80000000)
+
+(setq auto-save-default t)
+
+(setq truncate-string-ellipsis "…")
+
+(setq delete-by-moving-to-trash t)
+
+(setq help-window-select t)
+
+(setq initial-scratch-message "")
+
+(setq read-process-output-max (* 1024 1024))
+
+(setq recenter-positions '(5 top bottom))
+
+(setq scroll-conservatively 101)
+
+(setq scroll-margin 35)
+
+(setq scroll-preserve-screen-position t)
+
+(setq sentence-end-double-space nil)
+
+(setq uniquify-buffer-name-style 'complete)
+
+(setq window-combination-resize t)
+
+(global-display-fill-column-indicator-mode t)
+
+(setq-default enable-local-variables t)
+
+(setq confirm-kill-emacs nil)
 
 ;; *** Auto Save
 
@@ -56,6 +91,15 @@
 (require 'crafted-completion)  ; selection framework based on `vertico`
 (require 'crafted-speedbar)    ; built-in file-tree
 
+;; *** windows
+
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+
+;; (defadvice! prompt-for-buffer (&rest _)
+;;   :after '(evil-window-split evil-window-vsplit)
+;;   (consult-buffer))
+
 ;; *** consult
 
 ;; Use Consult to select xref locations with preview
@@ -66,7 +110,7 @@
 (crafted-package-install-package 'which-key)
 (require 'which-key)
 (which-key-mode)
-
+(setq which-key-idle-delay 0.5)
 
 ;; *** Theme
 ;; also loaded in early-config.el
@@ -221,7 +265,7 @@
 
 ;; *** Margins
 
-;; (customize-set-variable 'fill-column 80)
+(customize-set-variable 'fill-column 80)
 
 ;; (crafted-package-install-package 'visual-fill-column)
 ;; (require 'visual-fill-column)
@@ -232,11 +276,7 @@
 ;; *** Commenting / Uncommenting
 
 (general-define-key
- :states 'motion
- ";" 'evilnc-comment-or-uncomment-lines)
-
-(general-define-key
- :states 'visual
+ :states '(normal visual)
  ";" 'evilnc-comment-or-uncomment-lines)
 
 ;; *** smartparens - Structural Editing
@@ -256,6 +296,20 @@
 (crafted-package-install-package 'evil-cleverparens)
 
 (add-hook 'smartparens-enabled-hook #'evil-cleverparens-mode)
+
+
+
+(general-define-key
+ :keymaps 'evil-cleverparens-mode-map
+ :states 'normal
+ "M-l" 'evil-cp->
+ "M-h" 'evil-cp-<)
+
+;; (general-define-key
+;;  :states '(normal visual)
+;;  "c-l" 'evil-cp->
+;;  "c-h" 'evil-cp-<
+;;  )
 
 ;; *** symex - Structural Editing
 ;; [[https://github.com/countvajhula/symex.el]]
@@ -352,7 +406,17 @@
 ;; [[https://github.com/alphapapa/outshine]]
 ;; [[https://orgmode.org/guide/Hyperlinks.html]]
 (crafted-package-install-package 'outshine)
-(add-hook 'emacs-lisp-mode-hook 'outshine-mode)
+
+(defun witek-activate-outshine ()
+  (outshine-mode 1)
+  (general-define-key
+   :keymaps 'outline-mode-map
+   :states 'normal
+   "M-l" 'nil
+   "M-h" 'nil))
+
+(add-hook 'emacs-lisp-mode-hook 'witek-activate-outshine)
+(add-hook 'clojure-mode-hook 'witek-activate-outshine)
 
 ;; ** Witek's extensions
 
