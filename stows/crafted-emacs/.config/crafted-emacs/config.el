@@ -10,7 +10,6 @@
 (require 'crafted-defaults)    ; Sensible default settings for Emacs
 ;(require 'crafted-compile)     ; Set up automatic compilation for some emacs-lisp files
 
-;; Prevent loading custom.el
 (setq crafted-load-custom-file nil)
 
 ;; *** TODO Start Emacs server (for emacsclient)
@@ -47,13 +46,13 @@
 
 (setq scroll-conservatively 101)
 
-(setq scroll-margin 35)
+(customize-set-variable 'scroll-margin 35)
 
 (setq scroll-preserve-screen-position t)
 
 (setq sentence-end-double-space nil)
 
-(setq uniquify-buffer-name-style 'complete)
+;; (setq uniquify-buffer-name-style 'complete)
 
 (setq window-combination-resize t)
 
@@ -360,7 +359,8 @@
 
 (my-local-leader-def
   :keymaps 'emacs-lisp-mode-map
-  "e v" 'eval-last-sexp)
+  "e v" 'eval-last-sexp
+  "e b" 'eval-buffer)
 
 ;; ** Clojure
 
@@ -384,16 +384,15 @@
 
 (my-local-leader-def
   :keymaps 'clojure-mode-map
-  "e v" #'cider-eval-sexp-at-point
+  "e v" 'cider-eval-sexp-at-point
+  "e b" 'cider-eval-buffer
   )
 
 ;; *** eglot
 
-(add-to-list 'eglot-server-programs `(clojurescript-mode . ("clojure-lsp")))
-
-;; ;; (add-to-list 'eglot-server-programs `(clojure-mode . ("clojure-lsp")))
-;; ;; (add-to-list 'eglot-server-programs `(clojurescript-mode . ("clojure-lsp")))
-;; ;; (add-to-list 'eglot-server-programs `(clojurec-mode . ("clojure-lsp")))
+;; (add-to-list 'eglot-server-programs `(clojure-mode . ("clojure-lsp")))
+;; (add-to-list 'eglot-server-programs `(clojurescript-mode . ("clojure-lsp")))
+;; (add-to-list 'eglot-server-programs `(clojurec-mode . ("clojure-lsp")))
 
 (add-hook 'clojure-mode-hook #'eglot-ensure)
 
@@ -416,18 +415,25 @@
 ;; [[https://github.com/alphapapa/outshine]]
 ;; [[https://orgmode.org/guide/Hyperlinks.html]]
 (use-package outshine
-  :straight t)
+  :straight t
+  :init
 
-(defun witek-activate-outshine ()
-  (outshine-mode 1)
-  (general-define-key
-   :keymaps 'outline-mode-map
-   :states 'normal
-   "M-l" 'nil
-   "M-h" 'nil))
+  (defun witek-activate-outshine ()
+    (outshine-mode 1)
+    (general-define-key
+     :keymaps 'outline-mode-map
+     :states 'normal
+     "M-l" 'nil
+     "M-h" 'nil))
 
-(add-hook 'emacs-lisp-mode-hook 'witek-activate-outshine)
-(add-hook 'clojure-mode-hook 'witek-activate-outshine)
+  (add-hook 'emacs-lisp-mode-hook 'witek-activate-outshine)
+  (add-hook 'clojure-mode-hook 'witek-activate-outshine))
+
+;; ** origami
+
+;; (use-package origami
+;;   :straight t)
+;; (global-origami-mode 1)
 
 ;; ** Witek's extensions
 
@@ -462,3 +468,13 @@
 
 (my-leader-def
   "f d" 'witek-delete-current-file)
+
+;; *** witek-save-all-buffers
+
+(defun witek-save-all-buffers ()
+  "Save all buffers."
+  (interactive)
+  (save-some-buffers t))
+
+(my-leader-def
+  "f S" 'witek-save-all-buffers)
