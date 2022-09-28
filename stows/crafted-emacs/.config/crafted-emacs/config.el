@@ -18,7 +18,6 @@
 ;; ESC Cancels All
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(save-place-mode 1)
 
 (setq vc-follow-symlinks t)
 
@@ -29,8 +28,6 @@
 (setq x-stretch-cursor t)
 
 (setq undo-limit 80000000)
-
-(setq auto-save-default t)
 
 (setq truncate-string-ellipsis "…")
 
@@ -62,6 +59,8 @@
 
 (setq confirm-kill-emacs nil)
 
+(save-place-mode 1)
+
 ;; *** Auto Save
 
 (let ((witek-auto-save-directory (concat crafted-config-var-directory "witek-auto-save/")))
@@ -70,6 +69,7 @@
   (setq auto-save-file-name-transforms
         `((".*" ,witek-auto-save-directory t))))
 
+(setq auto-save-default t)
 
 ;; *** Let's be Evil
 
@@ -194,6 +194,8 @@
   "w k" 'evil-window-up
   "w h" 'evil-window-left
   "w l" 'evil-window-right
+  "w /" 'evil-window-vsplit
+  "w -" 'evil-window-split
 
   "d k" 'describe-key
   "d c" 'describe-command
@@ -343,6 +345,8 @@
 (require 'crafted-ide)
 (require 'eglot)
 
+(customize-set-variable `eglot-confirm-server-initiated-edits nil)
+
 ;; ** lsp-mode - IDE
 
 ;; (crafted-package-install-package 'lsp-mode)
@@ -390,6 +394,9 @@
 
 ;; *** eglot
 
+;; hack for doom-modeline internal var access
+(defun eglot--major-mode (server) (car (eglot--major-modes server)))
+
 ;; (add-to-list 'eglot-server-programs `(clojure-mode . ("clojure-lsp")))
 ;; (add-to-list 'eglot-server-programs `(clojurescript-mode . ("clojure-lsp")))
 ;; (add-to-list 'eglot-server-programs `(clojurec-mode . ("clojure-lsp")))
@@ -398,12 +405,18 @@
 
 ;; ;; *** /p/clj/ as eglot root
 
-;; ;; **** TODO use defadvice
-(defun eglot--current-project ()
-  "Witek's custom impl. Always /p/clj/"
-  (message "eglot--current-project: witek's hack returns /p/clj/")
-  (project-current nil "/p/clj/")
-  )
+(defun witek-project-find-for-clj-project (dir)
+  (if (and (boundp 'eglot-lsp-context)
+           eglot-lsp-context
+           (or (string-prefix-p "/p/happygast/" dir)
+               (string-prefix-p "/p/incubator/" dir)
+               (string-prefix-p "/p/spark/" dir)
+               (string-prefix-p "/p/kunagi-mui/" dir)
+               (string-prefix-p "/p/kunagi-utils/" dir)))
+      (project-try-vc "/p/clj/")
+    (project-try-vc dir)))
+
+(setq project-find-functions '(witek-project-find-for-clj-project))
 
 ;; ** Org
 
@@ -467,7 +480,7 @@
           (kill-buffer))))))
 
 (my-leader-def
-  "f d" 'witek-delete-current-file)
+  "f D" 'witek-delete-current-file)
 
 ;; *** witek-save-all-buffers
 
@@ -478,3 +491,49 @@
 
 (my-leader-def
   "f S" 'witek-save-all-buffers)
+
+(defun witek-rename-file (new-name)
+
+  "Renames both current buffer and file it's visiting to NEW-NAME." (interactive "sNew name: ")
+
+  (let ((name (buffer-name))
+
+        (filename (buffer-file-name)))
+
+    (if (not filename)
+
+        (message "Buffer '%s' is not visiting a file!" name)
+
+      (if (get-buffer new-name)
+
+          (message "A buffer named '%s' already exists!" new-name)
+
+        (progn   (rename-file filename new-name 1)   (rename-buffer new-name)   (set-visited-file-name new-name)   (set-buffer-modified-p nil)))))) ;;
+
+(my-leader-def
+  "f R" 'witek-rename-file)
+
+(defun witek-move-file (dir)
+
+  "Moves both current buffer and file it's visiting to DIR." (interactive "DNew directory: ")
+
+  (let* ((name (buffer-name))
+
+         (filename (buffer-file-name))
+
+         (dir
+
+          (if (string-match dir "\\(?:/\\|\\\\)$")
+
+              (substring dir 0 -1) dir))
+
+         (newname (concat dir "/" name)))
+
+    (if (not filename)
+
+        (message "Buffer '%s' is not visiting a file!" name)
+
+      (progn  (copy-file filename newname 1)  (delete-file filename)  (set-visited-file-name newname)  (set-buffer-modified-p nil)  t))))
+
+(my-leader-def
+  "f M" 'witek-move-file)
