@@ -4,12 +4,15 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
-
-
-
 (straight-use-package 'use-package)
 
 (require 'crafted-defaults)    ; Sensible default settings for Emacs
+(require 'crafted-ui)          ; Better UI experience (modeline etc.)
+(require 'crafted-windows)     ; Window management configuration
+(require 'crafted-completion)  ; selection framework based on `vertico`
+(require 'crafted-speedbar)    ; built-in file-tree
+(require 'crafted-lisp)
+
 ;(require 'crafted-compile)     ; Set up automatic compilation for some emacs-lisp files
 
 (setq crafted-load-custom-file nil)
@@ -20,6 +23,8 @@
 ;; ESC Cancels All
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+(setq max-lisp-eval-depth 16000)
+(setq max-specpdl-size 25000)
 
 (setq vc-follow-symlinks t)
 
@@ -73,6 +78,7 @@
 
 (setq auto-save-default t)
 
+
 ;; *** Let's be Evil
 
 (require 'crafted-evil)
@@ -89,10 +95,6 @@
 
 ;; ** UI
 
-(require 'crafted-ui)          ; Better UI experience (modeline etc.)
-(require 'crafted-windows)     ; Window management configuration
-(require 'crafted-completion)  ; selection framework based on `vertico`
-(require 'crafted-speedbar)    ; built-in file-tree
 
 ;; (setq-default left-fringe-width  16)
 ;; (setq-default right-fringe-width  16)
@@ -342,12 +344,9 @@
   ", a" 'evil-cp-insert-at-end-of-form
   )
 
-;; ** Lisp
-
-(require 'crafted-lisp)
 
 
-;; ** Emacs Lisp
+;; * Emacs Lisp
 
 (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
 (add-hook 'emacs-lisp-mode-hook #'evil-smartparens-mode)
@@ -356,6 +355,24 @@
   :keymaps 'emacs-lisp-mode-map
   "e v" 'eval-last-sexp
   "e b" 'eval-buffer)
+
+
+;; * wgrep
+;; https://github.com/mhayashi1120/Emacs-wgrep
+
+(use-package wgrep
+  :straight t
+  :after embark-consult
+  :init
+  (setq wgrep-auto-save-buffer t)
+  (setq wgrep-change-readonly-file t)
+  :config
+  (my-local-leader-def
+    :keymaps '(grep-mode-map wgrep-mode-map)
+    "e" 'wgrep-change-to-wgrep-mode
+    "," 'wgrep-finish-edit
+    "q" 'wgrep-exit))
+
 
 
 ;; * Export witek-defaults
