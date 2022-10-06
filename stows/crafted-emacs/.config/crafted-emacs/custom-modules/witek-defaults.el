@@ -12,6 +12,7 @@
 (require 'crafted-completion)  ; selection framework based on `vertico`
 (require 'crafted-speedbar)    ; built-in file-tree
 (require 'crafted-lisp)
+(require 'crafted-project)
 
 ;(require 'crafted-compile)     ; Set up automatic compilation for some emacs-lisp files
 
@@ -115,6 +116,8 @@
 (setq xref-show-xrefs-function #'consult-xref
       xref-show-definitions-function #'consult-xref)
 
+
+
 ;; *** which-key
 (use-package which-key
   :straight t
@@ -158,7 +161,7 @@
   ))
 
 
-;; *** general - Leader Keybindings
+;; * general - Leader Keybindings
 ;; general.el for prefixed key bindings
 ;; https://github.com/noctuid/general.el
 (use-package general
@@ -166,7 +169,8 @@
   :config
   (general-evil-setup))
 
-;; **** Leader
+
+;; ** Leader
 
 (general-create-definer my-leader-def
   :states (list 'normal 'visual)
@@ -219,7 +223,7 @@
  "e" 'embark-export
  "a" 'embark-act)
 
-;; **** Local Leader
+;; ** Local Leader
 
 (general-create-definer my-local-leader-def
   :states (list 'normal 'visual)
@@ -231,7 +235,26 @@
   "q" 'with-editor-cancel
   )
 
-;; *** Restart Emacs
+;; * treemacs
+
+(use-package treemacs
+  :straight t
+
+  :init
+  (setq treemacs-space-between-root-nodes nil)
+
+  :config
+  (my-local-leader-def
+    :keymaps (list 'treemacs-mode-map)
+    "," 'treemacs-mark-or-unmark-path-at-point
+    "x" 'treemacs-delete-file
+    "m" 'treemacs-move-file
+    "c" 'treemacs-copy-file
+    "r" 'treemacs-rename-file
+    )
+  )
+
+;; * Restart Emacs
 
 (use-package restart-emacs
   :straight t
@@ -241,9 +264,8 @@
     "e r" 'restart-emacs))
 
 
-;; ** project
+;; * project
 
-(require 'crafted-project)
 
 (customize-set-variable 'project-vc-merge-submodules t)
 

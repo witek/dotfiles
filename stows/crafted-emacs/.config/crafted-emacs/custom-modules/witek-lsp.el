@@ -77,7 +77,9 @@
  :keymaps 'clojure-mode-map
  :states 'normal
  "g r" 'lsp-find-references
- "g d" 'lsp-find-definition)
+ "g d" 'lsp-find-definition
+ "g i" 'consult-imenu
+ )
 
 
 ;; * Export witek-lsp
