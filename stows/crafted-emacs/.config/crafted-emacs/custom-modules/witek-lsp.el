@@ -3,7 +3,7 @@
 (use-package lsp-mode
   :straight t
   :init
-  (setq lsp-keymap-prefix ", r")
+  ;; (setq lsp-keymap-prefix ", r")
 
   ;; We don't want to get asked about project root
   (setq lsp-auto-guess-root t)
@@ -13,7 +13,7 @@
   (setq lsp-headerline-breadcrumb-icons-enable nil)
 
   (setq lsp-lens-enable t)
-  (setq lsp-lens-place-position 'above-line)
+  ;; (setq lsp-lens-place-position 'above-line)
 
   (custom-set-faces
    '(lsp-headerline-breadcrumb-separator-face ((t :inherit shadow :height 0.7)))
@@ -71,6 +71,7 @@
   :keymaps 'clojure-mode-map
   "e v" 'cider-eval-sexp-at-point
   "e b" 'cider-eval-buffer
+  "i l" 'cljr-introduce-let
   )
 
 (general-define-key
@@ -79,6 +80,7 @@
  "g r" 'lsp-find-references
  "g d" 'lsp-find-definition
  "g i" 'consult-imenu
+ "#" 'clojure-toggle-ignore
  )
 
 

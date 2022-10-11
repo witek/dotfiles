@@ -33,20 +33,20 @@
 ;; *** outshine - Org features in code files
 ;; [[https://github.com/alphapapa/outshine]]
 ;; [[https://orgmode.org/guide/Hyperlinks.html]]
-(use-package outshine
-  :straight t
-  :init
+;; (use-package outshine
+;;   :straight t
+;;   :init
 
-  (defun witek-activate-outshine ()
-    (outshine-mode 1)
-    (general-define-key
-     :keymaps 'outline-mode-map
-     :states 'normal
-     "M-l" 'nil
-     "M-h" 'nil))
+;;   (defun witek-activate-outshine ()
+;;     (outshine-mode 1)
+;;     (general-define-key
+;;      :keymaps 'outline-mode-map
+;;      :states 'normal
+;;      "M-l" 'nil
+;;      "M-h" 'nil))
 
-  (add-hook 'emacs-lisp-mode-hook 'witek-activate-outshine)
-  (add-hook 'clojure-mode-hook 'witek-activate-outshine))
+;;   (add-hook 'emacs-lisp-mode-hook 'witek-activate-outshine)
+;;   (add-hook 'clojure-mode-hook 'witek-activate-outshine))
 
 ;; ** origami
 

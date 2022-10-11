@@ -7,6 +7,7 @@
 (straight-use-package 'use-package)
 
 (require 'crafted-defaults)    ; Sensible default settings for Emacs
+(require 'crafted-evil)
 (require 'crafted-ui)          ; Better UI experience (modeline etc.)
 (require 'crafted-windows)     ; Window management configuration
 (require 'crafted-completion)  ; selection framework based on `vertico`
@@ -82,7 +83,6 @@
 
 ;; *** Let's be Evil
 
-(require 'crafted-evil)
 
 ;; Use C-h as usual
 (customize-set-variable 'evil-want-C-u-delete nil)
@@ -330,7 +330,7 @@
 (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
 
 ;; *** cleverparens
-
+;; https://github.com/luxbock/evil-cleverparens
 (use-package evil-cleverparens
   :straight t
   :init
@@ -341,6 +341,7 @@
    :states 'normal
    "M-l" 'evil-cp->
    "M-h" 'evil-cp-<))
+(require 'evil-cleverparens-text-objects)
 
 ;; (general-define-key
 ;;  :states '(normal visual)
@@ -361,7 +362,8 @@
   "(" 'sp-wrap-round
   "[" 'sp-wrap-square
   "{" 'sp-wrap-curly
-  "=" 'indent-sexp
+  ;; "=" 'indent-sexp
+  "=" 'sp-indent-defun
   ", i" 'evil-cp-insert-at-beginning-of-form
   ", a" 'evil-cp-insert-at-end-of-form
   )
@@ -395,7 +397,13 @@
     "," 'wgrep-finish-edit
     "q" 'wgrep-exit))
 
+;; * Avy
+;; https://github.com/abo-abo/avy
 
+(use-package avy
+  :straight t
+  :ensure t
+  :bind ("C-j" . avy-goto-char-timer))
 
 ;; * Export witek-defaults
 (provide 'witek-defaults)
