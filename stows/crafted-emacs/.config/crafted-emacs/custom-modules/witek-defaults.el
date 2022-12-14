@@ -70,6 +70,8 @@
 
 (save-place-mode 1)
 
+(setq create-lockfiles nil)
+
 ;; *** Auto Save
 
 (let ((witek-auto-save-directory (concat crafted-config-var-directory "witek-auto-save/")))

@@ -4,3 +4,5 @@
 
 ;; Theme
 (load-theme 'modus-vivendi)
+
+(setq helm-ag-show-status-function nil)

@@ -1,5 +1,6 @@
 ;; Based on Crafted Emacs and davivil's config.
 
+
 ;; https://github.com/daviwil/dotfiles/blob/master/Emacs.org
 
 (require 'witek-defaults)

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+export DATA_PATH=/run/media/witek/DATA
+
+read -s -p "Enter restic repo password: " RESTIC_PASSWORD
+export RESTIC_PASSWORD
+
+export RESTIC_REPOSITORY=$DATA_PATH/restic/helix
+
+restic --verbose backup /etc
+restic --verbose backup /home/witek --exclude-file /home/witek/restic-excludes.txt
+restic --verbose backup /p --exclude-file /p/restic-excludes.txt
+restic --verbose backup /home/witek/inbox --exclude-file /home/witek/inbox/restic-excludes.txt
