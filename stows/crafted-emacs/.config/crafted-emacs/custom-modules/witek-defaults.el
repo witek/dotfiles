@@ -9,6 +9,7 @@
 (require 'crafted-defaults)    ; Sensible default settings for Emacs
 (require 'crafted-evil)
 (require 'crafted-ui)          ; Better UI experience (modeline etc.)
+(require 'crafted-editing)     ; Whitespace trimming, auto parens etc.
 (require 'crafted-windows)     ; Window management configuration
 (require 'crafted-completion)  ; selection framework based on `vertico`
 (require 'crafted-speedbar)    ; built-in file-tree
@@ -288,7 +289,6 @@
 
 ;; ** Editing
 
-(require 'crafted-editing)     ; Whitespace trimming, auto parens etc.
 
 ;; Default to an indentation size of 2 spaces
 (setq-default tab-width 2)
@@ -382,29 +382,6 @@
   "e b" 'eval-buffer)
 
 
-;; * wgrep
-;; https://github.com/mhayashi1120/Emacs-wgrep
-
-(use-package wgrep
-  :straight t
-  :after embark-consult
-  :init
-  (setq wgrep-auto-save-buffer t)
-  (setq wgrep-change-readonly-file t)
-  :config
-  (my-local-leader-def
-    :keymaps '(grep-mode-map wgrep-mode-map)
-    "e" 'wgrep-change-to-wgrep-mode
-    "," 'wgrep-finish-edit
-    "q" 'wgrep-exit))
-
-;; * Avy
-;; https://github.com/abo-abo/avy
-
-(use-package avy
-  :straight t
-  :ensure t
-  :bind ("C-j" . avy-goto-char-timer))
 
 ;; * Export witek-defaults
 (provide 'witek-defaults)

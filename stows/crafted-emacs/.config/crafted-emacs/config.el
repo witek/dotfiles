@@ -4,6 +4,7 @@
 ;; https://github.com/daviwil/dotfiles/blob/master/Emacs.org
 
 (require 'witek-defaults)
+(require 'witek-extras)
 ;; (require 'witek-eglot)
 (require 'witek-lsp)
 
