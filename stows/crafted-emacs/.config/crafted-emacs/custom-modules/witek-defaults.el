@@ -14,8 +14,7 @@
 (require 'crafted-speedbar)    ; built-in file-tree
 (require 'crafted-lisp)
 (require 'crafted-project)
-
-;(require 'crafted-compile)     ; Set up automatic compilation for some emacs-lisp files
+(require 'crafted-compile)     ; Set up automatic compilation for some emacs-lisp files
 
 (setq crafted-load-custom-file nil)
 

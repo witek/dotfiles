@@ -31,6 +31,7 @@
       (message "[witek:lsp--suggest-project-root] project=%s dir=%s" (project-current) dir)
       (if (or (string-prefix-p "/p/happygast/" dir)
               (string-prefix-p "/p/conco/" dir)
+              (string-prefix-p "/p/kunagi-secrets/" dir)
               (string-prefix-p "/p/incubator/" dir)
               (string-prefix-p "/p/spark/" dir)
               (string-prefix-p "/p/kunagi-mui/" dir)
