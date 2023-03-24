@@ -1,4 +1,4 @@
-;;; witek-defaults.el --- Witek's Defaults based on Crafted Defaults  -*- lexical-binding: t; -*-
+;; witek-defaults.el --- Witek's Defaults based on Crafted Defaults  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  Witoslaw Koczewski
 
@@ -129,7 +129,7 @@
 (global-set-key (kbd "C-c f r") 'consult-recent-file)
 (global-set-key (kbd "C-c p /") 'consult-git-grep)
 
-
+(global-set-key (kbd "C-c x") ctl-x-map)
 
 ;; * Export witek-defaults
 (provide 'witek-defaults)

@@ -74,21 +74,21 @@
 
 ;; * Clojure
 
-(my-local-leader-def
-  :keymaps 'clojure-mode-map
-  "e v" 'cider-eval-sexp-at-point
-  "e b" 'cider-eval-buffer
-  "i l" 'cljr-introduce-let
-  )
+;; (my-local-leader-def
+;;   :keymaps 'clojure-mode-map
+;;   "e v" 'cider-eval-sexp-at-point
+;;   "e b" 'cider-eval-buffer
+;;   "i l" 'cljr-introduce-let
+;;   )
 
-(general-define-key
- :keymaps 'clojure-mode-map
- :states 'normal
- "g r" 'lsp-find-references
- "g d" 'lsp-find-definition
- "g i" 'consult-imenu
- "#" 'clojure-toggle-ignore
- )
+;; (general-define-key
+;;  :keymaps 'clojure-mode-map
+;;  :states 'normal
+;;  "g r" 'lsp-find-references
+;;  "g d" 'lsp-find-definition
+;;  "g i" 'consult-imenu
+;;  "#" 'clojure-toggle-ignore
+;;  )
 
 
 ;; * Export witek-lsp

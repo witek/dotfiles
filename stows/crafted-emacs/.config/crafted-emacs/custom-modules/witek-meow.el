@@ -6,10 +6,7 @@
 
 (straight-use-package 'use-package)
 
-(use-package meow
-  :straight t
-
-  :config
+(defun meow-setup ()
 
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
 
@@ -100,10 +97,15 @@
    '("'" . repeat)
    '("<escape>" . ignore))
 
-  (meow-global-mode 1)
+
   )
 
+(use-package meow
+  :straight t)
+
 (require 'meow)
+(meow-setup)
+(meow-global-mode 1)
 
 ;; ---
 (provide 'witek-meow)

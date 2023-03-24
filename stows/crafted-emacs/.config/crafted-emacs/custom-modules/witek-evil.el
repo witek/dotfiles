@@ -148,6 +148,20 @@
   "e v" 'eval-last-sexp
   "e b" 'eval-buffer)
 
+(my-leader-def
+  "e m" 'witek-make-frame-with-messages)
+(my-leader-def
+  "f D" 'witek-delete-current-file)
+(my-leader-def
+  "f S" 'witek-save-all-buffers)
+(my-leader-def
+  "f M" 'witek-move-file)
+
+(my-leader-def
+  "f R" 'witek-rename-file)
+
+
+
 
 
 
