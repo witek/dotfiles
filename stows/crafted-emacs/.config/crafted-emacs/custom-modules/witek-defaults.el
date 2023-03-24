@@ -106,30 +106,31 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(global-set-key (kbd "C-c C-c") 'execute-extended-command)
+(global-set-key (kbd "C-c <SPC>") 'execute-extended-command)
 (global-set-key (kbd "C-c <RET>") 'save-buffer)
+(global-set-key (kbd "C-c x") ctl-x-map)
 
-(global-set-key (kbd "C-c f q") 'save-buffers-kill-terminal)
-(global-set-key (kbd "C-c f Q") 'save-buffers-kill-emacs)
-(global-set-key (kbd "C-c f e") 'eval-expression)
-(global-set-key (kbd "C-c f f") 'make-frame)
+(global-set-key (kbd "C-c e q") 'save-buffers-kill-terminal)
+(global-set-key (kbd "C-c e Q") 'save-buffers-kill-emacs)
+(global-set-key (kbd "C-c e e") 'eval-expression)
+(global-set-key (kbd "C-c e l") 'eval-last-sexp)
+(global-set-key (kbd "C-c e b") 'eval-buffer)
+
+(global-set-key (kbd "C-c b b") 'consult-buffer)
+(global-set-key (kbd "C-c b d") 'kill-current-buffer)
 
 (global-set-key (kbd "C-c f s") 'save-buffer)
 (global-set-key (kbd "C-c f S") 'save-some-buffers)
 (global-set-key (kbd "C-c f f") 'find-file)
+(global-set-key (kbd "C-c f r") 'consult-recent-file)
 
 (global-set-key (kbd "C-c t s") 'smartparens-mode)
 (global-set-key (kbd "C-c t S") 'smartparens-strict-mode)
 
 (global-set-key (kbd "C-c p p") 'project-switch-project)
 (global-set-key (kbd "C-c p f") 'project-find-file)
-
-
-
-(global-set-key (kbd "C-c f r") 'consult-recent-file)
 (global-set-key (kbd "C-c p /") 'consult-git-grep)
 
-(global-set-key (kbd "C-c x") ctl-x-map)
 
 ;; * Export witek-defaults
 (provide 'witek-defaults)

@@ -13,10 +13,12 @@
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
    '("k" . meow-prev)
-   '("<escape>" . ignore))
+   ;; '("<escape>" . ignore)
+   )
 
   (meow-leader-define-key
    ;; SPC j/k will run the original command in MOTION state.
+   '("<SPC>" . execute-extended-command)
    '("j" . "H-j")
    '("k" . "H-k")
    ;; Use SPC (0-9) for digit arguments.
@@ -37,37 +39,36 @@
   (meow-normal-define-key
 
    ;; Movement
-   '("h" . meow-left)
-   '("l" . meow-right)
+   '("H" . meow-left)
+   '("L" . meow-right)
    '("j" . meow-next)
    '("k" . meow-prev)
 
    ;; Movement + Navigation
-   '("e" . meow-next-symbol)
+   '("l" . meow-next-symbol)
+   '("h" . meow-back-symbol)
    '("E" . meow-next-word)
-   '("b" . meow-back-symbol)
    '("B" . meow-back-word)
 
    ;; Selection
    '("V" . meow-line)
    '("w" . meow-mark-symbol)
    '("W" . meow-mark-word)
-   '("o" . meow-block)
+   '("b" . meow-block)
    '("O" . meow-to-block)
    '("(" . meow-inner-of-thing)
    '(")" . meow-bounds-of-thing)
-   '("f" . meow-find)
+   '("F" . meow-find)
    '("t" . meow-till)
    '("m" . meow-join)
    '("[" . meow-beginning-of-thing)
    '("]" . meow-end-of-thing)
-   ;; these can be remapped, because cursor keys work the same
-   '("H" . meow-left-expand)
-   '("J" . meow-next-expand)
-   '("K" . meow-prev-expand)
-   '("L" . meow-right-expand)
+   '("v" . meow-right-expand)
+   ;; '("H" . meow-left-expand)
+   ;; '("J" . meow-next-expand)
+   ;; '("K" . meow-prev-expand)
 
-   '("g" . meow-cancel-selection)
+   '("<escape>" . meow-cancel-selection)
 
    ;; Editing
    '("i" . meow-insert)
@@ -89,8 +90,9 @@
    '("." . repeat)
    '("R" . meow-reverse)
    '("-" . negative-argument)
-   '("v" . meow-visit)
+   '("/" . meow-visit)
    '("q" . meow-quit)
+   ;; '("<escape>" . ignore)
 
    '("y" . meow-save)
    '("p" . meow-yank)
@@ -117,17 +119,54 @@
    ;; '("U" . meow-undo-in-selection)
    ;; '("s" . meow-line)
    '("z" . meow-pop-selection)
-   '("<escape>" . ignore)))
+
+   ;; more...
+   '(";" . comment-line)
+
+   ;;
+   ))
 
 (global-set-key (kbd "C-s") 'isearch-forward)
-
+(global-set-key (kbd "C-f") 'isearch-forward)
+(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+(define-key isearch-mode-map (kbd "C-b") 'isearch-repeat-backward)
 
 (use-package meow
-  :straight t)
+  :straight t
+  :config
+  (setq meow-expand-hint-counts nil)
+  (setq meow-keypad-self-insert-undefined nil)
+  (setq meow-keypad-describe-delay 0.1)
+  (setq meow-use-clipboard t))
+
 
 (require 'meow)
 (meow-setup)
+(meow-setup-indicator)
 (meow-global-mode 1)
+
+;; paren state
+(setq meow-paren-keymap (make-keymap))
+(meow-define-state paren
+  "meow state for interacting with smartparens"
+  :lighter " [P]"
+  :keymap meow-paren-keymap)
+
+;; meow-define-state creates the variable
+(setq meow-cursor-type-paren 'hollow)
+
+(meow-define-keys 'paren
+  '("<escape>" . meow-normal-mode)
+  '("l" . sp-forward-sexp)
+  '("h" . sp-backward-sexp)
+  '("j" . sp-down-sexp)
+  '("k" . sp-up-sexp)
+  '("n" . sp-forward-slurp-sexp)
+  '("b" . sp-forward-barf-sexp)
+  '("v" . sp-backward-barf-sexp)
+  '("c" . sp-backward-slurp-sexp)
+  '("u" . meow-undo))
+
 
 ;; ---
 (provide 'witek-meow)

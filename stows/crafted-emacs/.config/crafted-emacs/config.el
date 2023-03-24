@@ -21,5 +21,6 @@
 
 ;; (require 'witek-eglot)
 (require 'witek-lsp)
+
 (require 'crafted-org)         ; org-appear, clickable hyperlinks etc.
 (require 'witek-extras)
