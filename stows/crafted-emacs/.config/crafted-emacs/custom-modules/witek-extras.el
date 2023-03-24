@@ -5,6 +5,31 @@
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
 
+;; * treemacs
+
+(use-package treemacs
+  :straight t
+
+  :init
+  (setq treemacs-space-between-root-nodes nil)
+
+  :config
+  (my-local-leader-def
+    :keymaps (list 'treemacs-mode-map)
+    "," 'treemacs-mark-or-unmark-path-at-point
+    "x" 'treemacs-delete-file
+    "m" 'treemacs-move-file
+    "c" 'treemacs-copy-file
+    "r" 'treemacs-rename-file
+    )
+  )
+
+;; * Restart Emacs
+
+(use-package restart-emacs
+  :straight t
+  :config
+  (global-set-key (kbd "C-c e r") 'restart-emacs))
 
 
 ;; * wgrep
@@ -35,6 +60,24 @@
 
 (use-package adoc-mode
   :straight t)
+
+;; * Clojure, CIDER clj-refactor
+
+(use-package cider
+  :after clojure-mode
+  :config
+  (setq cider-eldoc-display-for-symbol-at-point nil)
+  (setq cider-repl-display-help-banner nil)
+  (setq cider-print-fn 'fipp))
+
+(use-package clj-refactor
+  :after clojure-mode
+  :config
+  (setq cljr-add-ns-to-blank-clj-files t))
+
+
+
+
 
 ;; * Export witek-extras
 (provide 'witek-extras)

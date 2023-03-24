@@ -8,6 +8,11 @@
   ;; We don't want to get asked about project root
   (setq lsp-auto-guess-root t)
 
+  (setq lsp-enable-indentation t)
+  (setq lsp-enable-snippet t)
+  (setq lsp-enable-symbol-highlighting t)
+  (setq lsp-log-io nil)
+
   ;; Don't underline on errors/warnings
   (setq lsp-headerline-breadcrumb-enable-diagnostics nil)
   (setq lsp-headerline-breadcrumb-icons-enable nil)
