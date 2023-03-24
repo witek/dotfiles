@@ -39,12 +39,18 @@
   ;;   )
   )
 
+(use-package smartparens
+  :straight t
+  )
+(require 'smartparens-config)
+
+
 ;; * Restart Emacs
 
 (use-package restart-emacs
   :straight t
-  :config
-  (global-set-key (kbd "C-c e r") 'restart-emacs))
+  :bind (("C-c e r" . 'restart-emacs))
+  )
 
 
 ;; * wgrep
