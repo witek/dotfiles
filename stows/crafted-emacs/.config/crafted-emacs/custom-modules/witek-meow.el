@@ -42,17 +42,25 @@
    '("j" . meow-next)
    '("k" . meow-prev)
 
+   ;; Movement + Navigation
+   '("e" . meow-next-symbol)
+   '("E" . meow-next-word)
+   '("b" . meow-back-symbol)
+   '("B" . meow-back-word)
+
    ;; Selection
    '("V" . meow-line)
    '("w" . meow-mark-symbol)
    '("W" . meow-mark-word)
    '("o" . meow-block)
    '("O" . meow-to-block)
-   '("," . meow-inner-of-thing)
-   '("." . meow-bounds-of-thing)
+   '("(" . meow-inner-of-thing)
+   '(")" . meow-bounds-of-thing)
    '("f" . meow-find)
    '("t" . meow-till)
    '("m" . meow-join)
+   '("[" . meow-beginning-of-thing)
+   '("]" . meow-end-of-thing)
    ;; these can be remapped, because cursor keys work the same
    '("H" . meow-left-expand)
    '("J" . meow-next-expand)
@@ -60,6 +68,14 @@
    '("L" . meow-right-expand)
 
    '("g" . meow-cancel-selection)
+
+   ;; Editing
+   '("i" . meow-insert)
+   '("I" . meow-open-above)
+   '("a" . meow-append)
+   '("A" . meow-open-below)
+   '("c" . meow-change)
+   '("r" . meow-replace)
 
    ;; Deleting
    '("d" . meow-kill)
@@ -69,9 +85,23 @@
    '("u" . meow-undo)
    '("U" . undo-redo)
 
-   '(";" . meow-reverse)
+   ;; Misc
+   '("." . repeat)
+   '("R" . meow-reverse)
    '("-" . negative-argument)
    '("v" . meow-visit)
+   '("q" . meow-quit)
+
+   '("y" . meow-save)
+   '("p" . meow-yank)
+
+   '("G" . meow-grab)
+   '("_" . meow-swap-grab)
+   '("Y" . meow-sync-grab)
+
+   '("n" . meow-search)
+   '("Q" . meow-goto-line)
+   '("X" . meow-goto-line)
 
    '("0" . meow-expand-0)
    '("9" . meow-expand-9)
@@ -83,33 +113,10 @@
    '("3" . meow-expand-3)
    '("2" . meow-expand-2)
    '("1" . meow-expand-1)
-   '("[" . meow-beginning-of-thing)
-   '("]" . meow-end-of-thing)
-   '("a" . meow-append)
-   '("A" . meow-open-below)
-   '("b" . meow-back-symbol)
-   '("B" . meow-back-word)
-   '("c" . meow-change)
-   '("e" . meow-next-symbol)
-   '("E" . meow-next-word)
-   '("G" . meow-grab)
-   '("i" . meow-insert)
-   '("I" . meow-open-above)
-   '("n" . meow-search)
-   '("p" . meow-yank)
-   '("q" . meow-quit)
-   '("Q" . meow-goto-line)
-   '("r" . meow-replace)
-   '("R" . meow-swap-grab)
-
 
    ;; '("U" . meow-undo-in-selection)
    ;; '("s" . meow-line)
-   '("X" . meow-goto-line)
-   '("y" . meow-save)
-   '("Y" . meow-sync-grab)
-   '("z" . meo-pwop-selection)
-   '("'" . repeat)
+   '("z" . meow-pop-selection)
    '("<escape>" . ignore)))
 
 (global-set-key (kbd "C-s") 'isearch-forward)
