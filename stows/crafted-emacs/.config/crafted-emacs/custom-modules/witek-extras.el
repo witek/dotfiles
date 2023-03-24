@@ -5,6 +5,21 @@
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
 
+(use-package which-key
+  :straight t
+  :config
+  (which-key-mode)
+  (setq which-key-idle-delay 0.5))
+
+(use-package magit
+  :straight t
+  :bind (("C-c g s" . 'magit-status)))
+
+(use-package clean-kill-ring
+  :straight (clean-kill-ring :type git :host github :repo "NicholasBHubbard/clean-kill-ring.el")
+  :config
+  (clean-kill-ring-mode 1))
+
 ;; * treemacs
 
 (use-package treemacs

@@ -26,6 +26,12 @@
   :config
   (general-evil-setup))
 
+
+(general-create-definer my-leader-def
+  :states (list 'normal 'visual)
+  :prefix "SPC")
+
+
 (my-leader-def
   "w j" 'evil-window-down
   "w k" 'evil-window-up
@@ -38,6 +44,50 @@
 (general-define-key
  :states '(normal visual)
  ";" 'evilnc-comment-or-uncomment-lines)
+
+
+
+(my-leader-def
+  "SPC" 'execute-extended-command
+  "/" 'consult-git-grep
+
+;;  "e" 'witek-e-key-map
+;;  "f" 'witek-f-key-map
+;;  "t" 'witek-f-key-map
+
+
+  "b b" 'consult-buffer
+  "b d" 'kill-current-buffer
+
+  ;; "f s" 'save-buffer
+  ;; "f S" 'save-some-buffers
+  ;; "f f" 'find-file
+  ;; "f r" 'consult-recent-file
+
+  "w d" 'delete-window
+  "w w" 'other-window
+
+  "d k" 'describe-key
+  "d c" 'describe-command
+  "d v" 'describe-variable
+  "d f" 'describe-function
+  "d m" 'describe-mode
+  "d K" 'describe-keymap
+
+
+  )
+
+(general-define-key
+ :keymaps 'vertico-map
+ :prefix "C-,"
+ "e" 'embark-export
+ "a" 'embark-act)
+
+;; ** Local Leader
+
+(general-create-definer my-local-leader-def
+  :states (list 'normal 'visual)
+  :prefix ",")
 
 
 (use-package evil-smartparens
@@ -70,6 +120,35 @@
 
 (add-hook 'emacs-lisp-mode-hook #'evil-smartparens-mode)
 (add-hook 'clojure-mode-hook #'evil-smartparens-mode)
+
+
+(my-local-leader-def
+  :keymaps (list 'with-editor-mode-map)
+  "," 'with-editor-finish
+  "q" 'with-editor-cancel
+  )
+
+
+
+(my-local-leader-def
+  :keymaps (list 'emacs-lisp-mode-map 'clojure-mode-map)
+  "(" 'sp-wrap-round
+  "[" 'sp-wrap-square
+  "{" 'sp-wrap-curly
+  ;; "=" 'indent-sexp
+  "=" 'sp-indent-defun
+  )
+
+
+;; * Emacs Lisp
+
+
+(my-local-leader-def
+  :keymaps 'emacs-lisp-mode-map
+  "e v" 'eval-last-sexp
+  "e b" 'eval-buffer)
+
+
 
 
 ;;
