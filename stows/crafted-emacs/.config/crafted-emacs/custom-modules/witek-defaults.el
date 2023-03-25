@@ -106,6 +106,11 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+(global-set-key (kbd "C-s") 'save-buffer)
+(global-set-key (kbd "C-f") 'isearch-forward)
+(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+(define-key isearch-mode-map (kbd "C-b") 'isearch-repeat-backward)
+
 (global-set-key (kbd "C-c <SPC>") 'execute-extended-command)
 (global-set-key (kbd "C-c <RET>") 'save-buffer)
 (global-set-key (kbd "C-c x") ctl-x-map)
@@ -130,6 +135,8 @@
 (global-set-key (kbd "C-c p p") 'project-switch-project)
 (global-set-key (kbd "C-c p f") 'project-find-file)
 (global-set-key (kbd "C-c p /") 'consult-git-grep)
+
+(global-set-key (kbd "C-c s q") 'query-replace)
 
 
 ;; * Export witek-defaults

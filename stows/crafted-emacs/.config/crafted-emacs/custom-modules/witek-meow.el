@@ -56,11 +56,11 @@
    '("W" . meow-mark-word)
    '("b" . meow-block)
    '("O" . meow-to-block)
-   '("(" . meow-inner-of-thing)
-   '(")" . meow-bounds-of-thing)
+   '("s" . meow-inner-of-thing)
+   '("S" . meow-bounds-of-thing)
    '("F" . meow-find)
    '("t" . meow-till)
-   '("m" . meow-join)
+   '("J" . meow-join)
    '("[" . meow-beginning-of-thing)
    '("]" . meow-end-of-thing)
    '("v" . meow-right-expand)
@@ -85,6 +85,7 @@
 
    '("u" . meow-undo)
    '("U" . undo-redo)
+   '("C-r" . undo-redo)
 
    ;; Misc
    '("." . repeat)
@@ -105,6 +106,8 @@
    '("Q" . meow-goto-line)
    '("X" . meow-goto-line)
 
+   '("=" . meow-indent)
+
    '("0" . meow-expand-0)
    '("9" . meow-expand-9)
    '("8" . meow-expand-8)
@@ -122,21 +125,25 @@
 
    ;; more...
    '(";" . comment-line)
+   '("M" . magit-status)
 
    ;;
    ))
 
-(global-set-key (kbd "C-s") 'isearch-forward)
-(global-set-key (kbd "C-f") 'isearch-forward)
-(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
-(define-key isearch-mode-map (kbd "C-b") 'isearch-repeat-backward)
 
 (use-package meow
   :straight t
   :config
-  (setq meow-expand-hint-counts nil)
+
+  ;; disable anoying hints when expanding
+  (setq meow-expand-hint-counts ())
+
+  ;; don't insert anything when undevided key is used
   (setq meow-keypad-self-insert-undefined nil)
+
+  ;; quicker pupup
   (setq meow-keypad-describe-delay 0.1)
+
   (setq meow-use-clipboard t))
 
 
