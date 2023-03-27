@@ -4,11 +4,25 @@
 
 ;; Author: Witoslaw Koczewski <witek@helix>
 
+;; ███╗░░░███╗███████╗░█████╗░░██╗░░░░░░░██╗
+;; ████╗░████║██╔════╝██╔══██╗░██║░░██╗░░██║
+;; ██╔████╔██║█████╗░░██║░░██║░╚██╗████╗██╔╝
+;; ██║╚██╔╝██║██╔══╝░░██║░░██║░░████╔═████║░
+;; ██║░╚═╝░██║███████╗╚█████╔╝░░╚██╔╝░╚██╔╝░
+;; ╚═╝░░░░░╚═╝╚══════╝░╚════╝░░░░╚═╝░░░╚═╝░░
+
 (straight-use-package 'use-package)
 
-(defun meow-setup ()
 
-  (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+(defun witek-wrap-round ()
+  (interactive)
+  (sp-wrap-round)
+  (meow-insert)
+  )
+
+
+(defun meow-setup-keys ()
+
 
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
@@ -35,20 +49,21 @@
    '("/" . meow-keypad-describe-key)
    '("?" . meow-cheatsheet))
 
-
   (meow-normal-define-key
 
    ;; Movement
-   '("H" . meow-left)
-   '("L" . meow-right)
+   '("h" . meow-left)
+   '("l" . meow-right)
    '("j" . meow-next)
    '("k" . meow-prev)
 
    ;; Movement + Navigation
-   '("l" . meow-next-symbol)
-   '("h" . meow-back-symbol)
+   '("L" . meow-next-symbol)
+   '("H" . meow-back-symbol)
    '("E" . meow-next-word)
    '("B" . meow-back-word)
+   '("e" . meow-end-of-thing)
+   '(":" . meow-goto-line)
 
    ;; Selection
    '("V" . meow-line)
@@ -82,6 +97,7 @@
    '("d" . meow-kill)
    '("D" . meow-kill-whole-line)
    '("x" . meow-delete)
+   '("<del>". meow-backward-delete)
 
    '("u" . meow-undo)
    '("U" . undo-redo)
@@ -126,6 +142,14 @@
    ;; more...
    '(";" . comment-line)
    '("M" . magit-status)
+   '("G" . end-of-buffer)
+   '("0" . beginning-of-line-text)
+   '("$" . end-of-line)
+   '("," . witek-activate-context-key-map)
+   '("(" . witek-wrap-round)
+
+   '("g g" . beginning-of-buffer)
+   '("g r" . xref-find-references)
 
    ;;
    ))
@@ -133,46 +157,76 @@
 
 (use-package meow
   :straight t
-  :config
+  :demand t
+
+  :init
+
+  (setq meow--kbd-kill-ring-save "H-w")
 
   ;; disable anoying hints when expanding
-  (setq meow-expand-hint-counts ())
+  (setq meow-expand-hint-remove-delay 3)
+  ;; (setq meow-expand-hint-counts ())
 
-  ;; don't insert anything when undevided key is used
+  ;; (setq meow-char-thing-table ((?r . round)
+  ;;                              (?s . square)
+  ;;                              (?c . curly)
+  ;;                              (?g . string)
+  ;;                              (?e . symbol)
+  ;;                              (?w . window)
+  ;;                              (?b . buffer)
+  ;;                              (?p . paragraph)
+  ;;                              (?l . line)
+  ;;                              (?d . defun)
+  ;;                              (?. . sentence)) )
+
+  ;; don't insert anything when undefided key is used
   (setq meow-keypad-self-insert-undefined nil)
 
   ;; quicker pupup
   (setq meow-keypad-describe-delay 0.1)
 
-  (setq meow-use-clipboard t))
+  (setq meow-use-clipboard t)
 
 
-(require 'meow)
-(meow-setup)
-(meow-setup-indicator)
-(meow-global-mode 1)
+  (setq meow-use-cursor-position-hack t
+        meow-use-enhanced-selection-effect t)
+
+  :config
+
+  (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+  (meow-setup-keys)
+  (meow-setup-indicator)
+  (meow-global-mode 1)
+
+  (when (fboundp 'corfu-quit)
+    (add-hook 'meow-insert-exit-hook 'corfu-quit))
+
+  )
+
+;; (require 'meow)
+
 
 ;; paren state
-(setq meow-paren-keymap (make-keymap))
-(meow-define-state paren
-  "meow state for interacting with smartparens"
-  :lighter " [P]"
-  :keymap meow-paren-keymap)
+;; (setq meow-paren-keymap (make-keymap))
+;; (meow-define-state paren
+;;  "meow state for interacting with smartparens"
+;;  :lighter " [P]"
+;;  :keymap meow-paren-keymap)
 
 ;; meow-define-state creates the variable
-(setq meow-cursor-type-paren 'hollow)
+;;(setq meow-cursor-type-paren 'hollow)
 
-(meow-define-keys 'paren
-  '("<escape>" . meow-normal-mode)
-  '("l" . sp-forward-sexp)
-  '("h" . sp-backward-sexp)
-  '("j" . sp-down-sexp)
-  '("k" . sp-up-sexp)
-  '("n" . sp-forward-slurp-sexp)
-  '("b" . sp-forward-barf-sexp)
-  '("v" . sp-backward-barf-sexp)
-  '("c" . sp-backward-slurp-sexp)
-  '("u" . meow-undo))
+;;(meow-define-keys 'paren
+;;  '("<escape>" . meow-normal-mode)
+;;  '("l" . sp-forward-sexp)
+;;  '("h" . sp-backward-sexp)
+;;  '("j" . sp-down-sexp)
+;;  '("k" . sp-up-sexp)
+;;  '("n" . sp-forward-slurp-sexp)
+;;  '("b" . sp-forward-barf-sexp)
+;;  '("v" . sp-backward-barf-sexp)
+;;  '("c" . sp-backward-slurp-sexp)
+;;  '("u" . meow-undo))
 
 
 ;; ---

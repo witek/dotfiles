@@ -75,6 +75,10 @@
 
 (setq auto-save-default t)
 
+;; just use identifier at point
+(setq xref-prompt-for-identifier nil)
+
+
 
 ;; *** Let's be Evil
 
@@ -106,10 +110,10 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(global-set-key (kbd "C-s") 'save-buffer)
-(global-set-key (kbd "C-f") 'isearch-forward)
-(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
-(define-key isearch-mode-map (kbd "C-b") 'isearch-repeat-backward)
+;; (global-set-key (kbd "C-s") 'save-buffer)
+;; (global-set-key (kbd "C-f") 'isearch-forward)
+;; (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+;; (define-key isearch-mode-map (kbd "C-b") 'isearch-repeat-backward)
 
 (global-set-key (kbd "C-c <SPC>") 'execute-extended-command)
 (global-set-key (kbd "C-c <RET>") 'save-buffer)
@@ -120,6 +124,7 @@
 (global-set-key (kbd "C-c e e") 'eval-expression)
 (global-set-key (kbd "C-c e l") 'eval-last-sexp)
 (global-set-key (kbd "C-c e b") 'eval-buffer)
+(global-set-key (kbd "C-c e f") 'eval-defun)
 
 (global-set-key (kbd "C-c b b") 'consult-buffer)
 (global-set-key (kbd "C-c b d") 'kill-current-buffer)
@@ -139,5 +144,24 @@
 (global-set-key (kbd "C-c s q") 'query-replace)
 
 
-;; * Export witek-defaults
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom Context Keymap ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar witek-context-key-map (make-sparse-keymap) "Witek's Context Keymap")
+
+(defun witek-activate-context-key-map ()
+  "Set 'witek-context-key-map as the current transient map. Also show which-key."
+  (interactive)
+  (set-transient-map witek-context-key-map)
+  ;; (progn
+  ;;   (when (fboundp 'which-key-show-keymap)
+  ;;     (which-key-show-keymap 'witek-context-key-map))
+  ;;   )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Export witek-defaults ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (provide 'witek-defaults)

@@ -8,8 +8,14 @@
 (use-package which-key
   :straight t
   :config
+  (setq which-key-show-transient-maps t)
+  (setq which-key-idle-delay 0.5)
   (which-key-mode)
-  (setq which-key-idle-delay 0.5))
+  )
+
+(use-package corfu
+  :bind
+  (:map corfu-map ("C-ä" . 'corfu-quit))  )
 
 (use-package magit
   :straight t
@@ -42,7 +48,17 @@
 
 (use-package smartparens
   :straight t
+  :demand t
+  :bind (("M-l" . 'sp-forward-slurp-sexp) ; owerride: downcase-word
+         ("M-h" . 'sp-forward-barf-sexp)  ; override: mark-paragraph
+
+         ("M-w" . 'sp-clone-sexp)         ; override: kill-ring-save
+         ("H-w" . 'kill-ring-save)
+         )
+  :config
+  (define-key witek-context-key-map (kbd "=") 'sp-indent-defun)
   )
+
 (require 'smartparens-config)
 
 

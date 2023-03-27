@@ -30,6 +30,8 @@
   ;; (setq lsp-headerline-breadcrumb-path-face '((t :inherit font-lock-string-face :height 0.5)))
 
   :config
+  (lsp-semantic-tokens--warn-about-deprecated-setting)
+
   (defun lsp--suggest-project-root ()
     "Get project root."
     (let ((dir (project-root (project-current))))

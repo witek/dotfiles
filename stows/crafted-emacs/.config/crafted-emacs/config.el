@@ -16,7 +16,7 @@
 (require 'witek-defaults)
 (require 'witek-theme)
 
-;;(require 'witek-evil)
+;; (require 'witek-evil)
 (require 'witek-meow)
 
 ;; (require 'witek-eglot)
