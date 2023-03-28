@@ -146,8 +146,8 @@
 (global-set-key (kbd "C-c w r") 'window-right)
 (global-set-key (kbd "C-c w n") 'next-window-any-frame)
 (global-set-key (kbd "C-c w p") 'previous-window-any-frame)
-(global-set-key (kbd "C-c w /") 'split-window-vertically)
-(global-set-key (kbd "C-c w -") 'split-window-horizontally)
+(global-set-key (kbd "C-c w /") 'split-window-horizontally)
+(global-set-key (kbd "C-c w -") 'split-window-vertically)
 (global-set-key (kbd "C-c w d") 'delete-window)
 
 (global-set-key (kbd "C-c s q") 'query-replace)
@@ -158,6 +158,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar witek-context-key-map (make-sparse-keymap) "Witek's Context Keymap")
+(defalias 'witek-context-key-map witek-context-key-map)
 
 (defun witek-activate-context-key-map ()
   "Set 'witek-context-key-map as the current transient map. Also show which-key."

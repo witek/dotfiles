@@ -20,6 +20,18 @@
   (meow-insert)
   )
 
+(defun witek-meow-mark-symbol ()
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'meow-next-symbol)
+    (call-interactively 'meow-mark-symbol)))
+
+(defun witek-meow-mark-word ()
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'meow-next-word)
+    (call-interactively 'meow-mark-word)))
+
 
 (defun meow-setup-keys ()
 
@@ -61,14 +73,13 @@
    '("L" . meow-next-symbol)
    '("H" . meow-back-symbol)
    '("E" . meow-next-word)
-   '("B" . meow-back-word)
+   ;; '("B" . meow-back-word)
    '("e" . meow-end-of-thing)
-   '(":" . meow-goto-line)
 
    ;; Selection
    '("V" . meow-line)
-   '("w" . meow-mark-symbol)
-   '("W" . meow-mark-word)
+   '("w" . witek-meow-mark-symbol)
+   '("W" . witek-meow-mark-word)
    '("b" . meow-block)
    '("O" . meow-to-block)
    '("s" . meow-inner-of-thing)
@@ -91,13 +102,13 @@
    '("a" . meow-append)
    '("A" . meow-open-below)
    '("c" . meow-change)
-   '("r" . meow-replace)
 
    ;; Deleting
    '("d" . meow-kill)
    '("D" . meow-kill-whole-line)
-   '("x" . meow-delete)
+   '("<deletechar>" . meow-delete)
    '("<del>". meow-backward-delete)
+   '("C-<backspace>" . sp-raise-sexp)
 
    '("u" . meow-undo)
    '("U" . undo-redo)
@@ -119,10 +130,10 @@
    '("Y" . meow-sync-grab)
 
    '("n" . meow-search)
-   '("Q" . meow-goto-line)
-   '("X" . meow-goto-line)
 
    '("=" . meow-indent)
+
+   '(":" . consult-goto-line)
 
    '("0" . meow-expand-0)
    '("9" . meow-expand-9)
@@ -141,22 +152,33 @@
 
    ;; more...
    '(";" . comment-line)
-   '("M" . magit-status)
    '("G" . end-of-buffer)
    '("0" . beginning-of-line-text)
    '("$" . end-of-line)
-   ;; '("," . 'witek-context-key-map)
+
+   '("C-l" . sp-end-of-sexp)
+   '("C-h" . sp-beginning-of-sexp)
+
+   '("," . witek-activate-context-key-map)
    '("(" . witek-wrap-round)
+
+   '("M" . magit-status)
+
+   '("#" . clojure-toggle-ignore)
+
+   '("B" . bookmark-set)
 
    '("g g" . beginning-of-buffer)
    '("g r" . xref-find-references)
+   '("g i" . consult-imenu)
+   '("g b" . consult-bookmark)
 
+   '("m" . consult-register-store)
+   '("'" . consult-register-load)
+
+   '("," . witek-context-key-map)
    ;;
    )
-
-    ;; (defalias 'witek-context-key-map witek-context-key-map)
-    ;; (meow-normal-define-key "," 'witek-context-key-map)
-
 
   )
 
