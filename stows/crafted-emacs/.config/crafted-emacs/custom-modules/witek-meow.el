@@ -145,14 +145,20 @@
    '("G" . end-of-buffer)
    '("0" . beginning-of-line-text)
    '("$" . end-of-line)
-   '("," . witek-activate-context-key-map)
+   ;; '("," . 'witek-context-key-map)
    '("(" . witek-wrap-round)
 
    '("g g" . beginning-of-buffer)
    '("g r" . xref-find-references)
 
    ;;
-   ))
+   )
+
+    ;; (defalias 'witek-context-key-map witek-context-key-map)
+    ;; (meow-normal-define-key "," 'witek-context-key-map)
+
+
+  )
 
 
 (use-package meow

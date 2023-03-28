@@ -141,6 +141,15 @@
 (global-set-key (kbd "C-c p f") 'project-find-file)
 (global-set-key (kbd "C-c p /") 'consult-git-grep)
 
+(global-set-key (kbd "C-c w w") 'other-window)
+(global-set-key (kbd "C-c w l") 'window-left)
+(global-set-key (kbd "C-c w r") 'window-right)
+(global-set-key (kbd "C-c w n") 'next-window-any-frame)
+(global-set-key (kbd "C-c w p") 'previous-window-any-frame)
+(global-set-key (kbd "C-c w /") 'split-window-vertically)
+(global-set-key (kbd "C-c w -") 'split-window-horizontally)
+(global-set-key (kbd "C-c w d") 'delete-window)
+
 (global-set-key (kbd "C-c s q") 'query-replace)
 
 
