@@ -17,6 +17,14 @@
   :bind
   (:map corfu-map ("C-ä" . 'corfu-quit))  )
 
+(use-package embark-consult
+  :bind
+  (:map vertico-map
+        ("C-, e" . 'embark-export)
+        ("C-, a" . 'embark-act)
+        )
+  )
+
 (use-package magit
   :straight t
   :bind (("C-c g s" . 'magit-status)
