@@ -130,7 +130,7 @@
 (global-set-key (kbd "C-c b d") 'kill-current-buffer)
 
 (global-set-key (kbd "C-c f s") 'save-buffer)
-(global-set-key (kbd "C-c f S") 'save-some-buffers)
+(global-set-key (kbd "C-c f S") 'witek-save-all-buffers)
 (global-set-key (kbd "C-c f f") 'find-file)
 (global-set-key (kbd "C-c f r") 'consult-recent-file)
 
@@ -139,7 +139,7 @@
 
 (global-set-key (kbd "C-c p p") 'project-switch-project)
 (global-set-key (kbd "C-c p f") 'project-find-file)
-(global-set-key (kbd "C-c p /") 'consult-git-grep)
+(global-set-key (kbd "C-c p s") 'consult-git-grep)
 
 (global-set-key (kbd "C-c w w") 'other-window)
 (global-set-key (kbd "C-c w l") 'window-left)
@@ -152,6 +152,8 @@
 
 (global-set-key (kbd "C-c s q") 'query-replace)
 
+;; (global-set-key (kbd "C-f") 'isearch-forward)
+(global-set-key (kbd "C-s") 'isearch-forward)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom Context Keymap ;;

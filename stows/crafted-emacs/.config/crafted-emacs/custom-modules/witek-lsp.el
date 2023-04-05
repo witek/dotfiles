@@ -1,5 +1,20 @@
 ;; * lsp-mode
 
+(defun witek-lsp-rename ()
+  (interactive)
+  (call-interactively 'save-some-buffers)
+  (call-interactively 'lsp-rename)
+  (save-some-buffers t)
+  )
+
+(defun witek-lsp-clojure-clean-ns ()
+  (interactive)
+  (call-interactively 'save-some-buffers)
+  (call-interactively 'lsp-clojure-clean-ns)
+  (save-some-buffers t)
+  )
+
+
 (use-package lsp-mode
   :straight t
   :init
@@ -28,6 +43,10 @@
    '(lsp-lens-face ((t (:inherit lsp-details-face :height 0.7)))))
 
   ;; (setq lsp-headerline-breadcrumb-path-face '((t :inherit font-lock-string-face :height 0.5)))
+
+  :bind
+  (:map witek-context-key-map
+        ("r" . 'witek-lsp-rename))
 
   :config
   (lsp-semantic-tokens--warn-about-deprecated-setting)

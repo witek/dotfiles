@@ -15,7 +15,11 @@
 
 (use-package corfu
   :bind
-  (:map corfu-map ("C-ä" . 'corfu-quit))  )
+  (:map corfu-map ("C-ä" . 'corfu-quit))
+  :config
+  (define-key corfu-map (kbd "<RET>") nil))
+
+
 
 (use-package embark-consult
   :bind
@@ -28,7 +32,10 @@
 (use-package magit
   :straight t
   :bind (("C-c g s" . 'magit-status)
-         ("C-c G s" . 'magit-status)))
+         ("C-c G s" . 'magit-status))
+  :config
+  (define-key witek-context-key-map (kbd "M") 'magit-file-dispatch)
+  )
 
 (use-package clean-kill-ring
   :straight (clean-kill-ring :type git :host github :repo "NicholasBHubbard/clean-kill-ring.el")
@@ -65,6 +72,7 @@
          )
   :config
   (define-key witek-context-key-map (kbd "=") 'sp-indent-defun)
+  (show-smartparens-global-mode 1)
   )
 
 (require 'smartparens-config)
@@ -110,12 +118,21 @@
 
 ;; * Clojure, CIDER clj-refactor
 
+(use-package clojure-mode
+  :ensure t
+  :config
+  (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+  )
+
 (use-package cider
   :after clojure-mode
   :config
   (setq cider-eldoc-display-for-symbol-at-point nil)
   (setq cider-repl-display-help-banner nil)
-  (setq cider-print-fn 'fipp))
+  (setq cider-print-fn 'fipp)
+
+
+  )
 
 (use-package clj-refactor
   :after clojure-mode
@@ -128,7 +145,6 @@
 
 ;; *** smartparens
 
-(add-hook 'clojure-mode-hook #'smartparens-strict-mode)
 
 ;; *** defaults
 
