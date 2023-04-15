@@ -16,7 +16,6 @@
 
 
 (use-package lsp-mode
-  :straight t
   :init
   ;; (setq lsp-keymap-prefix ", r")
 
@@ -76,7 +75,6 @@
   :commands lsp)
 
 (use-package lsp-ui
-  :straight t
   :commands lsp-ui-mode
   :init
   ;; (setq lsp-ui-sideline-show-hover t)
@@ -89,7 +87,6 @@
   )
 
 (use-package lsp-treemacs
-  :straight t
   :commands lsp-treemacs-errors-list)
 
 

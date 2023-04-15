@@ -4,19 +4,21 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
-(straight-use-package 'use-package)
+;;(straight-use-package 'use-package)
 
 
 ;; (setq-default left-fringe-width  16)
 ;; (setq-default right-fringe-width  16)
 (set-frame-parameter nil 'internal-border-width 8)
 
-
+(crafted-package-install-package 'spacegray-theme)
 (use-package spacegray-theme
-  :straight t)
+  ;; :straight t
+  )
 
+(crafted-package-install-package 'doom-themes)
 (use-package doom-themes
-  :straight t
+  ;; :straight t
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t
@@ -29,8 +31,9 @@
   (doom-themes-org-config))
 
 
+(crafted-package-install-package 'fira-code-mode)
 (use-package fira-code-mode
-  :straight t
+  ;; :straight t
   :config
   (global-fira-code-mode))
 

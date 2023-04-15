@@ -11,7 +11,7 @@
 ;; ██║░╚═╝░██║███████╗╚█████╔╝░░╚██╔╝░╚██╔╝░
 ;; ╚═╝░░░░░╚═╝╚══════╝░╚════╝░░░░╚═╝░░░╚═╝░░
 
-(straight-use-package 'use-package)
+
 
 
 (defun witek-wrap-round ()
@@ -184,9 +184,8 @@
 
   )
 
-
+(crafted-package-install-package 'meow)
 (use-package meow
-  :straight t
   :demand t
 
   :init
