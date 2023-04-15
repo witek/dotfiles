@@ -106,6 +106,8 @@
 
 (customize-set-variable 'project-vc-merge-submodules t)
 
+(setq browse-url-browser-function 'browse-url-chrome)
+
 ;; *** my custom keymaps
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)

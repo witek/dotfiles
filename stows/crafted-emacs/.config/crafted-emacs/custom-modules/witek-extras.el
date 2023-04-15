@@ -131,6 +131,9 @@
   (setq cider-repl-display-help-banner nil)
   (setq cider-print-fn 'fipp)
 
+  (define-key witek-context-key-map (kbd "e b") 'cider-eval-buffer)
+  (define-key witek-context-key-map (kbd "e l") 'cider-eval-last-sexp)
+  (define-key witek-context-key-map (kbd "e s") 'cider-eval-region)
 
   )
 

@@ -176,6 +176,8 @@
    '("m" . consult-register-store)
    '("'" . consult-register-load)
 
+   '("@" . other-window)
+
    '("," . witek-context-key-map)
    ;;
    )
