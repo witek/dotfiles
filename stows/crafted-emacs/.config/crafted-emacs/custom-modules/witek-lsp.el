@@ -1,4 +1,4 @@
-;; * lsp-mode
+;; -*- lexical-binding: t; -*-
 
 (defun witek-lsp-rename ()
   (interactive)
@@ -14,6 +14,7 @@
   (save-some-buffers t)
   )
 
+;;; lsp-mode
 
 (crafted-package-install-package 'lsp-mode)
 (use-package lsp-mode
@@ -75,6 +76,8 @@
   :hook ((clojure-mode . lsp))
   :commands lsp)
 
+;;; lsp-ui
+
 (crafted-package-install-package 'lsp-ui)
 (use-package lsp-ui
   :commands lsp-ui-mode
@@ -101,29 +104,18 @@
 
   )
 
+;;; lsp-treemacs
+
 (crafted-package-install-package 'lsp-treemacs)
 (use-package lsp-treemacs
   :commands lsp-treemacs-errors-list)
 
+;;; consult-lsp
 
-;; * Clojure
+(crafted-package-install-package 'consult-lsp)
+(use-package consult-lsp
+  :after lsp-mode
+  )
 
-;; (my-local-leader-def
-;;   :keymaps 'clojure-mode-map
-;;   "e v" 'cider-eval-sexp-at-point
-;;   "e b" 'cider-eval-buffer
-;;   "i l" 'cljr-introduce-let
-;;   )
-
-;; (general-define-key
-;;  :keymaps 'clojure-mode-map
-;;  :states 'normal
-;;  "g r" 'lsp-find-references
-;;  "g d" 'lsp-find-definition
-;;  "g i" 'consult-imenu
-;;  "#" 'clojure-toggle-ignore
-;;  )
-
-
-;; * Export witek-lsp
+;;; provide
 (provide 'witek-lsp)

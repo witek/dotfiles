@@ -1,11 +1,8 @@
-;; witek-defaults.el --- Witek's Defaults based on Crafted Defaults  -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  Witoslaw Koczewski
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
-
-(straight-use-package 'use-package)
-
 
 (setq crafted-load-custom-file nil)
 
@@ -45,7 +42,7 @@
 
 ;; (setq uniquify-buffer-name-style 'complete)
 
-(setq window-combination-resize t)
+;; (setq window-combination-resize t)
 
 (global-display-fill-column-indicator-mode t)
 
@@ -86,9 +83,6 @@
 
 ;; *** consult
 
-;; Use Consult to select xref locations with preview
-(setq xref-show-xrefs-function #'consult-xref
-      xref-show-definitions-function #'consult-xref)
 
 
 (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
@@ -98,7 +92,7 @@
 
 (setq browse-url-browser-function 'browse-url-chrome)
 
-;; *** my custom keymaps
+;;; keys
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
@@ -147,9 +141,7 @@
 ;; (global-set-key (kbd "C-f") 'isearch-forward)
 (global-set-key (kbd "C-s") 'isearch-forward)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Custom Context Keymap ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; witek-context-key-map
 
 (defvar witek-context-key-map (make-sparse-keymap) "Witek's Context Keymap")
 (defalias 'witek-context-key-map witek-context-key-map)
@@ -164,8 +156,5 @@
   ;;   )
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Export witek-defaults ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;; provide
 (provide 'witek-defaults)

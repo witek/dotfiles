@@ -1,22 +1,20 @@
-;;; witek-meow.el --- MEOW specific configuration    -*- lexical-binding: t; -*-
-
-;; Copyright (C) 2023  Witoslaw Koczewski
-
-;; Author: Witoslaw Koczewski <witek@helix>
-
-;; ███╗░░░███╗███████╗░█████╗░░██╗░░░░░░░██╗
-;; ████╗░████║██╔════╝██╔══██╗░██║░░██╗░░██║
-;; ██╔████╔██║█████╗░░██║░░██║░╚██╗████╗██╔╝
-;; ██║╚██╔╝██║██╔══╝░░██║░░██║░░████╔═████║░
-;; ██║░╚═╝░██║███████╗╚█████╔╝░░╚██╔╝░╚██╔╝░
-;; ╚═╝░░░░░╚═╝╚══════╝░╚════╝░░░░╚═╝░░░╚═╝░░
-
-
-
+;; -*- lexical-binding: t; -*-
 
 (defun witek-wrap-round ()
   (interactive)
   (sp-wrap-round)
+  (meow-insert)
+  )
+
+(defun witek-wrap-square ()
+  (interactive)
+  (sp-wrap-square)
+  (meow-insert)
+  )
+
+(defun witek-wrap-curly ()
+  (interactive)
+  (sp-wrap-curly)
   (meow-insert)
   )
 
@@ -32,6 +30,11 @@
       (call-interactively 'meow-next-word)
     (call-interactively 'meow-mark-word)))
 
+(defun witek-append-after-end-of-sexp ()
+  (interactive)
+  (call-interactively 'sp-end-of-sexp)
+  (call-interactively 'meow-insert))
+
 
 (defun meow-setup-keys ()
 
@@ -45,6 +48,7 @@
   (meow-leader-define-key
    ;; SPC j/k will run the original command in MOTION state.
    '("<SPC>" . execute-extended-command)
+   '(":" . eval-expression)
    '("j" . "H-j")
    '("k" . "H-k")
    ;; Use SPC (0-9) for digit arguments.
@@ -124,6 +128,7 @@
 
    '("y" . meow-save)
    '("p" . meow-yank)
+   '("P" . consult-yank-pop)
 
    '("G" . meow-grab)
    '("_" . meow-swap-grab)
@@ -156,11 +161,14 @@
    '("0" . beginning-of-line-text)
    '("$" . end-of-line)
 
-   '("C-l" . sp-end-of-sexp)
+   '("ö" . witek-append-after-end-of-sexp)
    '("C-h" . sp-beginning-of-sexp)
+   '("C-l" . sp-end-of-sexp)
 
    '("," . witek-activate-context-key-map)
    '("(" . witek-wrap-round)
+   '("[" . witek-wrap-square)
+   '("{" . witek-wrap-curly)
 
    '("M" . magit-status)
 
@@ -193,9 +201,12 @@
 
   (setq meow--kbd-kill-ring-save "H-w")
 
+  (setq meow-cursor-type-normal '(bar . 4))
+
   ;; disable anoying hints when expanding
+  (setq meow-expand-hint-counts ())
+
   (setq meow-expand-hint-remove-delay 3)
-  ;; (setq meow-expand-hint-counts ())
 
   ;; (setq meow-char-thing-table ((?r . round)
   ;;                              (?s . square)

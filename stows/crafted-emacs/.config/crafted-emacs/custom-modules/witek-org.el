@@ -1,8 +1,9 @@
-;;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
 
 
 (require 'crafted-org)
 
+;;; org
 
 (use-package org
   :init
@@ -44,7 +45,9 @@
 ;; [[https://github.com/alphapapa/outshine]]
 ;; [[https://orgmode.org/guide/Hyperlinks.html]]
 
-(crafted-package-install-package 'outshine)
+;;; outshine
+
+;; (crafted-package-install-package 'outshine)
 ;; (use-package outshine
 ;;   :init
 
@@ -61,4 +64,5 @@
 ;; (global-origami-mode 1)
 
 
+;;; provide
 (provide 'witek-org)

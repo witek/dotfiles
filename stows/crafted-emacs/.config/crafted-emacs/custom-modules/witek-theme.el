@@ -1,4 +1,4 @@
-;;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023  Witoslaw Koczewski
 
@@ -94,7 +94,7 @@
 
 (custom-set-faces
  ;; '(org-level-1 ((t (:inherit default :weight bold :foreground "gray80" :font "Source Sans Pro" :height 1.75))))
- '(outline-minor-1 ((t (:inherit default :foreground "gray60" :font "Rubik Dirt" :height 3.0))))
+ '(outline-minor-1 ((t (:inherit default :foreground "gray60" :font "Rubik Dirt" :height 2.0))))
  ;;
  )
 

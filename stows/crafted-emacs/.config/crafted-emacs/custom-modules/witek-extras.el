@@ -1,16 +1,11 @@
-;;; witek-extras.el --- Witek's Extras -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  Witoslaw Koczewski
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
 
-
-;;           _     _      _           _
-;; __      _| |__ (_) ___| |__       | | _____ _   _
-;; \ \ /\ / / '_ \| |/ __| '_ \ _____| |/ / _ \ | | |
-;;  \ V  V /| | | | | (__| | | |_____|   <  __/ |_| |
-;;   \_/\_/ |_| |_|_|\___|_| |_|     |_|\_\___|\__, |
+;;; which-key
 
 (crafted-package-install-package 'which-key)
 (use-package which-key
@@ -20,11 +15,7 @@
   (which-key-mode)
   )
 
-;;  _     _       _            _
-;; | |__ (_)     | | ___   ___| | __
-;; | '_ \| |_____| |/ _ \ / __| |/ /
-;; | | | | |_____| | (_) | (__|   <
-;; |_| |_|_|     |_|\___/ \___|_|\_\
+;;; hi-lock
 
 (use-package hi-lock
   :bind (:map witek-context-key-map
@@ -39,11 +30,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
     (unhighlight-regexp t))
   )
 
-;;                  __
-;;   ___ ___  _ __ / _|_   _
-;;  / __/ _ \| '__| |_| | | |
-;; | (_| (_) | |  |  _| |_| |
-;;  \___\___/|_|  |_|  \__,_|
+;;; corfu
 
 (use-package corfu
   :bind (:map corfu-map
@@ -52,23 +39,21 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
               ("<right>" . 'corfu-insert)
               ))
 
-;;                 _                _                                   _ _
-;;   ___ _ __ ___ | |__   __ _ _ __| | __      ___ ___  _ __  ___ _   _| | |_
-;;  / _ \ '_ ` _ \| '_ \ / _` | '__| |/ /____ / __/ _ \| '_ \/ __| | | | | __|
-;; |  __/ | | | | | |_) | (_| | |  |   <_____| (_| (_) | | | \__ \ |_| | | |_
-;;  \___|_| |_| |_|_.__/ \__,_|_|  |_|\_\     \___\___/|_| |_|___/\__,_|_|\__|
+;;; consult
+
+(use-package consult
+  :config
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref))
+
+;;; embark-consult
 
 (use-package embark-consult
   :bind (:map vertico-map
               ("C-, e" . embark-export)
               ("C-, a" . embark-act)))
 
-;;                        _ _
-;;  _ __ ___   __ _  __ _(_) |_
-;; | '_ ` _ \ / _` |/ _` | | __|
-;; | | | | | | (_| | (_| | | |_
-;; |_| |_| |_|\__,_|\__, |_|\__|
-;;                  |___/
+;;; magit
 
 (crafted-package-install-package 'magit)
 (use-package magit
@@ -81,11 +66,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
          :map magit-status-mode-map
          ("x"       . 'magit-discard)))
 
-;;     _                  _   _ _ _         _
-;;  __| |___ __ _ _ _ ___| |_(_) | |___ _ _(_)_ _  __ _
-;; / _| / -_) _` | ' \___| / / | | |___| '_| | ' \/ _` |
-;; \__|_\___\__,_|_||_|  |_\_\_|_|_|   |_| |_|_||_\__, |
-;;                                                |___/
+;;; clean-kill-ring
 
 ;; (crafted-package-install-package 'clean-kill-ring)
 ;; (use-package clean-kill-ring
@@ -93,10 +74,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;   :config
 ;;   (clean-kill-ring-mode 1))
 
-;;  _
-;; | |_ _ _ ___ ___ _ __  __ _ __ ___
-;; |  _| '_/ -_) -_) '  \/ _` / _(_-<
-;;  \__|_| \___\___|_|_|_\__,_\__/__/
+;;; treemacs
 
 (crafted-package-install-package 'treemacs)
 (use-package treemacs
@@ -114,11 +92,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   ;;   )
   )
 
-;;                    _
-;;  ____ __  __ _ _ _| |_ _ __  __ _ _ _ __ _ _ _  ___
-;; (_-< '  \/ _` | '_|  _| '_ \/ _` | '_/ _` | ' \(_-<
-;; /__/_|_|_\__,_|_|  \__| .__/\__,_|_| \__,_|_||_/__/
-;;                       |_|
+;;; smartparens
 
 (crafted-package-install-package 'smartparens)
 (use-package smartparens
@@ -136,15 +110,25 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
          )
 
   :config
+
+  ;; fix, so that \n is not added to the kill-ring
+  (defun sp-kill-whole-line ()
+    (interactive)
+    (if mark-active
+        (sp-kill-region (region-beginning) (region-end))
+      (beginning-of-line)
+      (sp-kill-hybrid-sexp nil)
+      (when (= (char-after) ?\n)
+        (append-next-kill)
+        (kill-whole-line))))
+
+  (require 'smartparens-config)
   (show-smartparens-global-mode 1)
   )
 
-(require 'smartparens-config)
 
-;;             _            _
-;;  _ _ ___ __| |_ __ _ _ _| |_ ___ ___ _ __  __ _ __ ___
-;; | '_/ -_|_-<  _/ _` | '_|  _|___/ -_) '  \/ _` / _(_-<
-;; |_| \___/__/\__\__,_|_|  \__|   \___|_|_|_\__,_\__/__/
+
+;;; restart-emacs
 
 (crafted-package-install-package 'restart-emacs)
 (use-package restart-emacs
@@ -152,10 +136,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   )
 
 
-;; __ __ ____ _ _ _ ___ _ __
-;; \ V  V / _` | '_/ -_) '_ \
-;;  \_/\_/\__, |_| \___| .__/
-;;        |___/        |_|
+;;; wgrep
 
 ;; https://github.com/mhayashi1120/Emacs-wgrep
 
@@ -174,10 +155,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   )
 
 
-;;  __ ___ ___  _
-;; / _` \ V / || |
-;; \__,_|\_/ \_, |
-;;           |__/
+;;; avy
 
 ;; https://github.com/abo-abo/avy
 
@@ -185,32 +163,27 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   :ensure t
   :bind ("C-j" . avy-goto-char-timer))
 
-;;          _                           _
-;;  __ _ __| |___  __ ___ _ __  ___  __| |___
-;; / _` / _` / _ \/ _|___| '  \/ _ \/ _` / -_)
-;; \__,_\__,_\___/\__|   |_|_|_\___/\__,_\___|
+;;; adoc-mode
 
 (crafted-package-install-package 'adoc-mode)
 (use-package adoc-mode
   )
 
 
-;;     _      _                                _
-;;  __| |___ (_)_  _ _ _ ___ ___ _ __  ___  __| |___
-;; / _| / _ \| | || | '_/ -_)___| '  \/ _ \/ _` / -_)
-;; \__|_\___// |\_,_|_| \___|   |_|_|_\___/\__,_\___|
-;;         |__/
+;;; clojure-mode
 
 (use-package clojure-mode
   :ensure t
   :config
+  (setq
+   clojure-ident-style 'align-arguments
+   clojure-align-forms-automatically 't
+   )
+
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   )
 
-;;     _    _
-;;  __(_)__| |___ _ _
-;; / _| / _` / -_) '_|
-;; \__|_\__,_\___|_|
+;;; cider
 
 (use-package cider
   :after clojure-mode
@@ -218,6 +191,9 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   (setq cider-eldoc-display-for-symbol-at-point nil)
   (setq cider-repl-display-help-banner nil)
   (setq cider-print-fn 'fipp)
+  (setq cider-font-lock-reader-conditionals nil)
+  (setq cider-auto-inspect-after-eval t)
+  (setq cider-save-file-on-load t)
 
   (define-key witek-context-key-map (kbd "e b") 'cider-eval-buffer)
   (define-key witek-context-key-map (kbd "e l") 'cider-eval-last-sexp)
@@ -225,43 +201,21 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
   )
 
-;;     _  _              __         _
-;;  __| |(_)___ _ _ ___ / _|__ _ __| |_ ___ _ _
-;; / _| || |___| '_/ -_)  _/ _` / _|  _/ _ \ '_|
-;; \__|_|/ |   |_| \___|_| \__,_\__|\__\___/_|
-;;     |__/
+;;; clj-refactor
 
 (use-package clj-refactor
   :after clojure-mode
   :config
   (setq cljr-add-ns-to-blank-clj-files t))
 
-
-(setq
-   clojure-ident-style 'align-arguments
-   clojure-align-forms-automatically 't
-   )
-
-(setq cider-font-lock-reader-conditionals nil)
-(setq cider-auto-inspect-after-eval t)
-(setq cider-save-file-on-load t)
-
-
-
-;;   __ _      _     _
-;;  / _(_)__ _| |___| |_
-;; |  _| / _` | / -_)  _|
-;; |_| |_\__, |_\___|\__|
-;;       |___/
+;;; figlet
 
 (crafted-package-install-package 'figlet)
 (use-package figlet
   )
 
 
-;; ** Witek's extensions
-
-;; *** witek-make-frame-with-messages
+;;; witek
 
 (defun witek-make-frame-with-messages ()
   "Make a new frame with *Messages* buffer."
@@ -336,6 +290,5 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
       (progn  (copy-file filename newname 1)  (delete-file filename)  (set-visited-file-name newname)  (set-buffer-modified-p nil)  t))))
 
 
-
-;; * Export witek-extras
+;;; provide
 (provide 'witek-extras)
