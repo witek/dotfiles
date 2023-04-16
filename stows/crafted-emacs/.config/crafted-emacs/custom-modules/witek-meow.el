@@ -171,6 +171,7 @@
    '("g g" . beginning-of-buffer)
    '("g r" . xref-find-references)
    '("g i" . consult-imenu)
+   '("g o" . consult-outline)
    '("g b" . consult-bookmark)
 
    '("m" . consult-register-store)

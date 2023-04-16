@@ -78,17 +78,7 @@
 ;; just use identifier at point
 (setq xref-prompt-for-identifier nil)
 
-
-
-;; *** Let's be Evil
-
-
-
-;; ** UI
-
-;;
-;; *** windows
-
+;; (set-face-attribute 'doom-mode-line nil :box '(:width 0))
 
 ;; (defadvice! prompt-for-buffer (&rest _)
 ;;   :after '(evil-window-split evil-window-vsplit)

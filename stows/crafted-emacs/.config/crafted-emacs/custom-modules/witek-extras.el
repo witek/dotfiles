@@ -29,10 +29,10 @@
 (use-package hi-lock
   :bind (:map witek-context-key-map
               ("h s"        . 'highlight-symbol-at-point)
-              ("h <escape>" . 'my/unhighlight-all-in-buffer))
+              ("h <escape>" . 'witekunhighlight-all-in-buffer))
   :config
 
-  (defun my/unhighlight-all-in-buffer ()
+  (defun witek-unhighlight-all-in-buffer ()
     "Remove all highlights made by `hi-lock' from the current buffer.
 The same result can also be be achieved by \\[universal-argument] \\[unhighlight-regexp]."
     (interactive)
@@ -123,7 +123,9 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 (crafted-package-install-package 'smartparens)
 (use-package smartparens
   :demand t
-  :bind (("M-l" . 'sp-forward-slurp-sexp) ; owerride: downcase-word
+  :bind (("<backspace>" . 'sp-backward-delete-char)
+
+         ("M-l" . 'sp-forward-slurp-sexp) ; owerride: downcase-word
          ("M-h" . 'sp-forward-barf-sexp)  ; override: mark-paragraph
 
          ("M-w" . 'sp-clone-sexp)         ; override: kill-ring-save
@@ -245,36 +247,6 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 (setq cider-save-file-on-load t)
 
 
-;;  ___ _ _ __ _
-;; / _ \ '_/ _` |
-;; \___/_| \__, |
-;;         |___/
-
-
-(setq org-directory "~/org/")
-
-;; *** outshine - Org features in code files
-;; [[https://github.com/alphapapa/outshine]]
-;; [[https://orgmode.org/guide/Hyperlinks.html]]
-;; (use-package outshine
-;;   :init
-
-;;   (defun witek-activate-outshine ()
-;;     (outshine-mode 1)
-;;     (general-define-key
-;;      :keymaps 'outline-mode-map
-;;      :states 'normal
-;;      "M-l" 'nil
-;;      "M-h" 'nil))
-
-;;   (add-hook 'emacs-lisp-mode-hook 'witek-activate-outshine)
-;;   (add-hook 'clojure-mode-hook 'witek-activate-outshine))
-
-;; ** origami
-
-;; (use-package origami
-;;   )
-;; (global-origami-mode 1)
 
 ;;   __ _      _     _
 ;;  / _(_)__ _| |___| |_
