@@ -35,6 +35,11 @@
   (call-interactively 'sp-end-of-sexp)
   (call-interactively 'meow-insert))
 
+(defun witek-indent-region-or-defun ()
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'meow-indent)
+    (call-interactively 'sp-indent-defun)))
 
 (defun meow-setup-keys ()
 
@@ -43,6 +48,7 @@
    '("j" . meow-next)
    '("k" . meow-prev)
    ;; '("<escape>" . ignore)
+
    )
 
   (meow-leader-define-key
@@ -63,7 +69,15 @@
    '("9" . meow-digit-argument)
    '("0" . meow-digit-argument)
    '("/" . meow-keypad-describe-key)
-   '("?" . meow-cheatsheet))
+   '("?" . meow-cheatsheet)
+
+   '("d v" . describe-variable)
+   '("d k" . describe-key)
+   '("d K" . describe-keymap)
+   '("d f" . describe-function)
+   '("d m" . describe-mode)
+
+   )
 
   (meow-normal-define-key
 
@@ -136,7 +150,7 @@
 
    '("n" . meow-search)
 
-   '("=" . meow-indent)
+   '("=" . witek-indent-region-or-defun)
 
    '(":" . consult-goto-line)
 

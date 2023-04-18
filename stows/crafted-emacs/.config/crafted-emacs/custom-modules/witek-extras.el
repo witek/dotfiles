@@ -9,9 +9,10 @@
 
 (crafted-package-install-package 'which-key)
 (use-package which-key
+  :init (which-key-mode)
   :config
   (setq which-key-show-transient-maps t)
-  (setq which-key-idle-delay 0.5)
+  (setq which-key-idle-delay 0.3)
   (which-key-mode)
   )
 
@@ -34,10 +35,9 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 (use-package corfu
   :bind (:map corfu-map
-              ("C-ä"     . 'corfu-quit)
-              ("<ret>"   . nil)
-              ("<right>" . 'corfu-insert)
-              ))
+              ("C-ä"      . 'corfu-quit)
+              ("<return>" . nil)
+              ("<right>"  . 'corfu-insert)))
 
 ;;; consult
 
@@ -55,8 +55,17 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 ;;; magit
 
+(crafted-package-install-package 'compat)
+(use-package compat)
+(use-package dash)
+(use-package transient)
+(crafted-package-install-package 'with-editor)
+(use-package with-editor)
+
+
 (crafted-package-install-package 'magit)
 (use-package magit
+  :defer
   :bind (("C-c g s" . 'magit-status)
          ("C-c G s" . 'magit-status)
 
@@ -64,7 +73,8 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
          ("M"       . 'magit-file-dispatch)
 
          :map magit-status-mode-map
-         ("x"       . 'magit-discard)))
+         ("x"       . 'magit-discard))
+  )
 
 ;;; clean-kill-ring
 
@@ -92,6 +102,17 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   ;;   )
   )
 
+;;; paren-face
+
+;; https://github.com/tarsius/paren-face
+
+(crafted-package-install-package 'paren-face)
+(use-package paren-face
+  :init
+  (global-paren-face-mode 1)
+  )
+
+
 ;;; smartparens
 
 (crafted-package-install-package 'smartparens)
@@ -111,6 +132,9 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
   :config
 
+  (require 'smartparens-config)
+  (show-smartparens-global-mode 1)
+
   ;; fix, so that \n is not added to the kill-ring
   (defun sp-kill-whole-line ()
     (interactive)
@@ -122,9 +146,8 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
         (append-next-kill)
         (kill-whole-line))))
 
-  (require 'smartparens-config)
-  (show-smartparens-global-mode 1)
   )
+
 
 ;;; popper
 
@@ -169,8 +192,8 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 ;; https://github.com/abo-abo/avy
 
+(crafted-package-install-package 'avy)
 (use-package avy
-  :ensure t
   :bind ("C-j" . avy-goto-char-timer))
 
 ;;; adoc-mode
@@ -182,8 +205,8 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 ;;; clojure-mode
 
+(crafted-package-install-package 'clojure-mode)
 (use-package clojure-mode
-  :ensure t
   :config
   (setq
    clojure-ident-style 'align-arguments
@@ -237,6 +260,11 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
           (car
            (auth-source-search :host "platform.openai.com"))
           :secret))))
+
+;;; lorem-ipsum
+
+(crafted-package-install-package 'lorem-ipsum)
+(use-package lorem-ipsum)
 
 ;;; witek
 

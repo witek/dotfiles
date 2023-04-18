@@ -4,6 +4,9 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
+(setq user-full-name "Witoslaw Koczewski")
+(setq user-mail-address "wi@koczewski.de")
+
 (setq crafted-load-custom-file nil)
 
 (setq gc-cons-threshold (* 100 1024 1024))
