@@ -271,7 +271,6 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   (interactive)
   (save-some-buffers t))
 
-
 (defun witek-rename-file (new-name)
 
   "Renames both current buffer and file it's visiting to NEW-NAME." (interactive "sNew name: ")
