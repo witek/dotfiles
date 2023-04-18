@@ -126,7 +126,18 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   (show-smartparens-global-mode 1)
   )
 
+;;; popper
 
+;; https://github.com/karthink/popper
+
+(crafted-package-install-package 'popper)
+(use-package popper
+  :init
+  (setq popper-reference-buffers
+        '(help-mode
+          magit-status-mode))
+  (popper-mode 1)
+  (popper-echo-mode 1))
 
 ;;; restart-emacs
 
@@ -214,6 +225,12 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 (use-package figlet
   )
 
+;;; gptel
+
+;; https://github.com/karthink/gptel
+
+;; (crafted-package-install-package 'gptel)
+;; (use-package gptel)
 
 ;;; witek
 

@@ -64,7 +64,7 @@
   (setq doom-modeline-height 35)
   ;; (setq doom-modeline-hud t)
   ;; (setq doom-modeline-bar-width 20)
-  ;; (setq doom-modeline-window-width-limit nil)
+  (setq doom-modeline-window-width-limit 20)
   ;; (setq doom-modeline-project-detection 'auto)
   (setq doom-modeline-buffer-file-name-style 'relative-from-project)
   (setq doom-modeline-minor-modes nil)
