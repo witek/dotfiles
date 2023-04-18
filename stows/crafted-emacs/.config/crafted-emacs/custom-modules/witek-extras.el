@@ -134,8 +134,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 (use-package popper
   :init
   (setq popper-reference-buffers
-        '(help-mode
-          magit-status-mode))
+        '(help-mode))
   (popper-mode 1)
   (popper-echo-mode 1))
 
@@ -229,8 +228,15 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 ;; https://github.com/karthink/gptel
 
-;; (crafted-package-install-package 'gptel)
-;; (use-package gptel)
+(crafted-package-install-package 'gptel)
+(use-package gptel
+  :config
+  (setq gptel-api-key
+        (funcall
+         (plist-get
+          (car
+           (auth-source-search :host "platform.openai.com"))
+          :secret))))
 
 ;;; witek
 
