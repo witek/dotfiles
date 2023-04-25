@@ -41,6 +41,12 @@
       (call-interactively 'meow-indent)
     (call-interactively 'sp-indent-defun)))
 
+(defun witek-matching-paren ()
+  (interactive)
+  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+        ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+        ))
+
 (defun meow-setup-keys ()
 
 
@@ -93,6 +99,7 @@
    '("E" . meow-next-word)
    ;; '("B" . meow-back-word)
    '("e" . meow-end-of-thing)
+   '("%" . witek-matching-paren)
 
    ;; Selection
    '("V" . meow-line)
