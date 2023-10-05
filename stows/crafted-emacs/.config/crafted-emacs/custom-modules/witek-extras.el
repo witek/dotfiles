@@ -266,6 +266,22 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 (crafted-package-install-package 'lorem-ipsum)
 (use-package lorem-ipsum)
 
+;;; go-translate
+
+(crafted-package-install-package 'go-translate)
+(use-package go-translate
+  :init
+  (require 'go-translate)
+  :config
+  (setq gts-translate-list '(("de" "en")
+                             ("en" "de")))
+  (setq gts-default-translator
+        (gts-translator
+         :picker (gts-prompt-picker)
+         :engines (list (gts-bing-engine) (gts-google-engine))
+         :render (gts-buffer-render)))
+  )
+
 ;;; witek
 
 (defun witek-make-frame-with-messages ()

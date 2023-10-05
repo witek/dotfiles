@@ -36,6 +36,10 @@
 
   )
 
+;;; ef-themes
+
+(crafted-package-install-package 'ef-themes)
+
 ;;; fira-code-mode
 
 (crafted-package-install-package 'fira-code-mode)

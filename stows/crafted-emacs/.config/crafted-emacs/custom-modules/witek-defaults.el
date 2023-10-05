@@ -86,6 +86,13 @@
 
 ;; *** consult
 
+;;; smartparens
+
+(crafted-package-install-package 'smartparens)
+(use-package smartparens
+  :demand t
+  )
+
 
 
 (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)

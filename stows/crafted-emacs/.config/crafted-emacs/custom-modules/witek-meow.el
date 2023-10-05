@@ -94,6 +94,8 @@
    '("k" . meow-prev)
 
    ;; Movement + Navigation
+   '("K" . sp-beginning-of-previous-sexp)
+   '("J" . sp-beginning-of-next-sexp)
    '("L" . meow-next-symbol)
    '("H" . meow-back-symbol)
    '("E" . meow-next-word)
@@ -111,7 +113,6 @@
    '("S" . meow-bounds-of-thing)
    '("F" . meow-find)
    '("t" . meow-till)
-   '("J" . meow-join)
    '("[" . meow-beginning-of-thing)
    '("]" . meow-end-of-thing)
    '("v" . meow-right-expand)
