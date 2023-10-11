@@ -149,7 +149,7 @@
 (global-set-key (kbd "C-c s q") 'query-replace)
 
 ;; (global-set-key (kbd "C-f") 'isearch-forward)
-(global-set-key (kbd "C-s") 'isearch-forward)
+;; (global-set-key (kbd "C-s") 'isearch-forward)
 
 ;;; witek-context-key-map
 

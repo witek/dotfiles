@@ -5,4 +5,4 @@
 (straight-use-package 'use-package)
 
 (setq inhibit-compacting-font-caches t)
-(setq helm-ag-show-status-function nil)
+;; (setq helm-ag-show-status-function nil)

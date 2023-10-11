@@ -34,9 +34,11 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; corfu
 
 (use-package corfu
+  :config
+  (setq corfu-auto nil
+        corfu-quit-no-match 'separator)
   :bind (:map corfu-map
-              ("C-ä"      . 'corfu-quit)
-              ("<return>" . nil)
+              ("RET" . nil)
               ("<right>"  . 'corfu-insert)))
 
 ;;; consult
@@ -100,6 +102,17 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   ;;   "c" 'treemacs-copy-file
   ;;   "r" 'treemacs-rename-file
   ;;   )
+  )
+
+;;; phi-search
+
+;; https://github.com/zk-phi/phi-search
+
+(crafted-package-install-package 'phi-search)
+(use-package phi-search
+  :config
+  (global-set-key (kbd "C-s") 'phi-search)
+  (global-set-key (kbd "C-r") 'phi-search-backward)
   )
 
 ;;; paren-face

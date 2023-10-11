@@ -138,7 +138,7 @@
 
    '("u" . meow-undo)
    '("U" . undo-redo)
-   '("C-r" . undo-redo)
+   ;; '("C-r" . undo-redo)
 
    ;; Misc
    '("." . repeat)
@@ -146,6 +146,7 @@
    '("-" . negative-argument)
    '("/" . meow-visit)
    '("q" . meow-quit)
+   '("M-j" . join-line)
    ;; '("<escape>" . ignore)
 
    '("y" . meow-save)
