@@ -1,4 +1,5 @@
 alias ls='ls --color=auto'
+alias mkdir='mkdir -pv'
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias fgrep='fgrep --colour=auto'

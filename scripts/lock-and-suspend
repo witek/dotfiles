@@ -1,0 +1,3 @@
+~/.dotfiles/scripts/lock
+systemctl suspend
+

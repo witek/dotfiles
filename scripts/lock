@@ -1,0 +1,2 @@
+swaylock --ignore-empty-password --show-failed-attempts --daemonize --color 000000 --inside-color 111111 --font "Fira Code" --indicator-idle-visible &
+

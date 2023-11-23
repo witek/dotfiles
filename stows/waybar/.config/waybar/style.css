@@ -1,0 +1,181 @@
+/****** GLOBAL ******/
+
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: FontAwesome, Fira Code, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+window#waybar {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/*
+window#waybar.empty {
+    background-color: transparent;
+}
+window#waybar.solo {
+    background-color: #FFFFFF;
+}
+*/
+
+window#waybar.termite {
+    background-color: #3F3F3F;
+}
+
+window#waybar.chromium {
+    background-color: #000000;
+    border: none;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
+    border: none;
+    border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+    background: inherit;
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+/****** hyprland/workspaces ******/
+
+#workspaces {
+    margin-right: 32px;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: #aaaaaa;
+}
+
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#workspaces button.active {
+    color: white;
+}
+
+#workspaces button.empty {
+    color: #999999;
+}
+
+#workspaces button.persistent {
+    color: white;
+}
+
+#workspaces button.special {
+    color: orange;
+}
+
+/****** hyprland/window ******/
+
+#window {
+    color: #cccccc;
+    margin-right: 32px;
+}
+
+/****** BUTTONS ******/
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#keyboard-state,
+#mpd {
+    padding: 4px 10px;
+    /* margin: 0 5px; */
+    background-color: transparent;
+    color: #cccccc;
+}
+
+#keyboard-state > label.locked,
+#idle_inhibitor.activated,
+#network.disconnected,
+#temperature.critical,
+#wireplumber.muted,
+#pulseaudio.muted,
+#battery.critical:not(.charging),
+#privacy,
+.needs-attention {
+    background-color: red;
+    color: white;
+    text-decoration: none;
+}
+
+
+/****** keyboard-state ******/
+
+#keyboard-state {
+    padding: 0 0px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state > label {
+    padding: 0 5px;
+    text-decoration: line-through;
+}
+
+/****** tray ******/
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: red;
+}
+
+
+label:focus {
+    background-color: #000000;
+}
+
+
+#language {
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+
+#scratchpad {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#scratchpad.empty {
+  background-color: transparent;
+}

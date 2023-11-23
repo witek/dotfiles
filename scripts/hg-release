@@ -1,0 +1,3 @@
+cd /p/happygast
+gnome-terminal -- bin/release-and-wait
+

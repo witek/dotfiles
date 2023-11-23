@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "hello world"
+echo "Press ENTER to continue..."
+read
+
