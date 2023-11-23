@@ -54,7 +54,7 @@
         ef-themes-variable-pitch-ui t)
   (setq ef-themes-region '(intense no-extend neutral))
   (mapc #'disable-theme custom-enabled-themes)
-  (ef-themes-select 'ef-elea-dark)
+  (ef-themes-select 'ef-maris-dark)
   )
 
 ;;; fira-code-mode
