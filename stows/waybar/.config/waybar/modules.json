@@ -15,7 +15,9 @@
  "disk":
  {"interval": 30,
   "format": " {used}",
-  "path": "/"},
+  "path": "/",
+  "on-click": "baobab"
+  },
 
  "keyboard-state":
  {
@@ -71,24 +73,24 @@
  "tray":
  {
      // "icon-size": 21,
-     "spacing": 10,
-     "show-passive-items": true
+  "spacing": 10,
+  "show-passive-items": true
   },
 
 
  "clock":
  {
      // "timezone": "America/New_York",
-  "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
   "format": "{:%d.%b %H:%M}",
-  "format-alt": "{:%Y-%m-%d %H:%M}"
+  "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
   },
 
 
  "cpu":
  {
   "format": " {usage}%",
-  "tooltip": true
+  "tooltip": true,
+  "on-click": "gnome-system-monitor"
   },
 
 
@@ -157,7 +159,7 @@
   "format": "{icon} {volume}% {format_source}",
   "format-bluetooth": "{icon} {volume}% {format_source}",
   "format-bluetooth-muted": " {icon} {format_source}",
-  "format-muted": "<big>󰝟</big> {format_source}",
+  "format-muted": "<big>󰝟</big> MUTE {format_source}",
   "format-source": "  {volume}%",
   "format-source-muted": "",
   "format-icons": {

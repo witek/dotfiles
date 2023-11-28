@@ -1,5 +1,5 @@
 {
-    // "layer": "top", // Waybar at top layer
+    "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 40, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
@@ -8,9 +8,9 @@
     "include": ["~/.config/waybar/modules.json"],
 
     // Choose the order of the modules
-    "modules-left": ["clock"],
-    "modules-center": ["hyprland/window", "hyprland/workspaces"],
-    "modules-right": ["privacy", "idle_inhibitor", "pulseaudio", "network", "disk", "cpu", "temperature", "keyboard-state", "battery", "tray"],
+    "modules-left": ["hyprland/window"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["privacy", "idle_inhibitor", "pulseaudio", "network", "disk", "cpu", "temperature", "keyboard-state", "battery", "tray", "clock"],
 
 
 }
