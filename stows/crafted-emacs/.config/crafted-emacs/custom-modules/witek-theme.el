@@ -121,6 +121,11 @@
  ;;
  )
 
+;;; spacious-padding
+
+(crafted-package-install-package 'spacious-padding)
+(use-package spacious-padding)
+
 ;;; provide
 
 (provide 'witek-theme)
