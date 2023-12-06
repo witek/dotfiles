@@ -1,54 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-(defun witek-wrap-round ()
-  (interactive)
-  (sp-wrap-round)
-  (meow-insert)
-  )
-
-(defun witek-wrap-square ()
-  (interactive)
-  (sp-wrap-square)
-  (meow-insert)
-  )
-
-(defun witek-wrap-curly ()
-  (interactive)
-  (sp-wrap-curly)
-  (meow-insert)
-  )
-
-(defun witek-meow-mark-symbol ()
-  (interactive)
-  (if (use-region-p)
-      (call-interactively 'meow-next-symbol)
-    (call-interactively 'meow-mark-symbol)))
-
-(defun witek-meow-mark-word ()
-  (interactive)
-  (if (use-region-p)
-      (call-interactively 'meow-next-word)
-    (call-interactively 'meow-mark-word)))
-
-(defun witek-append-after-end-of-sexp ()
-  (interactive)
-  (call-interactively 'sp-end-of-sexp)
-  (call-interactively 'meow-insert))
-
-(defun witek-indent-region-or-defun ()
-  (interactive)
-  (if (use-region-p)
-      (call-interactively 'meow-indent)
-    (call-interactively 'sp-indent-defun)))
-
-(defun witek-matching-paren ()
-  (interactive)
-  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-        ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-        ))
-
 (defun meow-setup-keys ()
-
 
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
@@ -94,6 +46,7 @@
    '("k" . meow-prev)
 
    ;; Movement + Navigation
+   '(")" . witek-after-sexp)
    '("K" . sp-beginning-of-previous-sexp)
    '("J" . sp-beginning-of-next-sexp)
    '("L" . meow-next-symbol)
@@ -135,6 +88,7 @@
    '("<deletechar>" . meow-delete)
    '("<del>". meow-backward-delete)
    '("C-<backspace>" . sp-raise-sexp)
+   '("x" . delete-char)
 
    '("u" . meow-undo)
    '("U" . undo-redo)

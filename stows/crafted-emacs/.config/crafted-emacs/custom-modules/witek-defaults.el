@@ -130,8 +130,8 @@
 (global-set-key (kbd "C-c f f") 'find-file)
 (global-set-key (kbd "C-c f r") 'consult-recent-file)
 
-(global-set-key (kbd "C-c t s") 'smartparens-mode)
-(global-set-key (kbd "C-c t S") 'smartparens-strict-mode)
+;; (global-set-key (kbd "C-c t S") 'smartparens-mode)
+(global-set-key (kbd "C-c t s") 'smartparens-strict-mode)
 
 (global-set-key (kbd "C-c p p") 'project-switch-project)
 (global-set-key (kbd "C-c p f") 'project-find-file)
@@ -165,6 +165,79 @@
   ;;     (which-key-show-keymap 'witek-context-key-map))
   ;;   )
   )
+
+(define-key witek-context-key-map (kbd "e b") 'eval-buffer)
+(define-key witek-context-key-map (kbd "e l") 'eval-last-sexp)
+(define-key witek-context-key-map (kbd "e s") 'eval-region)
+
+;;; witek commands
+
+
+(defun witek-hg-text-wrap (text-key)
+  (interactive "sEnter key for text:")
+  (save-excursion
+   (sp-beginning-of-sexp)
+   (backward-char)
+   (sp-wrap-round)
+   (insert "u/text :")
+   (insert text-key)
+   (insert " "))
+  (save-buffer)
+  )
+
+(define-key witek-context-key-map (kbd "t") 'witek-hg-text-wrap)
+
+(defun witek-wrap-round ()
+  (interactive)
+  (sp-wrap-round)
+  (meow-insert)
+  )
+
+(defun witek-wrap-square ()
+  (interactive)
+  (sp-wrap-square)
+  (meow-insert)
+  )
+
+(defun witek-wrap-curly ()
+  (interactive)
+  (sp-wrap-curly)
+  (meow-insert)
+  )
+
+(defun witek-meow-mark-symbol ()
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'meow-next-symbol)
+    (call-interactively 'meow-mark-symbol)))
+
+(defun witek-meow-mark-word ()
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'meow-next-word)
+    (call-interactively 'meow-mark-word)))
+
+(defun witek-append-after-end-of-sexp ()
+  (interactive)
+  (call-interactively 'sp-end-of-sexp)
+  (call-interactively 'meow-insert))
+
+(defun witek-after-sexp ()
+  (interactive)
+  (call-interactively 'sp-end-of-sexp)
+  (call-interactively 'meow-right))
+
+(defun witek-indent-region-or-defun ()
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'meow-indent)
+    (call-interactively 'sp-indent-defun)))
+
+(defun witek-matching-paren ()
+  (interactive)
+  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+        ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+        ))
 
 ;;; provide
 (provide 'witek-defaults)

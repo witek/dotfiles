@@ -68,13 +68,16 @@
 
    ((> (x-display-pixel-height) 1600)
     (customize-set-variable 'crafted-ui-default-font
-                            '(:font "Fira Code" :height 110)))
+                            ;; '(:font "Fira Code" :height 110)
+                            '(:font "JetBrains Mono" :height 110 :weight light)
+                            ;; '(:font "Roboto Mono" :height 110)
+                            ))
 
    (:else
     (customize-set-variable 'crafted-ui-default-font
-                            '(:font "Fira Code" :height 110))
-    ))
-  )
+                            ;;'(:font "Fira Code" :height 110)
+                            '(:font "JetBrains Mono" :height 110 :weight light)
+                            ))))
 
 ;;; doom-modeline
 
@@ -125,6 +128,10 @@
 
 (crafted-package-install-package 'spacious-padding)
 (use-package spacious-padding)
+
+;;; transparency
+
+(set-frame-parameter nil 'alpha-background 90)
 
 ;;; provide
 

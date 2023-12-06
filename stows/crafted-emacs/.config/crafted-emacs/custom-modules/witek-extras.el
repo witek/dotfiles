@@ -21,7 +21,7 @@
 (use-package hi-lock
   :bind (:map witek-context-key-map
               ("h s"        . 'highlight-symbol-at-point)
-              ("h <escape>" . 'witekunhighlight-all-in-buffer))
+              ("h <escape>" . 'witek-unhighlight-all-in-buffer))
   :config
 
   (defun witek-unhighlight-all-in-buffer ()
@@ -47,6 +47,12 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   :config
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref))
+
+;;; embark
+
+(use-package embark
+  :bind (:map witek-context-key-map
+              ("e a" . 'embark-act)))
 
 ;;; embark-consult
 
@@ -367,7 +373,6 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
         (message "Buffer '%s' is not visiting a file!" name)
 
       (progn  (copy-file filename newname 1)  (delete-file filename)  (set-visited-file-name newname)  (set-buffer-modified-p nil)  t))))
-
 
 ;;; provide
 (provide 'witek-extras)
