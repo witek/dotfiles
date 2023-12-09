@@ -389,13 +389,13 @@ colors:
   #
   #command: None
 
-#selection:
+selection:
   # This string contains all characters that are used as separators for
   # "semantic words" in Alacritty.
   #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
 
   # When set to `true`, selected text will be copied to the primary clipboard.
-  #save_to_clipboard: false
+  save_to_clipboard: true
 
 #cursor:
   # Cursor style
@@ -661,8 +661,8 @@ colors:
 #   - Left
 #       One character left.
 #   - Right
-#       One character right.
-#   - First
+#       One character First.
+#   - right
 #       First column, or beginning of the line when already at the first column.
 #   - Last
 #       Last column, or beginning of the line when already at the last column.
@@ -771,8 +771,8 @@ colors:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
-  #- { key: Paste,                                       action: Paste          }
+key_bindings:
+  - { key: Paste,     mods: Control,                     action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
   #- { key: L,         mods: Control, mode: ~Vi|~Search, chars: "\x0c"          }
