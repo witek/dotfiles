@@ -66,17 +66,17 @@
 
   (cond
 
-   ((> (x-display-pixel-height) 1600)
+   ((> (x-display-pixel-height) 1080)
     (customize-set-variable 'crafted-ui-default-font
-                            ;; '(:font "Fira Code" :height 110)
-                            '(:font "JetBrains Mono" :height 110 :weight light)
+                            '(:font "Fira Code" :height 110)
+                            ;; '(:font "JetBrains Mono" :height 110 :weight light)
                             ;; '(:font "Roboto Mono" :height 110)
                             ))
 
    (:else
     (customize-set-variable 'crafted-ui-default-font
-                            ;;'(:font "Fira Code" :height 110)
-                            '(:font "JetBrains Mono" :height 110 :weight light)
+                            '(:font "Fira Code" :height 110)
+                            ;; '(:font "JetBrains Mono" :height 110 :weight light)
                             ))))
 
 ;;; doom-modeline

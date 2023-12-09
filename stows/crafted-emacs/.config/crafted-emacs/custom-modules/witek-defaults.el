@@ -178,6 +178,7 @@
   (save-excursion
    (sp-beginning-of-sexp)
    (backward-char)
+   (insert "#")
    (sp-wrap-round)
    (insert "u/text :")
    (insert text-key)
