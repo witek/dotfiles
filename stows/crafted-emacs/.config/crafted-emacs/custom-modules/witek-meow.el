@@ -12,7 +12,6 @@
   (meow-leader-define-key
    ;; SPC j/k will run the original command in MOTION state.
    '("<SPC>" . execute-extended-command)
-   '(":" . eval-expression)
    '("j" . "H-j")
    '("k" . "H-k")
    ;; Use SPC (0-9) for digit arguments.
@@ -28,13 +27,6 @@
    '("0" . meow-digit-argument)
    '("/" . meow-keypad-describe-key)
    '("?" . meow-cheatsheet)
-
-   '("d v" . describe-variable)
-   '("d k" . describe-key)
-   '("d K" . describe-keymap)
-   '("d f" . describe-function)
-   '("d m" . describe-mode)
-
    )
 
   (meow-normal-define-key
@@ -46,7 +38,8 @@
    '("k" . meow-prev)
 
    ;; Movement + Navigation
-   '(")" . witek-after-sexp)
+   '(")" . my/after-end-of-sexp)
+   '("(" . my/before-beginning-of-sexp)
    '("K" . sp-beginning-of-previous-sexp)
    '("J" . sp-beginning-of-next-sexp)
    '("L" . meow-next-symbol)
@@ -88,7 +81,7 @@
    '("<deletechar>" . meow-delete)
    '("<del>". meow-backward-delete)
    '("C-<backspace>" . sp-raise-sexp)
-   '("x" . delete-char)
+   '("x" . meow-delete)
 
    '("u" . meow-undo)
    '("U" . undo-redo)
@@ -96,7 +89,7 @@
 
    ;; Misc
    '("." . repeat)
-   '("R" . meow-reverse)
+   '("r" . meow-reverse)
    '("-" . negative-argument)
    '("/" . meow-visit)
    '("q" . meow-quit)
@@ -105,6 +98,7 @@
 
    '("y" . meow-save)
    '("p" . meow-yank)
+   '("R" . meow-replace)
    '("P" . consult-yank-pop)
 
    '("G" . meow-grab)
@@ -138,14 +132,11 @@
    '("0" . beginning-of-line-text)
    '("$" . end-of-line)
 
-   '("ö" . witek-append-after-end-of-sexp)
+   '("ö" . my/append-after-end-of-sexp)
    '("C-h" . sp-beginning-of-sexp)
    '("C-l" . sp-end-of-sexp)
 
-   '("," . witek-activate-context-key-map)
-   '("(" . witek-wrap-round)
-   '("[" . witek-wrap-square)
-   '("{" . witek-wrap-curly)
+   '("," . my/activate-context-key-map)
 
    '("M" . magit-status)
 

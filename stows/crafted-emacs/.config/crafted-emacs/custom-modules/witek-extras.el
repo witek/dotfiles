@@ -57,9 +57,15 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; embark-consult
 
 (use-package embark-consult
-  :bind (:map vertico-map
-              ("C-, e" . embark-export)
-              ("C-, a" . embark-act)))
+  :bind (:map
+         vertico-map
+         ("C-, e" . embark-export)
+         ("C-, a" . embark-act)
+
+         :map
+         witek-context-key-map
+         ("<RET>" . embark-dwim)
+         ))
 
 ;;; magit
 

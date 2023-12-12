@@ -78,13 +78,9 @@
 ;; just use identifier at point
 (setq xref-prompt-for-identifier nil)
 
-;; (set-face-attribute 'doom-mode-line nil :box '(:width 0))
+(customize-set-variable 'project-vc-merge-submodules t)
 
-;; (defadvice! prompt-for-buffer (&rest _)
-;;   :after '(evil-window-split evil-window-vsplit)
-;;   (consult-buffer))
-
-;; *** consult
+(setq browse-url-browser-function 'browse-url-chrome)
 
 ;;; smartparens
 
@@ -92,15 +88,7 @@
 (use-package smartparens
   :demand t
   )
-
-
-
 (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
-
-
-(customize-set-variable 'project-vc-merge-submodules t)
-
-(setq browse-url-browser-function 'browse-url-chrome)
 
 ;;; keys
 
@@ -112,8 +100,15 @@
 ;; (define-key isearch-mode-map (kbd "C-b") 'isearch-repeat-backward)
 
 (global-set-key (kbd "C-c <SPC>") 'execute-extended-command)
+(global-set-key (kbd "C-c :") 'eval-expression)
 (global-set-key (kbd "C-c <RET>") 'save-buffer)
 (global-set-key (kbd "C-c x") ctl-x-map)
+
+(global-set-key (kbd "C-c d v") 'describe-variable)
+(global-set-key (kbd "C-c d k") 'describe-key)
+(global-set-key (kbd "C-c d K") 'describe-keymap)
+(global-set-key (kbd "C-c d f") 'describe-function)
+(global-set-key (kbd "C-c d m") 'describe-mode)
 
 (global-set-key (kbd "C-c e q") 'save-buffers-kill-terminal)
 (global-set-key (kbd "C-c e Q") 'save-buffers-kill-emacs)
@@ -156,7 +151,7 @@
 (defvar witek-context-key-map (make-sparse-keymap) "Witek's Context Keymap")
 (defalias 'witek-context-key-map witek-context-key-map)
 
-(defun witek-activate-context-key-map ()
+(defun my/activate-context-key-map ()
   "Set 'witek-context-key-map as the current transient map. Also show which-key."
   (interactive)
   (set-transient-map witek-context-key-map)
@@ -185,26 +180,29 @@
    (insert " "))
   (save-buffer)
   )
-
 (define-key witek-context-key-map (kbd "t") 'witek-hg-text-wrap)
 
 (defun witek-wrap-round ()
   (interactive)
   (sp-wrap-round)
-  (meow-insert)
-  )
+  (insert " ")
+  (backward-char)
+  (meow-insert))
+(define-key witek-context-key-map (kbd "(") 'witek-wrap-round)
 
 (defun witek-wrap-square ()
   (interactive)
   (sp-wrap-square)
-  (meow-insert)
-  )
+  (insert " ")
+  (backward-char)
+  (meow-insert))
 
 (defun witek-wrap-curly ()
   (interactive)
   (sp-wrap-curly)
-  (meow-insert)
-  )
+  (insert " ")
+  (backward-char)
+  (meow-insert))
 
 (defun witek-meow-mark-symbol ()
   (interactive)
@@ -218,15 +216,21 @@
       (call-interactively 'meow-next-word)
     (call-interactively 'meow-mark-word)))
 
-(defun witek-append-after-end-of-sexp ()
+(defun my/append-after-end-of-sexp ()
   (interactive)
-  (call-interactively 'sp-end-of-sexp)
+  (sp-end-of-sexp)
+  (insert " ")
   (call-interactively 'meow-insert))
 
-(defun witek-after-sexp ()
+(defun my/before-beginning-of-sexp ()
   (interactive)
-  (call-interactively 'sp-end-of-sexp)
-  (call-interactively 'meow-right))
+  (sp-beginning-of-sexp)
+  (backward-char))
+
+(defun my/after-end-of-sexp ()
+  (interactive)
+  (sp-end-of-sexp)
+  (forward-char))
 
 (defun witek-indent-region-or-defun ()
   (interactive)
