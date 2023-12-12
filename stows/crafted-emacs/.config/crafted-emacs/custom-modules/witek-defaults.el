@@ -119,6 +119,8 @@
 
 (global-set-key (kbd "C-c b b") 'consult-buffer)
 (global-set-key (kbd "C-c b d") 'kill-current-buffer)
+(global-set-key (kbd "C-c b j") 'bookmark-jump)
+(global-set-key (kbd "C-c b J") 'bookmark-jump-other-frame)
 
 (global-set-key (kbd "C-c f s") 'save-buffer)
 (global-set-key (kbd "C-c f S") 'witek-save-all-buffers)
@@ -131,6 +133,7 @@
 (global-set-key (kbd "C-c p p") 'project-switch-project)
 (global-set-key (kbd "C-c p f") 'project-find-file)
 (global-set-key (kbd "C-c p s") 'consult-git-grep)
+
 
 (global-set-key (kbd "C-c w w") 'other-window)
 (global-set-key (kbd "C-c w l") 'window-left)
@@ -165,10 +168,14 @@
 (define-key witek-context-key-map (kbd "e l") 'eval-last-sexp)
 (define-key witek-context-key-map (kbd "e s") 'eval-region)
 
+(define-key witek-context-key-map (kbd "b s") 'bookmark-set)
+(define-key witek-context-key-map (kbd "b j") 'bookmark-jump)
+(define-key witek-context-key-map (kbd "b J") 'bookmark-jump-other-window)
+
 ;;; witek commands
 
 
-(defun witek-hg-text-wrap (text-key)
+(defun my/hg-text-wrap (text-key)
   (interactive "sEnter key for text:")
   (save-excursion
    (sp-beginning-of-sexp)
@@ -180,29 +187,31 @@
    (insert " "))
   (save-buffer)
   )
-(define-key witek-context-key-map (kbd "t") 'witek-hg-text-wrap)
+(define-key witek-context-key-map (kbd "t") 'my/hg-text-wrap)
 
-(defun witek-wrap-round ()
+(defun my/wrap-round ()
   (interactive)
   (sp-wrap-round)
   (insert " ")
   (backward-char)
   (meow-insert))
-(define-key witek-context-key-map (kbd "(") 'witek-wrap-round)
+(define-key witek-context-key-map (kbd "(") 'my/wrap-round)
 
-(defun witek-wrap-square ()
+(defun my/wrap-square ()
   (interactive)
   (sp-wrap-square)
   (insert " ")
   (backward-char)
   (meow-insert))
+(define-key witek-context-key-map (kbd "[") 'my/wrap-square)
 
-(defun witek-wrap-curly ()
+(defun my/wrap-curly ()
   (interactive)
   (sp-wrap-curly)
   (insert " ")
   (backward-char)
   (meow-insert))
+(define-key witek-context-key-map (kbd "{") 'my/wrap-curly)
 
 (defun witek-meow-mark-symbol ()
   (interactive)
@@ -232,13 +241,13 @@
   (sp-end-of-sexp)
   (forward-char))
 
-(defun witek-indent-region-or-defun ()
+(defun my/indent-region-or-defun ()
   (interactive)
   (if (use-region-p)
       (call-interactively 'meow-indent)
     (call-interactively 'sp-indent-defun)))
 
-(defun witek-matching-paren ()
+(defun my/matching-paren ()
   (interactive)
   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
         ((looking-at "\\s\)") (forward-char 1) (backward-list 1))

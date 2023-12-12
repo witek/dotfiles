@@ -47,14 +47,14 @@
    '("E" . meow-next-word)
    ;; '("B" . meow-back-word)
    '("e" . meow-end-of-thing)
-   '("%" . witek-matching-paren)
+   '("%" . my/matching-paren)
 
    ;; Selection
    '("V" . meow-line)
    '("w" . witek-meow-mark-symbol)
    '("W" . witek-meow-mark-word)
    '("b" . meow-block)
-   '("O" . meow-to-block)
+   '("B" . meow-to-block)
    '("s" . meow-inner-of-thing)
    '("S" . meow-bounds-of-thing)
    '("F" . meow-find)
@@ -107,7 +107,7 @@
 
    '("n" . meow-search)
 
-   '("=" . witek-indent-region-or-defun)
+   '("=" . my/indent-region-or-defun)
 
    '(":" . consult-goto-line)
 
@@ -141,8 +141,6 @@
    '("M" . magit-status)
 
    '("#" . clojure-toggle-ignore)
-
-   '("B" . bookmark-set)
 
    '("g g" . beginning-of-buffer)
    '("g r" . xref-find-references)
@@ -198,7 +196,7 @@
 
 
   (setq meow-use-cursor-position-hack t
-        meow-use-enhanced-selection-effect t)
+        meow-use-enhanced-selection-effect nil)
 
   :config
 
