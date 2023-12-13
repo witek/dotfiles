@@ -178,8 +178,9 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
         (append-next-kill)
         (kill-whole-line))))
 
-  )
+  (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
 
+  )
 
 ;;; popper
 

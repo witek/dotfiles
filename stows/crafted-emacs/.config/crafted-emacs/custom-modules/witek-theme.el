@@ -36,7 +36,7 @@
 
 ;;; ef-themes
 
-(crafted-package-install-package 'ef-themes)
+;; (crafted-package-install-package 'ef-themes)
 (use-package ef-themes
   :config
   (setq ef-themes-to-toggle '(ef-elea-light ef-elea-dark))
@@ -60,7 +60,7 @@
 
 ;;; fira-code-mode
 
-(crafted-package-install-package 'fira-code-mode)
+;; (crafted-package-install-package 'fira-code-mode)
 (use-package fira-code-mode
   :config
   (global-fira-code-mode)
@@ -83,7 +83,7 @@
 
 ;;; doom-modeline
 
-(crafted-package-install-package 'doom-modeline)
+;; (crafted-package-install-package 'doom-modeline)
 (use-package doom-modeline
   :init
   (setq doom-modeline-support-imenu t)
@@ -108,7 +108,7 @@
 
 ;;; outline-minor-faces
 
-(crafted-package-install-package 'outline-minor-faces)
+;; (crafted-package-install-package 'outline-minor-faces)
 (use-package outline-minor-faces
   :after outline
 
@@ -128,7 +128,7 @@
 
 ;;; spacious-padding
 
-(crafted-package-install-package 'spacious-padding)
+;; (crafted-package-install-package 'spacious-padding)
 (use-package spacious-padding)
 
 ;;; transparency
