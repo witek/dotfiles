@@ -82,6 +82,7 @@
 
 (setq browse-url-browser-function 'browse-url-chrome)
 
+(setq next-line-add-newlines t)
 ;;; smartparens
 
 (crafted-package-install-package 'smartparens)
