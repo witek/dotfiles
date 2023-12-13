@@ -2,4 +2,6 @@ custom.el
 straight
 elpa
 var
+*.elc
+
 
