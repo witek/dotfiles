@@ -98,6 +98,13 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;   :config
 ;;   (clean-kill-ring-mode 1))
 
+;;; dirvish
+
+(crafted-package-install-package 'dirvish)
+(use-package dirvish
+  :init
+  (dirvish-override-dired-mode))
+
 ;;; treemacs
 
 (crafted-package-install-package 'treemacs)

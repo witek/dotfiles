@@ -72,6 +72,7 @@
                             '(:font "Fira Code" :height 110)
                             ;; '(:font "JetBrains Mono" :height 110 :weight light)
                             ;; '(:font "Roboto Mono" :height 110)
+                            ;; '(:font "Iosevka" :height 120)
                             ))
 
    (:else
