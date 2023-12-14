@@ -67,6 +67,7 @@
 (when (and (executable-find "latex")
            (executable-find "latexmk"))
   (add-to-list 'package-selected-packages 'auctex-latexmk))
+(add-to-list 'package-selected-packages 'binky)
 
 ;; Install
 (package-install-selected-packages :noconfirm)

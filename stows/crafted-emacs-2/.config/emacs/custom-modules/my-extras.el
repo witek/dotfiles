@@ -223,6 +223,16 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 (when (locate-library "org-appear")
   (add-hook 'org-mode-hook 'org-appear-mode))
 
+;;; binky
+;; https://github.com/liuyinz/binky.el/
+
+(use-package binky
+  :init
+  (setq binky-overwrite t)
+  (binky-mode)
+  (binky-margin-mode)
+  )
+
 ;;; provide
 (provide 'my-extras)
 
