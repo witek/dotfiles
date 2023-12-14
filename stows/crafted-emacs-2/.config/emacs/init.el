@@ -23,11 +23,37 @@
 (add-to-list 'package-selected-packages 'consult)
 (add-to-list 'package-selected-packages 'corfu)
 (add-to-list 'package-selected-packages 'embark)
+(add-to-list 'package-selected-packages 'embark-consult)
 (add-to-list 'package-selected-packages 'ef-themes)
+(add-to-list 'package-selected-packages 'meow)
+(add-to-list 'package-selected-packages 'spacious-padding)
+(add-to-list 'package-selected-packages 'outline)
+(add-to-list 'package-selected-packages 'outline-minor-faces)
+(add-to-list 'package-selected-packages 'which-key)
+(add-to-list 'package-selected-packages 'hi-lock)
+(add-to-list 'package-selected-packages 'magit)
+(add-to-list 'package-selected-packages 'dirvish)
+(add-to-list 'package-selected-packages 'smartparens)
+(add-to-list 'package-selected-packages 'phi-search)
+(add-to-list 'package-selected-packages 'paren-face)
+(add-to-list 'package-selected-packages 'popper)
+(add-to-list 'package-selected-packages 'avy)
+(add-to-list 'package-selected-packages 'treemacs)
+(add-to-list 'package-selected-packages 'adoc-mode)
+(add-to-list 'package-selected-packages 'cider)
+(add-to-list 'package-selected-packages 'clj-refactor)
+(add-to-list 'package-selected-packages 'figlet)
+(add-to-list 'package-selected-packages 'gptel)
+(add-to-list 'package-selected-packages 'lorem-ipsum)
+(add-to-list 'package-selected-packages 'go-translate)
+(add-to-list 'package-selected-packages 'lsp-mode)
+(add-to-list 'package-selected-packages 'lsp-ui)
+(add-to-list 'package-selected-packages 'lsp-treemacs)
+(add-to-list 'package-selected-packages 'consult-lsp)
 
 (package-install-selected-packages :noconfirm)
 
-;;; Configuration
+;;; Crafted Configuration
 
 (require 'crafted-updates-config)
 (require 'crafted-defaults-config)
@@ -37,3 +63,32 @@
 (require 'crafted-lisp-config)
 (require 'crafted-org-config)
 (require 'crafted-writing-config)
+
+;;; C-c custom keys (used as leader)
+
+(defun my/set-custom-key (kbd-string command-symbol)
+  (global-set-key (kbd (concat "C-c " kbd-string)) command-symbol))
+
+;;; my custom context key-map
+
+(defvar witek-context-key-map (make-sparse-keymap) "My Context Keymap")
+(defalias 'witek-context-key-map witek-context-key-map)
+
+(defun my/set-context-key (kbd-string command-symbol)
+  (define-key witek-context-key-map (kbd kbd-string) command-symbol))
+
+(defun my/activate-context-key-map ()
+  "Set `witek-context-key-map' as the current transient map. Also show which-key."
+  (interactive)
+  (set-transient-map witek-context-key-map))
+
+;;; My Stuff
+
+(require 'my-defaults)
+(require 'my-commands)
+(require 'my-meow)
+(require 'my-theme)
+(require 'my-keys)
+(require 'my-basics)
+(require 'my-extras)
+(require 'my-lsp)
