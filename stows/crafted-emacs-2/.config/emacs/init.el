@@ -50,6 +50,7 @@
 (add-to-list 'package-selected-packages 'lsp-ui)
 (add-to-list 'package-selected-packages 'lsp-treemacs)
 (add-to-list 'package-selected-packages 'consult-lsp)
+(add-to-list 'package-selected-packages 'ligature)
 
 (package-install-selected-packages :noconfirm)
 
