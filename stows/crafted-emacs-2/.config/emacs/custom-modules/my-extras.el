@@ -238,6 +238,13 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 (use-package string-edit-at-point)
 
+;;; substitute
+;; https://protesilaos.com/emacs/substitute
+
+(use-package substitute
+  :config
+  (setq substitute-fixed-letter-case t))
+
 ;;; provide
 (provide 'my-extras)
 

@@ -69,6 +69,8 @@
   (add-to-list 'package-selected-packages 'auctex-latexmk))
 (add-to-list 'package-selected-packages 'binky)
 (add-to-list 'package-selected-packages 'string-edit-at-point)
+(add-to-list 'package-selected-packages 'substitute)
+
 
 ;; Install
 (package-install-selected-packages :noconfirm)
