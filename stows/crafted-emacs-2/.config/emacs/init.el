@@ -30,6 +30,7 @@
 (add-to-list 'package-selected-packages 'orderless)
 (add-to-list 'package-selected-packages 'ef-themes)
 (add-to-list 'package-selected-packages 'doom-modeline)
+(add-to-list 'package-selected-packages 'doom-themes)
 (add-to-list 'package-selected-packages 'meow)
 (add-to-list 'package-selected-packages 'spacious-padding)
 (add-to-list 'package-selected-packages 'outline)

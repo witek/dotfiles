@@ -36,6 +36,8 @@
 
 (setq confirm-kill-emacs nil)
 
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;;; ** automatic saving and backups
