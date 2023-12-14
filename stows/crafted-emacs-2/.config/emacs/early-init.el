@@ -3,7 +3,7 @@
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-
+(scroll-bar-mode -1)
 
 ;; https://www.emacswiki.org/emacs/FullScreen
 (push '(fullscreen . maximized) default-frame-alist)

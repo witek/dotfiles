@@ -162,18 +162,18 @@
 
 ;;; doom-modeline
 
-;; (crafted-package-install-package 'doom-modeline)
-;; (use-package doom-modeline
-;;   :init
-;;   (setq doom-modeline-support-imenu t)
-;;   (setq doom-modeline-height 35)
-;;   (setq doom-modeline-window-width-limit 20)
-;;   (setq doom-modeline-buffer-file-name-style 'relative-from-project)
-;;   (setq doom-modeline-minor-modes nil)
-;;   (setq doom-modeline-buffer-encoding nil)
-;;   (setq doom-modeline-indent-info t)
-;;   (doom-modeline-mode 1)
-;;   )
+(crafted-package-install-package 'doom-modeline)
+(use-package doom-modeline
+  :init
+  (setq doom-modeline-support-imenu t)
+  (setq doom-modeline-height 35)
+  (setq doom-modeline-window-width-limit 20)
+  (setq doom-modeline-buffer-file-name-style 'relative-from-project)
+  (setq doom-modeline-minor-modes nil)
+  (setq doom-modeline-buffer-encoding nil)
+  (setq doom-modeline-indent-info t)
+  (doom-modeline-mode 1)
+  )
 
 ;;; outline
 
