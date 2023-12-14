@@ -2,6 +2,17 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
+;;; eldoc
+
+(require 'eldoc)
+
+;;; aggressive-indent-mode
+
+;; (when (locate-library "aggressive-indent")
+  ;; (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
+  ;; (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+  ;; (add-hook 'scheme-mode-hook #'aggressive-indent-mode))
+
 ;;; which-key
 ;; https://github.com/justbur/emacs-which-key
 
@@ -116,10 +127,14 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   :config
   (setq
    clojure-ident-style 'align-arguments
-   clojure-align-forms-automatically 't
+   clojure-align-forms-automatically t
    )
 
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+  
+  ;; (with-eval-after-load "flycheck"
+    ;; (flycheck-clojure-setup))
+  
   )
 
 ;;; cider
@@ -183,6 +198,23 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
          :engines (list (gts-bing-engine) (gts-google-engine))
          :render (gts-buffer-render)))
   )
+
+;;; org
+
+;; Return or left-click with mouse follows link
+(customize-set-variable 'org-return-follows-link t)
+(customize-set-variable 'org-mouse-1-follows-link t)
+
+;; Display links as the description provided
+(customize-set-variable 'org-link-descriptive t)
+
+;; Visually indent org-mode files to a given header level
+(add-hook 'org-mode-hook #'org-indent-mode)
+
+;; Hide markup markers
+(customize-set-variable 'org-hide-emphasis-markers t)
+(when (locate-library "org-appear")
+  (add-hook 'org-mode-hook 'org-appear-mode))
 
 
 ;;; provide

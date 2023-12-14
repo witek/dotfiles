@@ -2,7 +2,6 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
-
 ;;; corfu
 
 (use-package corfu
@@ -53,6 +52,7 @@
 
          :map witek-context-key-map
          ("s c" . 'sp-clone-sexp)
+         ("s s" . 'sp-split-sexp)
          ("=" . 'sp-indent-defun)
          )
 
@@ -97,3 +97,23 @@
 
 ;;; provide
 (provide 'my-basics)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

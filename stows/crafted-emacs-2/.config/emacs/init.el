@@ -13,17 +13,20 @@
 ;;; Install packages
 
 (require 'crafted-completion-packages)
-(require 'crafted-ui-packages)
-(require 'crafted-lisp-packages)
-(require 'crafted-org-packages)
-(require 'crafted-writing-packages)
 
+(add-to-list 'package-selected-packages 'all-the-icons)
+(add-to-list 'package-selected-packages 'elisp-demos)
+(add-to-list 'package-selected-packages 'helpful)
+(add-to-list 'package-selected-packages 'aggressive-indent)
 (add-to-list 'package-selected-packages 'vertico)
 (add-to-list 'package-selected-packages 'cape)
 (add-to-list 'package-selected-packages 'consult)
 (add-to-list 'package-selected-packages 'corfu)
+(add-to-list 'package-selected-packages 'corfu-terminal)
 (add-to-list 'package-selected-packages 'embark)
 (add-to-list 'package-selected-packages 'embark-consult)
+(add-to-list 'package-selected-packages 'marginalia)
+(add-to-list 'package-selected-packages 'orderless)
 (add-to-list 'package-selected-packages 'ef-themes)
 (add-to-list 'package-selected-packages 'meow)
 (add-to-list 'package-selected-packages 'spacious-padding)
@@ -42,6 +45,8 @@
 (add-to-list 'package-selected-packages 'adoc-mode)
 (add-to-list 'package-selected-packages 'cider)
 (add-to-list 'package-selected-packages 'clj-refactor)
+(add-to-list 'package-selected-packages 'clojure-mode)
+(add-to-list 'package-selected-packages 'flycheck-clojure)
 (add-to-list 'package-selected-packages 'figlet)
 (add-to-list 'package-selected-packages 'gptel)
 (add-to-list 'package-selected-packages 'lorem-ipsum)
@@ -51,7 +56,16 @@
 (add-to-list 'package-selected-packages 'lsp-treemacs)
 (add-to-list 'package-selected-packages 'consult-lsp)
 (add-to-list 'package-selected-packages 'ligature)
+(add-to-list 'package-selected-packages 'markdown-mode)
+(add-to-list 'package-selected-packages 'denote)
+(add-to-list 'package-selected-packages 'org-appear)
+(when (executable-find "latex")
+  (add-to-list 'package-selected-packages 'auctex))
+(when (and (executable-find "latex")
+           (executable-find "latexmk"))
+  (add-to-list 'package-selected-packages 'auctex-latexmk))
 
+;; Install
 (package-install-selected-packages :noconfirm)
 
 ;;; Crafted Configuration
@@ -59,11 +73,7 @@
 (require 'crafted-updates-config)
 (require 'crafted-defaults-config)
 (require 'crafted-startup-config)
-(require 'crafted-ui-config)
 (require 'crafted-completion-config)
-(require 'crafted-lisp-config)
-(require 'crafted-org-config)
-(require 'crafted-writing-config)
 
 ;;; C-c custom keys (used as leader)
 
