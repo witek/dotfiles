@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+;; https://github.com/meow-edit/meow
+
 (defun meow-setup-keys ()
 
   (meow-motion-overwrite-define-key
@@ -165,7 +167,7 @@
 (setq meow-cursor-type-normal '(bar . 4))
 
 ;; disable anoying hints when expanding
-(setq meow-expand-hint-counts ())
+;; (setq meow-expand-hint-counts ())
 
 (setq meow-expand-hint-remove-delay 3)
 
