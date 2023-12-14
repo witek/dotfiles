@@ -13,6 +13,13 @@
   ;; (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
   ;; (add-hook 'scheme-mode-hook #'aggressive-indent-mode))
 
+;;; linum-relative
+;; https://github.com/coldnew/linum-relative
+
+(require 'linum-relative)
+(setq linum-relative-backend 'display-line-numbers-mode)
+(linum-relative-global-mode 1)
+
 ;;; which-key
 ;; https://github.com/justbur/emacs-which-key
 
@@ -216,6 +223,14 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 (when (locate-library "org-appear")
   (add-hook 'org-mode-hook 'org-appear-mode))
 
-
 ;;; provide
 (provide 'my-extras)
+
+
+
+
+
+
+
+
+

@@ -3,14 +3,30 @@
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
 ;;; corfu
+;; https://github.com/minad/corfu
 
 (use-package corfu
   :config
-  (setq corfu-auto nil
+  (setq corfu-auto t
+        corfu-auto-delay 0.2
+        corfu-auto-prefix 2
         corfu-quit-no-match 'separator)
   :bind (:map corfu-map
               ("RET" . nil)
               ("<right>"  . 'corfu-insert)))
+
+;;; nerd-icons-corfu
+;; https://github.com/LuigiPiucco/nerd-icons-corfu
+
+(use-package nerd-icons-corfu
+  :init
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
+  (setq nerd-icons-corfu-mapping
+      '((array :style "cod" :icon "symbol_array" :face font-lock-type-face)
+        (boolean :style "cod" :icon "symbol_boolean" :face font-lock-builtin-face)
+        ;; ...
+        (t :style "cod" :icon "code" :face font-lock-warning-face)))
+  )
 
 ;;; consult
 

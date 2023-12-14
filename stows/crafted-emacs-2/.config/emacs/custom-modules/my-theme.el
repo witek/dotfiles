@@ -162,16 +162,19 @@
 
 ;;; doom-modeline
 
-(crafted-package-install-package 'doom-modeline)
 (use-package doom-modeline
   :init
   (setq doom-modeline-support-imenu t)
   (setq doom-modeline-height 35)
+  ;; (setq doom-modeline-hud t)
+  (setq doom-modeline-project-detection 'project)
   (setq doom-modeline-window-width-limit 20)
-  (setq doom-modeline-buffer-file-name-style 'relative-from-project)
+  (setq doom-modeline-buffer-file-name-style 'auto)
   (setq doom-modeline-minor-modes nil)
   (setq doom-modeline-buffer-encoding nil)
   (setq doom-modeline-indent-info t)
+  (setq doom-modeline-lsp-icon t)
+  (setq doom-modeline-always-visible-segments '())
   (doom-modeline-mode 1)
   )
 
@@ -198,11 +201,12 @@
 
 (custom-set-faces
  ;; '(org-level-1 ((t (:inherit default :weight bold :foreground "gray80" :font "Source Sans Pro" :height 1.75))))
- '(outline-minor-1 ((t (:inherit default :foreground "gray60" :font "Rubik Dirt" :height 2.0))))
+ ;; '(outline-minor-1 ((t (:inherit default :foreground "gray60" :font "Rubik Dirt" :height 2.0))))
  ;;
  )
 
 ;;; spacious-padding
+(spacious-padding-mode 1)
 
 ;; TODO
 
@@ -213,3 +217,4 @@
 ;;; provide
 
 (provide 'my-theme)
+
