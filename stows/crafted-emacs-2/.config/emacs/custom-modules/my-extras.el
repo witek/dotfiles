@@ -233,6 +233,11 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   (binky-margin-mode)
   )
 
+;;; string-edit-at-point
+;; https://github.com/magnars/string-edit.el
+
+(use-package string-edit-at-point)
+
 ;;; provide
 (provide 'my-extras)
 
