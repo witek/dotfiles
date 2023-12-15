@@ -3,6 +3,8 @@ elpa/
 transient/
 auto-save/
 dirvish/
+
+custom.el
 history
 places
 projects
