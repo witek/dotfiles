@@ -85,6 +85,7 @@
 ;; just use identifier at point
 (setq xref-prompt-for-identifier nil)
 
+(setq xref-auto-jump-to-first-xref 'show)
 
 ;;; files and directories
 
@@ -94,7 +95,11 @@
 
 ;;; external tools
 
-(setq browse-url-browser-function 'browse-url-chrome)
+(setq browse-url-browser-function 'browse-url-firefox)
 
 ;;; provide
 (provide 'my-defaults)
+
+
+
+
