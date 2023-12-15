@@ -94,11 +94,22 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/karthink/popper
 
 (use-package popper
+
   :init
   (setq popper-reference-buffers
-        '(help-mode))
+        '("\\*Messages\\*"
+          "Output\\*$"
+          "\\*Async Shell Command\\*"
+          help-mode))
+
+  ;; (setq popper-window-height 20)
+  
   (popper-mode 1)
-  (popper-echo-mode 1))
+  (popper-echo-mode 1)
+  
+  :bind
+  ;; (setq popper-display-function #'display-buffer-in-child-frame)
+  ("C-c t p" . popper-toggle))
 
 ;;; wgrep
 ;; https://github.com/mhayashi1120/Emacs-wgrep
