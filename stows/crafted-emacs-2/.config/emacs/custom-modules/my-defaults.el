@@ -68,7 +68,7 @@
 
 (setq next-line-add-newlines t)
 
-(global-display-fill-column-indicator-mode t)
+;; (global-display-fill-column-indicator-mode t)
 
 (customize-set-variable 'fill-column 80)
 
@@ -76,7 +76,7 @@
 
 (setq scroll-conservatively 101)
 
-(customize-set-variable 'scroll-margin 35)
+;; (customize-set-variable 'scroll-margin 35)
 
 (setq scroll-preserve-screen-position t)
 
