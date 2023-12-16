@@ -3,6 +3,7 @@ elpa/
 transient/
 auto-save/
 dirvish/
+workspace/
 
 custom.el
 history
