@@ -4,7 +4,10 @@
 
 ;;; mu4e
 
-;; (require 'mu4easy)
+(use-package mu4easy
+  :config
+  (mu4easy-mode)
+         )
 
 ;;; provide
 (provide 'my-email)

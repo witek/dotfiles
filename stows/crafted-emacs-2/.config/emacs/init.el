@@ -12,6 +12,9 @@
 
 ;;; Install packages
 
+;; Distro Installed Lisp
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+
 (require 'crafted-completion-packages)
 
 (add-to-list 'package-selected-packages 'all-the-icons)
@@ -71,8 +74,7 @@
 (add-to-list 'package-selected-packages 'binky)
 (add-to-list 'package-selected-packages 'string-edit-at-point)
 (add-to-list 'package-selected-packages 'substitute)
-;; (add-to-list 'package-selected-packages 'mu4easy)
-
+(add-to-list 'package-selected-packages 'mu4easy)
 
 ;; Install
 (package-install-selected-packages :noconfirm)
@@ -113,3 +115,15 @@
 (require 'my-extras)
 (require 'my-lsp)
 (require 'my-email)
+
+
+
+
+
+
+
+
+
+
+
+
