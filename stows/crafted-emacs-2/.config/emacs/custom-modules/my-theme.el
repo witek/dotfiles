@@ -212,7 +212,7 @@
 
 ;;; transparency
 
-(set-frame-parameter nil 'alpha-background 90)
+;; (set-frame-parameter nil 'alpha-background 90)
 
 ;;; provide
 
