@@ -1,7 +1,7 @@
 {
  "hyprland/workspaces":
  {
-  "active-only": true,
+  "active-only": false,
   "all-outputs": false,
   "show-special": true,
   "format": "{name}",
