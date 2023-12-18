@@ -63,6 +63,8 @@
 (add-to-list 'package-selected-packages 'consult-lsp)
 (add-to-list 'package-selected-packages 'ligature)
 (add-to-list 'package-selected-packages 'markdown-mode)
+(add-to-list 'package-selected-packages 'org)
+(add-to-list 'package-selected-packages 'org-modern)
 (add-to-list 'package-selected-packages 'denote)
 (add-to-list 'package-selected-packages 'org-appear)
 (add-to-list 'package-selected-packages 'linum-relative)
