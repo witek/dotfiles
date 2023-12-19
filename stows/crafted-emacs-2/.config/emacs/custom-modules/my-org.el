@@ -24,5 +24,9 @@
   :config
   (global-org-modern-mode))
 
+(use-package outshine
+  :config
+  (add-hook 'outline-minor-mode-hook 'outshine-mode))
+
 ;;; provide
 (provide 'my-org)
