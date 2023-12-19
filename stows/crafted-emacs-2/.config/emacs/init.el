@@ -77,6 +77,7 @@
 (add-to-list 'package-selected-packages 'string-edit-at-point)
 (add-to-list 'package-selected-packages 'substitute)
 (add-to-list 'package-selected-packages 'mu4easy)
+(add-to-list 'package-selected-packages 'edit-server)
 
 ;; Install
 (package-install-selected-packages :noconfirm)
