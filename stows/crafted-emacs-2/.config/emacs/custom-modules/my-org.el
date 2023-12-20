@@ -20,8 +20,9 @@
    )
 
 (use-package org-modern
+  :after '(org)
   :config
-  (global-org-modern-mode 1))
+  (global-org-modern-mode))
 
 ;;; provide
 (provide 'my-org)
