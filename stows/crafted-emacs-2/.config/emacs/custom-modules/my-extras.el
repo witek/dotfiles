@@ -277,6 +277,11 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
           (menu-bar-lines .t)
           (window-system . x))))
 
+;;; gmail-message-mode
+;; https://github.com/Malabarba/gmail-mode
+
+(use-package gmail-message-mode)
+
 ;;; provide
 (provide 'my-extras)
 

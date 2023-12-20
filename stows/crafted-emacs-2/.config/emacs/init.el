@@ -78,6 +78,7 @@
 (add-to-list 'package-selected-packages 'substitute)
 (add-to-list 'package-selected-packages 'mu4easy)
 (add-to-list 'package-selected-packages 'edit-server)
+(add-to-list 'package-selected-packages 'gmail-message-mode)
 
 ;; Install
 (package-install-selected-packages :noconfirm)
