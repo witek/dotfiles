@@ -289,6 +289,9 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
     (lambda ()
       (auth-source-pass-get 'secret "openai-frankenburg")))))
 
+(use-package ob-chatgpt-shell
+  :after org-babel)
+
 ;;; provide
 (provide 'my-extras)
 
