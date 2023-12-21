@@ -287,7 +287,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   :custom
   ((chatgpt-shell-openai-key
     (lambda ()
-      (auth-source-pass-get 'secret "frankenburg-openai-key")))))
+      (auth-source-pass-get 'secret "openai-frankenburg")))))
 
 ;;; provide
 (provide 'my-extras)
