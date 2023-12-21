@@ -80,6 +80,7 @@
 (add-to-list 'package-selected-packages 'mu4easy)
 (add-to-list 'package-selected-packages 'edit-server)
 (add-to-list 'package-selected-packages 'gmail-message-mode)
+(add-to-list 'package-selected-packages 'chatgpt-shell)
 
 ;; Install
 (package-install-selected-packages :noconfirm)

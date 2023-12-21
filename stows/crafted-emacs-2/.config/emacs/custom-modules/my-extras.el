@@ -262,10 +262,8 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 (use-package edit-server
   :commands edit-server-start
   :init
-  (if after-init-time
-      (edit-server-start)
-    (add-hook 'after-init-hook
-              #'(lambda () (edit-server-start))))
+  (add-hook 'after-init-hook
+            #'(lambda () (edit-server-start)))
   :config
   (setq edit-server-new-frame-alist
         '((name . "Edit with Emacs FRAME")
@@ -281,6 +279,15 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/Malabarba/gmail-mode
 
 (use-package gmail-message-mode)
+
+;;; chatgpt-shell
+;; https://github.com/xenodium/chatgpt-shell
+
+(use-package chatgpt-shell
+  :custom
+  ((chatgpt-shell-openai-key
+    (lambda ()
+      (auth-source-pass-get 'secret "frankenburg-openai-key")))))
 
 ;;; provide
 (provide 'my-extras)
