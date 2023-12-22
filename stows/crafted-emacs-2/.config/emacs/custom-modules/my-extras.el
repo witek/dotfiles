@@ -289,11 +289,24 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
     (lambda ()
       (auth-source-pass-get 'secret "openai-frankenburg")))))
 
+;; (use-package dall-e-shell
+;;   :custom
+;;   ((dall-e-shell-openai-key
+;;     (lambda ()
+;;       (auth-source-pass-get 'secret "openai-frankenburg")))))
+
 (use-package ob-chatgpt-shell
-  :after org-babel)
+  :after '(chtgpt-shell)
+  :init
+  (setq org-babel-load-languages '((chatgpt-shell . t)))
+  :config
+  (ob-chatgpt-shell-setup))
 
 ;;; provide
 (provide 'my-extras)
+
+
+
 
 
 

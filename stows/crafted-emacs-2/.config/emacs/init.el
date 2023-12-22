@@ -81,6 +81,7 @@
 (add-to-list 'package-selected-packages 'edit-server)
 (add-to-list 'package-selected-packages 'gmail-message-mode)
 (add-to-list 'package-selected-packages 'chatgpt-shell)
+;; (add-to-list 'package-selected-packages 'dall-e-shell)
 (add-to-list 'package-selected-packages 'ob-chatgpt-shell)
 
 ;; Install
