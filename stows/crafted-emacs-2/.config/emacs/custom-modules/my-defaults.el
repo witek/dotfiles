@@ -80,6 +80,8 @@
 
 (setq scroll-preserve-screen-position t)
 
+(setq global-visual-line-mode t)
+
 ;;; navigation
 
 ;; just use identifier at point
