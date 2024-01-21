@@ -296,10 +296,11 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;       (auth-source-pass-get 'secret "openai-frankenburg")))))
 
 (use-package ob-chatgpt-shell
-  :init
-  (setq org-babel-load-languages '((chatgpt-shell . t)))
+  ;; :init
+  ;; (setq org-babel-load-languages '((chatgpt-shell . t)))
   :config
-  (ob-chatgpt-shell-setup))
+  (ob-chatgpt-shell-setup)
+  )
 
 ;;; provide
 (provide 'my-extras)
