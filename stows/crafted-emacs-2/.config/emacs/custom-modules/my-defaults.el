@@ -66,7 +66,7 @@
 
 (setq sentence-end-double-space nil)
 
-(setq next-line-add-newlines t)
+(setq next-line-add-newlines nil)
 
 ;; (global-display-fill-column-indicator-mode t)
 
