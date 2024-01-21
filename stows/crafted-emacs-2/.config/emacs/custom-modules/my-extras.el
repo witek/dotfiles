@@ -296,7 +296,6 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;       (auth-source-pass-get 'secret "openai-frankenburg")))))
 
 (use-package ob-chatgpt-shell
-  :after '(chtgpt-shell)
   :init
   (setq org-babel-load-languages '((chatgpt-shell . t)))
   :config

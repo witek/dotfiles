@@ -97,7 +97,8 @@
 
 ;;; external tools
 
-(setq browse-url-browser-function 'browse-url-firefox)
+;; (setq browse-url-browser-function 'browse-url-firefox)
+(setq browse-url-browser-function 'browse-url-chrome)
 
 ;;; provide
 (provide 'my-defaults)
