@@ -13,6 +13,7 @@
         corfu-quit-no-match 'separator)
   :bind (:map corfu-map
               ("RET" . nil)
+              ("<tab>"  . 'corfu-insert)
               ("<right>"  . 'corfu-insert)))
 
 ;;; nerd-icons-corfu

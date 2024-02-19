@@ -85,7 +85,7 @@
 
   (setq lsp-ui-doc-enable t)
   (setq lsp-ui-doc-show-with-cursor t)
-  (setq lsp-ui-doc-position 'top)
+  (setq lsp-ui-doc-position 'at-point)
 
   :config
   (custom-set-faces

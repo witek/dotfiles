@@ -254,7 +254,12 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 (use-package substitute
   :config
-  (setq substitute-fixed-letter-case t))
+  (setq substitute-fixed-letter-case t)
+
+  (define-key witek-context-key-map (kbd "s b") 'substitute-target-in-buffer)
+  (define-key witek-context-key-map (kbd "s d") 'substitute-target-in-defun)
+
+  )
 
 ;;; edit-server
 ;; https://github.com/stsquad/emacs_chrome

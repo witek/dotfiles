@@ -28,5 +28,26 @@
   :config
   (add-hook 'outline-minor-mode-hook 'outshine-mode))
 
+;;; denote
+;; https://protesilaos.com/emacs/denote#h:5d16932d-4f7b-493d-8e6a-e5c396b15fd6
+
+(use-package denote
+  :config
+  (setq denote-directory (expand-file-name "~/myfiles/denote/"))
+  (setq denote-save-buffer-after-creation nil)
+  (setq denote-known-keywords '("emacs" "dev" "home" "happygast" "frankenburg"))
+  (setq denote-infer-keywords t)
+  (setq denote-sort-keywords t)
+  (setq denote-file-type nil) ; Org is the default, set others here
+  (setq denote-prompts '(title keywords))
+  (setq denote-excluded-directories-regexp nil)
+  (setq denote-excluded-keywords-regexp nil)
+  (setq denote-rename-no-confirm t)
+  (setq denote-date-prompt-use-org-read-date t)
+  (setq denote-backlinks-show-context t)
+  (denote-rename-buffer-mode 1)
+  (add-hook 'context-menu-functions #'denote-context-menu)
+  )
+
 ;;; provide
 (provide 'my-org)

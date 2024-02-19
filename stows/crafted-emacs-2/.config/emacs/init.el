@@ -120,6 +120,7 @@
 (require 'my-theme)
 (require 'my-keys)
 (require 'my-basics)
+(require 'my-org)
 (require 'my-extras)
 (require 'my-lsp)
 (require 'my-email)
