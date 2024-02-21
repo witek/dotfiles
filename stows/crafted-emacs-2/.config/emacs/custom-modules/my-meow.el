@@ -151,6 +151,8 @@
    '("g b" . consult-bookmark)
 
    '("m" . consult-register-store)
+   '("g m" . consult-register-load)
+   '("g M" . consult-register)
    '("'" . consult-register-load)
 
    '("@" . other-window)
