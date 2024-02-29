@@ -1,5 +1,3 @@
-(require 'crafted-ide)
-(require 'eglot)
 
 (customize-set-variable `eglot-confirm-server-initiated-edits nil)
 

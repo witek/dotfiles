@@ -187,7 +187,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://www.emacswiki.org/emacs/Figlet
 
 (use-package figlet
-  )
+  :defer t)
 
 ;;; gptel
 ;; https://github.com/karthink/gptel
@@ -203,11 +203,13 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 ;;; lorem-ipsum
 
-(use-package lorem-ipsum)
+(use-package lorem-ipsum
+  :defer t)
 
 ;;; go-translate
 
 (use-package go-translate
+  :defer t
   :init
   (require 'go-translate)
   :config
@@ -220,54 +222,43 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
          :render (gts-buffer-render)))
   )
 
-;;; org
-
-;; Return or left-click with mouse follows link
-(customize-set-variable 'org-return-follows-link t)
-(customize-set-variable 'org-mouse-1-follows-link t)
-
-;; Display links as the description provided
-(customize-set-variable 'org-link-descriptive t)
-
-;; Visually indent org-mode files to a given header level
-(add-hook 'org-mode-hook #'org-indent-mode)
-
-;; Hide markup markers
-(customize-set-variable 'org-hide-emphasis-markers t)
-(when (locate-library "org-appear")
-  (add-hook 'org-mode-hook 'org-appear-mode))
 
 ;;; binky
 ;; https://github.com/liuyinz/binky.el/
 
-(use-package binky
-  :init
-  (setq binky-overwrite t)
-  (binky-mode)
-  (binky-margin-mode)
-  )
+;; (use-package binky
+;;   :init
+;;   (setq binky-overwrite t)
+;;   (binky-mode)
+;;   (binky-margin-mode)
+;;   )
 
 ;;; string-edit-at-point
 ;; https://github.com/magnars/string-edit.el
 
-(use-package string-edit-at-point)
+(use-package string-edit-at-point
+  :defer t)
 
 ;;; substitute
 ;; https://protesilaos.com/emacs/substitute
 
 (use-package substitute
+  :defer t
+
   :config
   (setq substitute-fixed-letter-case t)
 
-  (define-key witek-context-key-map (kbd "s b") 'substitute-target-in-buffer)
-  (define-key witek-context-key-map (kbd "s d") 'substitute-target-in-defun)
-
+  :bind
+  (:map witek-context-key-map
+        ("s b" . 'substitute-target-in-buffer)
+        ("s d" . 'substitute-target-in-defun))
   )
 
 ;;; edit-server
 ;; https://github.com/stsquad/emacs_chrome
 
 (use-package edit-server
+  :defer t
   :commands edit-server-start
   :init
   (add-hook 'after-init-hook
@@ -286,12 +277,14 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; gmail-message-mode
 ;; https://github.com/Malabarba/gmail-mode
 
-(use-package gmail-message-mode)
+(use-package gmail-message-mode
+  :defer t)
 
 ;;; chatgpt-shell
 ;; https://github.com/xenodium/chatgpt-shell
 
 (use-package chatgpt-shell
+  :defer t
   :custom
   ((chatgpt-shell-openai-key
     (lambda ()
@@ -304,6 +297,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;       (auth-source-pass-get 'secret "openai-frankenburg")))))
 
 (use-package ob-chatgpt-shell
+  :defer t
   ;; :init
   ;; (setq org-babel-load-languages '((chatgpt-shell . t)))
   :config
@@ -312,15 +306,3 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 ;;; provide
 (provide 'my-extras)
-
-
-
-
-
-
-
-
-
-
-
-

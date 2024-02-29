@@ -6,6 +6,7 @@
 ;; https://github.com/minad/corfu
 
 (use-package corfu
+  :defer t
   :config
   (setq corfu-auto t
         corfu-auto-delay 0.2
@@ -20,6 +21,7 @@
 ;; https://github.com/LuigiPiucco/nerd-icons-corfu
 
 (use-package nerd-icons-corfu
+  :defer t
   :init
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
   (setq nerd-icons-corfu-mapping
@@ -32,6 +34,7 @@
 ;;; consult
 
 (use-package consult
+  :defer t
   :config
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref))
@@ -39,12 +42,14 @@
 ;;; embark
 
 (use-package embark
+  :defer t
   :bind (:map witek-context-key-map
               ("e a" . 'embark-act)))
 
 ;;; embark-consult
 
 (use-package embark-consult
+  :defer t
   :bind (:map
          vertico-map
          ("C-, e" . embark-export)
@@ -59,6 +64,7 @@
 ;;; smartparens
 
 (use-package smartparens
+  :defer t
   :bind (("<backspace>" . 'sp-backward-delete-char)
 
          ("M-l" . 'sp-forward-slurp-sexp) ; owerride: downcase-word
@@ -101,7 +107,7 @@
 ;; (use-package with-editor)
 
 (use-package magit
-  :defer
+  :defer t
   :bind (("C-c g s" . 'magit-status)
          ("C-c G s" . 'magit-status)
 
@@ -114,23 +120,3 @@
 
 ;;; provide
 (provide 'my-basics)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

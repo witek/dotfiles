@@ -17,6 +17,7 @@
 ;;; lsp-mode
 
 (use-package lsp-mode
+  :defer t
   :init
   ;; (setq lsp-keymap-prefix ", r")
 
@@ -78,6 +79,7 @@
 ;;; lsp-ui
 
 (use-package lsp-ui
+  :defer t
   :commands lsp-ui-mode
   :init
   ;; (setq lsp-ui-sideline-show-hover t)
@@ -105,11 +107,13 @@
 ;;; lsp-treemacs
 
 (use-package lsp-treemacs
+  :defer t
   :commands lsp-treemacs-errors-list)
 
 ;;; consult-lsp
 
 (use-package consult-lsp
+  :defer t
   :after lsp-mode
   )
 

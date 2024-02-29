@@ -4,6 +4,23 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
+;;; org
+
+;; Return or left-click with mouse follows link
+(customize-set-variable 'org-return-follows-link t)
+(customize-set-variable 'org-mouse-1-follows-link t)
+
+;; Display links as the description provided
+(customize-set-variable 'org-link-descriptive t)
+
+;; Visually indent org-mode files to a given header level
+(add-hook 'org-mode-hook #'org-indent-mode)
+
+;; Hide markup markers
+(customize-set-variable 'org-hide-emphasis-markers t)
+(when (locate-library "org-appear")
+  (add-hook 'org-mode-hook 'org-appear-mode))
+
 (use-package org
   :config
   (setq org-directory "~/org/")
