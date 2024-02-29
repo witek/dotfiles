@@ -36,9 +36,10 @@
 
 (use-package hi-lock
 
-  :bind (:map witek-context-key-map
-              ("h s"        . 'highlight-symbol-at-point)
-              ("h <escape>" . 'my/unhighlight-all-in-buffer))
+  :bind
+  (:map witek-context-key-map
+        ("h s"        . 'highlight-symbol-at-point)
+        ("h <escape>" . 'my/unhighlight-all-in-buffer))
   
   :config
 
@@ -88,6 +89,8 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 (use-package paren-face
   :init
   (global-paren-face-mode 1)
+  :config
+  (set-face-attribute 'parenthesis nil :foreground "#2f3757")
   )
 
 ;;; popper
