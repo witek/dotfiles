@@ -64,7 +64,6 @@
 ;;; smartparens
 
 (use-package smartparens
-  :defer t
   :bind (("<backspace>" . 'sp-backward-delete-char)
 
          ("M-l" . 'sp-forward-slurp-sexp) ; owerride: downcase-word
