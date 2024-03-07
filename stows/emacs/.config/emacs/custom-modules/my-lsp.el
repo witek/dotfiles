@@ -16,8 +16,8 @@
 
 ;;; lsp-mode
 
-(crafted-package-install-package 'lsp-mode)
 (use-package lsp-mode
+  :defer t
   :init
   ;; (setq lsp-keymap-prefix ", r")
 
@@ -52,20 +52,20 @@
   :config
   (lsp-semantic-tokens--warn-about-deprecated-setting)
 
-  (defun lsp--suggest-project-root ()
-    "Get project root."
-    (let ((dir (project-root (project-current))))
-      (message "[witek:lsp--suggest-project-root] project=%s dir=%s" (project-current) dir)
-      (if (or (string-prefix-p "/p/happygast/" dir)
-              (string-prefix-p "/p/conco/" dir)
-              (string-prefix-p "/p/kunagi-secrets/" dir)
-              (string-prefix-p "/p/incubator/" dir)
-              (string-prefix-p "/p/spark/" dir)
-              (string-prefix-p "/p/kunagi-mui/" dir)
-              (string-prefix-p "/p/kunagi-utils/" dir))
-          (project-root (project-try-vc "/p/clj/"))
-        (project-root (project-try-vc dir)))
-      ))
+  ;; (defun lsp--suggest-project-root ()
+  ;;   "Get project root."
+  ;;   (let ((dir (project-root (project-current))))
+  ;;     (message "[witek:lsp--suggest-project-root] project=%s dir=%s" (project-current) dir)
+  ;;     (if (or ;; (string-prefix-p "/p/happygast/" dir)
+  ;;             (string-prefix-p "/p/conco/" dir)
+  ;;             (string-prefix-p "/p/kunagi-secrets/" dir)
+  ;;             (string-prefix-p "/p/incubator/" dir)
+  ;;             (string-prefix-p "/p/spark/" dir)
+  ;;             (string-prefix-p "/p/kunagi-mui/" dir)
+  ;;             (string-prefix-p "/p/kunagi-utils/" dir))
+  ;;         (project-root (project-try-vc "/p/clj/"))
+  ;;       (project-root (project-try-vc dir)))
+  ;;     ))
 
   ;; (add-hook 'lsp-after-apply-edits-hook (lambda (arg)
   ;;                                         (message "[witek-hook] save-all-buffers %s" arg)
@@ -78,8 +78,8 @@
 
 ;;; lsp-ui
 
-(crafted-package-install-package 'lsp-ui)
 (use-package lsp-ui
+  :defer t
   :commands lsp-ui-mode
   :init
   ;; (setq lsp-ui-sideline-show-hover t)
@@ -87,7 +87,7 @@
 
   (setq lsp-ui-doc-enable t)
   (setq lsp-ui-doc-show-with-cursor t)
-  (setq lsp-ui-doc-position 'top)
+  (setq lsp-ui-doc-position 'at-point)
 
   :config
   (custom-set-faces
@@ -106,16 +106,16 @@
 
 ;;; lsp-treemacs
 
-(crafted-package-install-package 'lsp-treemacs)
 (use-package lsp-treemacs
+  :defer t
   :commands lsp-treemacs-errors-list)
 
 ;;; consult-lsp
 
-(crafted-package-install-package 'consult-lsp)
 (use-package consult-lsp
+  :defer t
   :after lsp-mode
   )
 
 ;;; provide
-(provide 'witek-lsp)
+(provide 'my-lsp)

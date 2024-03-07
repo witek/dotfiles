@@ -2,9 +2,12 @@ elpaca/
 elpa/
 transient/
 auto-save/
+auto-save-list/
 dirvish/
 workspace/
 
+tramp
+.lsp-session-v1
 custom.el
 history
 places
