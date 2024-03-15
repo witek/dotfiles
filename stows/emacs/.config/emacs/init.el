@@ -32,6 +32,7 @@
 (add-to-list 'package-selected-packages 'marginalia)
 (add-to-list 'package-selected-packages 'orderless)
 (add-to-list 'package-selected-packages 'ef-themes)
+(add-to-list 'package-selected-packages 'yasnippet)
 (add-to-list 'package-selected-packages 'doom-modeline)
 (add-to-list 'package-selected-packages 'doom-themes)
 (add-to-list 'package-selected-packages 'meow)

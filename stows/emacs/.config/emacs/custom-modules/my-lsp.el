@@ -19,10 +19,15 @@
 (use-package lsp-mode
   :defer t
   :init
+
+  (setq lsp-file-watch-threshold 5000)
   ;; (setq lsp-keymap-prefix ", r")
 
   ;; We don't want to get asked about project root
-  (setq lsp-auto-guess-root t)
+  ;; (setq lsp-auto-guess-root t)
+
+  ;; Because we don't use company
+  (setq lsp-completion-provider :none)
 
   (setq lsp-enable-indentation t)
   (setq lsp-enable-snippet t)

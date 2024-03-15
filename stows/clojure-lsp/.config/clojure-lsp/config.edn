@@ -1,3 +1,4 @@
 {
- :hover {:arity-on-same-line? true} 
+ :hover {:arity-on-same-line? true}
+ :java {:download-jdk-source? true}
  }

@@ -48,7 +48,7 @@
 The same result can also be be achieved by \\[universal-argument] \\[unhighlight-regexp]."
     (interactive)
     (unhighlight-regexp t))
-  
+   
   )
 
 ;;; clean-kill-ring
@@ -58,6 +58,13 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;   ;; :straight (clean-kill-ring :type git :host github :repo "NicholasBHubbard/clean-kill-ring.el")
 ;;   :config
 ;;   (clean-kill-ring-mode 1))
+
+;;; yashippet
+;; https://github.com/joaotavora/yasnippet
+
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
 
 ;;; dirvish
 

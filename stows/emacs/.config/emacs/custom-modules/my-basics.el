@@ -2,16 +2,25 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
+;;; orderless
+
+(use-package orderless
+    :init
+    (setq completion-styles '(orderless)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles . (partial-completion)))))
+    )
+
 ;;; corfu
 ;; https://github.com/minad/corfu
 
 (use-package corfu
-  :defer t
-  :config
-  (setq corfu-auto t
-        corfu-auto-delay 0.2
-        corfu-auto-prefix 2
-        corfu-quit-no-match 'separator)
+  :after orderless
+  :custom
+  (corfu-auto t)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-prefix 2)
+  (corfu-quit-no-match 'separator)
   :bind (:map corfu-map
               ("RET" . nil)
               ("<tab>"  . 'corfu-insert)
