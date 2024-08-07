@@ -114,7 +114,7 @@
  "backlight":
  {
      // "device": "acpi_video1",
-  "format": "{percent}% {icon}",
+  "format": "{icon} {percent}%",
   "format-icons": ["", "", "", "", "", "", "", "", ""]
   },
 

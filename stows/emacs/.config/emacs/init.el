@@ -48,6 +48,7 @@
 (add-to-list 'package-selected-packages 'paren-face)
 (add-to-list 'package-selected-packages 'popper)
 (add-to-list 'package-selected-packages 'avy)
+(add-to-list 'package-selected-packages 'wgrep)
 (add-to-list 'package-selected-packages 'treemacs)
 (add-to-list 'package-selected-packages 'adoc-mode)
 (add-to-list 'package-selected-packages 'cider)
@@ -123,7 +124,8 @@
 (require 'my-basics)
 (require 'my-org)
 (require 'my-extras)
-(require 'my-lsp)
+(require 'my-eglot)
+;; (require 'my-lsp)
 (require 'my-email)
 
 

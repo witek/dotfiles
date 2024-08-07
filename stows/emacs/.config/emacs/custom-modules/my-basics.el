@@ -15,7 +15,6 @@
 ;; https://github.com/minad/corfu
 
 (use-package corfu
-  :after orderless
   :custom
   (corfu-auto t)
   (corfu-auto-delay 0.2)

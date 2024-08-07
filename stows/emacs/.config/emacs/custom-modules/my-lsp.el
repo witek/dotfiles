@@ -17,7 +17,7 @@
 ;;; lsp-mode
 
 (use-package lsp-mode
-  :defer t
+  :demand t
   :init
 
   (setq lsp-file-watch-threshold 5000)
@@ -84,7 +84,7 @@
 ;;; lsp-ui
 
 (use-package lsp-ui
-  :defer t
+  :demand t
   :commands lsp-ui-mode
   :init
   ;; (setq lsp-ui-sideline-show-hover t)

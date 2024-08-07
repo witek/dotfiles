@@ -10,7 +10,7 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/window"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["privacy", "idle_inhibitor", "pulseaudio", "network", "disk", "cpu", "temperature", "keyboard-state", "battery", "tray", "clock"],
+    "modules-right": ["privacy", "idle_inhibitor", "backlight", "pulseaudio", "network", "disk", "cpu", "temperature", "keyboard-state", "battery", "tray", "clock"],
 
 
 }

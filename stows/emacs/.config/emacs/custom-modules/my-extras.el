@@ -124,18 +124,18 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; wgrep
 ;; https://github.com/mhayashi1120/Emacs-wgrep
 
-;; (use-package wgrep
-  ;; :after embark-consult
-  ;; :init
-  ;; (setq wgrep-auto-save-buffer t)
-  ;; (setq wgrep-change-readonly-file t)
-  ;; :config
+(use-package wgrep
+  :after embark-consult
+  :init
+  (setq wgrep-auto-save-buffer t)
+  (setq wgrep-change-readonly-file t)
+  :config
   ;; (my-local-leader-def
   ;;   :keymaps '(grep-mode-map wgrep-mode-map)
   ;;   "e" 'wgrep-change-to-wgrep-mode
   ;;   "," 'wgrep-finish-edit
   ;;   "q" 'wgrep-exit)
-  ;; )
+  )
 
 ;;; avy
 ;; https://github.com/abo-abo/avy
