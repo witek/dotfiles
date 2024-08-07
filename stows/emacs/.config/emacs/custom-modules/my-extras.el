@@ -215,19 +215,19 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 
 ;;; go-translate
 
-(use-package go-translate
-  :defer t
-  :init
-  (require 'go-translate)
-  :config
-  (setq gts-translate-list '(("de" "en")
-                             ("en" "de")))
-  (setq gts-default-translator
-        (gts-translator
-         :picker (gts-prompt-picker)
-         :engines (list (gts-bing-engine) (gts-google-engine))
-         :render (gts-buffer-render)))
-  )
+;; (use-package go-translate
+;;   :defer t
+;;   :init
+;;   (require 'go-translate)
+;;   :config
+;;   (setq gts-translate-list '(("de" "en")
+;;                              ("en" "de")))
+;;   (setq gts-default-translator
+;;         (gts-translator
+;;          :picker (gts-prompt-picker)
+;;          :engines (list (gts-bing-engine) (gts-google-engine))
+;;          :render (gts-buffer-render)))
+;; )
 
 
 ;;; binky
