@@ -35,6 +35,7 @@
 ;; https://www.emacswiki.org/emacs/HiLock
 
 (use-package hi-lock
+  :defer t
 
   :bind
   (:map witek-context-key-map
@@ -63,12 +64,14 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/joaotavora/yasnippet
 
 (use-package yasnippet
+  :defer t
   :config
   (yas-global-mode 1))
 
 ;;; dirvish
 
 (use-package dirvish
+  :defer t
   :init
   (dirvish-override-dired-mode))
 
@@ -85,6 +88,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/zk-phi/phi-search
 
 (use-package phi-search
+  :defer t
   :config
   (global-set-key (kbd "C-s") 'phi-search)
   (global-set-key (kbd "C-r") 'phi-search-backward)
@@ -141,17 +145,20 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/abo-abo/avy
 
 (use-package avy
+  :defer t
   :bind ("C-j" . avy-goto-char-timer))
 
 ;;; adoc-mode
 
 (use-package adoc-mode
-  )
+  :defer t
+   )
 
 
 ;;; clojure-mode
 
 (use-package clojure-mode
+  :defer t
   :config
   (setq
    clojure-ident-style 'align-arguments
@@ -168,6 +175,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; cider
 
 (use-package cider
+  :defer t
   :after clojure-mode
   :config
   (setq cider-eldoc-display-for-symbol-at-point nil)

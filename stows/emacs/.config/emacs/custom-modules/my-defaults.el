@@ -24,7 +24,7 @@
 
 (setq x-stretch-cursor t)
 
-(setq undo-limit 80000000)
+(setq undo-limit 1600000)
 
 (setq truncate-string-ellipsis "…")
 
@@ -76,7 +76,7 @@
 
 (setq scroll-conservatively 101)
 
-;; (customize-set-variable 'scroll-margin 35)
+(customize-set-variable 'scroll-margin 10)
 
 (setq scroll-preserve-screen-position t)
 

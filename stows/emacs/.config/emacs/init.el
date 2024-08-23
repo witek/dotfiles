@@ -12,6 +12,8 @@
 
 ;;; Install packages
 
+(setq use-package-compute-statistics t)
+
 ;; Distro Installed Lisp
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 
@@ -125,7 +127,7 @@
 (require 'my-org)
 (require 'my-extras)
 (require 'my-eglot)
-;; (require 'my-lsp)
+;;(require 'my-lsp)
 (require 'my-email)
 
 

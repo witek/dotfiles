@@ -49,6 +49,7 @@
 ;; https://protesilaos.com/emacs/denote#h:5d16932d-4f7b-493d-8e6a-e5c396b15fd6
 
 (use-package denote
+  :defer t
   :config
   (setq denote-directory (expand-file-name "~/myfiles/denote/"))
   (setq denote-save-buffer-after-creation nil)
