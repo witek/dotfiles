@@ -101,7 +101,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   :init
   (global-paren-face-mode 1)
   :config
-  (set-face-attribute 'parenthesis nil :foreground "#2f3757")
+  (set-face-attribute 'parenthesis nil :foreground "#5f5f5f")
   )
 
 ;;; popper
