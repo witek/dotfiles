@@ -6,6 +6,8 @@ auto-save-list/
 dirvish/
 workspace/
 
+*cache*
+
 tramp
 .lsp-session-v1
 custom.el
