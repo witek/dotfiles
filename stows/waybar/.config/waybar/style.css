@@ -7,7 +7,7 @@
 }
 
 window#waybar {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
     color: #ffffff;
     transition-property: background-color;
     transition-duration: .5s;
@@ -59,7 +59,7 @@ button:hover {
 /****** hyprland/workspaces ******/
 
 #workspaces {
-    margin-right: 32px;
+    margin-right: 64px;
 }
 
 #workspaces button {
@@ -73,7 +73,7 @@ button:hover {
 }
 
 #workspaces button.active {
-    color: white;
+    color: orange;
 }
 
 #workspaces button.empty {
@@ -85,7 +85,7 @@ button:hover {
 }
 
 #workspaces button.special {
-    color: orange;
+    color: #999999;
 }
 
 /****** hyprland/window ******/
