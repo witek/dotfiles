@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+echo "aider with witek env"
+export DEEPSEEK_API_KEY="$(pass deepseek-aider)"
+
+/usr/bin/aider "$@"
+
+

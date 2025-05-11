@@ -1,0 +1,4 @@
+pkill emacs
+sleep 1 
+pkill -9 emacs
+emacs --daemon

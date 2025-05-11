@@ -1,0 +1,3 @@
+cd /p/localmo.de
+gnome-terminal -- bin/release
+
