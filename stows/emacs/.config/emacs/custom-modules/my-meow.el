@@ -50,6 +50,8 @@
    ;; '("B" . meow-back-word)
    '("e" . meow-end-of-thing)
    '("%" . my/matching-paren)
+   '("M-k" . beginning-of-defun)
+   '("M-j" . end-of-defun)
 
    ;; Selection
    '("V" . meow-line)
@@ -95,11 +97,10 @@
    '("-" . negative-argument)
    '("/" . meow-visit)
    '("q" . meow-quit)
-   '("M-j" . join-line)
    ;; '("<escape>" . ignore)
 
    '("y" . meow-save)
-   '("p" . meow-yank)
+   '("p" . yank)
    '("R" . meow-replace)
    '("P" . consult-yank-pop)
 

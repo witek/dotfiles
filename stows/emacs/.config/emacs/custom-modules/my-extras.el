@@ -6,6 +6,15 @@
 
 (require 'eldoc)
 
+;;; helpful
+
+(use-package helpful
+  :config
+  (my/set-custom-key "d v" 'helpful-variable)
+  (my/set-custom-key "d k" 'helpful-key)
+  (my/set-custom-key "d f" 'helpful-function)
+  )
+
 ;;; aggressive-indent-mode
 
 ;; (when (locate-library "aggressive-indent")
@@ -16,9 +25,9 @@
 ;;; linum-relative
 ;; https://github.com/coldnew/linum-relative
 
-(require 'linum-relative)
-(setq linum-relative-backend 'display-line-numbers-mode)
-(linum-relative-global-mode 1)
+;; (require 'linum-relative)
+;; (setq linum-relative-backend 'display-line-numbers-mode)
+;; (linum-relative-global-mode 1)
 
 ;;; which-key
 ;; https://github.com/justbur/emacs-which-key
@@ -35,8 +44,6 @@
 ;; https://www.emacswiki.org/emacs/HiLock
 
 (use-package hi-lock
-  :defer t
-
   :bind
   (:map witek-context-key-map
         ("h s"        . 'highlight-symbol-at-point)
@@ -88,10 +95,10 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/zk-phi/phi-search
 
 (use-package phi-search
-  :defer t
-  :config
-  (global-set-key (kbd "C-s") 'phi-search)
-  (global-set-key (kbd "C-r") 'phi-search-backward)
+  :bind
+  (:map global-map
+        ("C-s" . 'phi-search)
+        ("C-r" . 'phi-search-backward))
   )
 
 ;;; paren-face
@@ -184,6 +191,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   (setq cider-font-lock-reader-conditionals nil)
   (setq cider-auto-inspect-after-eval t)
   (setq cider-save-file-on-load t)
+  (setq cider-dynamic-indentation nil)
 
   (define-key witek-context-key-map (kbd "e b") 'cider-eval-buffer)
   (define-key witek-context-key-map (kbd "e l") 'cider-eval-last-sexp)
@@ -198,23 +206,29 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   :config
   (setq cljr-add-ns-to-blank-clj-files t))
 
+;;; blamer
+
+(use-package blamer
+  ;; :bind (("s-i" . blamer-show-commit-info)
+  ;;        ("C-c i" . blamer-show-posframe-commit-info))
+  :defer t
+  :custom
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 70)
+  :custom-face
+  ;; (blamer-face ((t :foreground "#7a88cf"
+  ;;                   :background nil
+  ;;                   :height 140
+  ;;                   :italic t)))
+  :config
+  (global-blamer-mode 1))
+
 ;;; figlet
 ;; https://www.emacswiki.org/emacs/Figlet
 
 (use-package figlet
   :defer t)
 
-;;; gptel
-;; https://github.com/karthink/gptel
-
-;; (use-package gptel
-;;   :config
-;;   (setq gptel-api-key
-;;         (funcall
-;;          (plist-get
-;;           (car
-;;            (auth-source-search :host "platform.openai.com"))
-;;           :secret))))
 
 ;;; lorem-ipsum
 
@@ -258,7 +272,6 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://protesilaos.com/emacs/substitute
 
 (use-package substitute
-  :defer t
 
   :config
   (setq substitute-fixed-letter-case t)
@@ -268,6 +281,14 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
         ("s b" . 'substitute-target-in-buffer)
         ("s d" . 'substitute-target-in-defun))
   )
+
+;; server
+
+(use-package server
+  :ensure nil
+  :defer 1
+  :config (unless (server-running-p)
+            (server-start)))
 
 ;;; edit-server
 ;; https://github.com/stsquad/emacs_chrome
@@ -318,6 +339,11 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
   :config
   (ob-chatgpt-shell-setup)
   )
+
+;;;
+
+;; (use-package app-launcher
+  ;; )
 
 ;;; provide
 (provide 'my-extras)

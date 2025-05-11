@@ -17,8 +17,8 @@
 (use-package corfu
   :custom
   (corfu-auto t)
-  (corfu-auto-delay 0.2)
-  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.8)
+  (corfu-auto-prefix 4)
   (corfu-quit-no-match 'separator)
   :bind (:map corfu-map
               ("RET" . nil)

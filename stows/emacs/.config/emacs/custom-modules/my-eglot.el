@@ -1,23 +1,35 @@
 
-(customize-set-variable `eglot-confirm-server-initiated-edits nil)
 
 ;; hack for doom-modeline internal var access
 ;; (defun eglot--major-mode (server) (car (eglot--major-modes server)))
 
-(add-hook 'clojure-mode-hook #'eglot-ensure)
 
-;; *** /p/clj/ as eglot root
 
-(defun witek-project-find-for-clj-project (dir)
-  (if (and (boundp 'eglot-lsp-context)
-           eglot-lsp-context
-           (or (string-prefix-p "/p/happygast/" dir)
-               (string-prefix-p "/p/incubator/" dir)
-               (string-prefix-p "/p/spark/" dir)
-               (string-prefix-p "/p/kunagi-mui/" dir)
-               (string-prefix-p "/p/kunagi-utils/" dir)))
-      (project-try-vc "/p/clj/")
-    (project-try-vc dir)))
+
+(defun witek-eglot-rename ()
+  (interactive)
+  (call-interactively 'save-some-buffers)
+  (call-interactively 'eglot-rename)
+  (save-some-buffers t)
+  )
+
+
+(use-package eglot
+  :demand t
+
+  :init
+  (customize-set-variable `eglot-confirm-server-initiated-edits nil)
+  (setq eglot-connect-timeout 120)
+  
+  :bind
+  (:map witek-context-key-map
+        ("r" . 'witek-eglot-rename))
+
+  :config
+  (add-hook 'clojure-mode-hook #'eglot-ensure)
+
+  )
+
 
 ;; (setq project-find-functions '(witek-project-find-for-clj-project))
 

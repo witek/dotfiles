@@ -68,6 +68,10 @@
 
 (setq next-line-add-newlines nil)
 
+(setq-default truncate-lines nil)
+(setq truncate-lines nil)
+
+
 ;; (global-display-fill-column-indicator-mode t)
 
 (customize-set-variable 'fill-column 80)

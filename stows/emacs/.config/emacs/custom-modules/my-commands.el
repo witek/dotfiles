@@ -98,6 +98,16 @@
   ;;   (select-frame current-frame))
   )
 
+;;; witek-kill-other-buffers
+
+(defun witek-project-kill-other-buffers ()
+  "kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer
+        (delq (get-buffer "*lsp-log*")
+              (delq (current-buffer)
+                    (project-buffers (project-current))))))
+
 ;; *** witek-delete-file
 
 (defun witek-delete-current-file ()

@@ -34,11 +34,12 @@
 (add-to-list 'package-selected-packages 'marginalia)
 (add-to-list 'package-selected-packages 'orderless)
 (add-to-list 'package-selected-packages 'ef-themes)
+(add-to-list 'package-selected-packages 'spacious-padding)
+(add-to-list 'package-selected-packages 'pulsar)
 (add-to-list 'package-selected-packages 'yasnippet)
 (add-to-list 'package-selected-packages 'doom-modeline)
 (add-to-list 'package-selected-packages 'doom-themes)
 (add-to-list 'package-selected-packages 'meow)
-(add-to-list 'package-selected-packages 'spacious-padding)
 (add-to-list 'package-selected-packages 'outline)
 (add-to-list 'package-selected-packages 'outline-minor-faces)
 (add-to-list 'package-selected-packages 'which-key)
@@ -87,6 +88,9 @@
 (add-to-list 'package-selected-packages 'chatgpt-shell)
 ;; (add-to-list 'package-selected-packages 'dall-e-shell)
 (add-to-list 'package-selected-packages 'ob-chatgpt-shell)
+(add-to-list 'package-selected-packages 'blamer)
+(add-to-list 'package-selected-packages 'aidermacs)
+;; (add-to-list 'package-selected-packages 'app-launcher)
 
 ;; Install
 (package-install-selected-packages :noconfirm)
@@ -126,10 +130,13 @@
 (require 'my-basics)
 (require 'my-org)
 (require 'my-extras)
-(require 'my-eglot)
-;;(require 'my-lsp)
-(require 'my-email)
 
+(require 'my-ai)
+
+;; (require 'my-eglot)
+(require 'my-lsp)
+
+;; (require 'my-email)
 
 
 

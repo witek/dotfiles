@@ -14,7 +14,7 @@
 (customize-set-variable 'org-link-descriptive t)
 
 ;; Visually indent org-mode files to a given header level
-(add-hook 'org-mode-hook #'org-indent-mode)
+;; (add-hook 'org-mode-hook #'org-indent-mode)
 
 ;; Hide markup markers
 (customize-set-variable 'org-hide-emphasis-markers t)
@@ -32,6 +32,9 @@
   (setq org-enforce-todo-checkbox-dependencies t)
   (setq org-reverse-note-order t)
 
+  :hook (org-mode . (lambda ()
+                      (toggle-truncate-lines)))
+
   ;; TODO more TODO keywords
   
    )
@@ -41,22 +44,25 @@
   :config
   (global-org-modern-mode))
 
-(use-package outshine
-  :config
-  (add-hook 'outline-minor-mode-hook 'outshine-mode))
+;; (use-package outshine
+;;   :config
+;;   (add-hook 'outline-minor-mode-hook 'outshine-mode))
 
 ;;; denote
 ;; https://protesilaos.com/emacs/denote#h:5d16932d-4f7b-493d-8e6a-e5c396b15fd6
 
 (use-package denote
   :defer t
+
+  :hook (dired-mode . denote-dired-mode)
+
   :config
-  (setq denote-directory (expand-file-name "~/myfiles/denote/"))
+  (setq denote-directory (expand-file-name "/p/orga/denote/"))
   (setq denote-save-buffer-after-creation nil)
-  (setq denote-known-keywords '("emacs" "dev" "home" "happygast" "frankenburg"))
+  (setq denote-known-keywords '("emacs" "dev" "home" "happygast" "fbst"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
-  (setq denote-file-type nil) ; Org is the default, set others here
+  (setq denote-file-type 'markdown-toml)
   (setq denote-prompts '(title keywords))
   (setq denote-excluded-directories-regexp nil)
   (setq denote-excluded-keywords-regexp nil)

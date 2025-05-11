@@ -10,10 +10,7 @@
 (my/set-custom-key ":" 'eval-expression)
 ;; (my/set-custom-key "<RET>" 'save-buffer)
 
-(my/set-custom-key "d v" 'describe-variable)
-(my/set-custom-key "d k" 'describe-key)
 (my/set-custom-key "d K" 'describe-keymap)
-(my/set-custom-key "d f" 'describe-function)
 (my/set-custom-key "d m" 'describe-mode)
 
 (my/set-custom-key "e q" 'save-buffers-kill-terminal)
@@ -29,8 +26,8 @@
 (my/set-custom-key "b j" 'bookmark-jump)
 (my/set-custom-key "b J" 'bookmark-jump-other-frame)
 
-(my/set-custom-key "f s" 'save-buffer)
-(my/set-custom-key "f S" 'witek-save-all-buffers)
+(my/set-custom-key "f S" 'save-buffer)
+(my/set-custom-key "f s" 'witek-save-all-buffers)
 (my/set-custom-key "f f" 'find-file)
 (my/set-custom-key "f r" 'consult-recent-file)
 
@@ -38,6 +35,8 @@
 
 (my/set-custom-key "p p" 'project-switch-project)
 (my/set-custom-key "p f" 'project-find-file)
+(my/set-custom-key "p b" 'consult-project-buffer)
+(my/set-custom-key "p B" 'witek-project-kill-other-buffers)
 (my/set-custom-key "p s" 'consult-git-grep)
 
 (my/set-custom-key "w w" 'other-window)
@@ -50,6 +49,11 @@
 (my/set-custom-key "w d" 'delete-window)
 
 (my/set-custom-key "s q" 'query-replace)
+
+(my/set-custom-key "o t" 'outline-toggle-children)
+(my/set-custom-key "o f" 'outline-hide-other)
+(my/set-custom-key "o a" 'outline-show-all)
+
 
 ;;; cusotm context key-map
 
