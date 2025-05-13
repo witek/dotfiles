@@ -52,6 +52,8 @@
    '("%" . my/matching-paren)
    '("M-k" . beginning-of-defun)
    '("M-j" . end-of-defun)
+   '("M-l" . forward-sexp)
+   '("M-h" . backward-sexp)
 
    ;; Selection
    '("V" . meow-line)
@@ -136,8 +138,6 @@
    '("$" . end-of-line)
 
    '("ö" . my/append-after-end-of-sexp)
-   '("C-h" . sp-beginning-of-sexp)
-   '("C-l" . sp-end-of-sexp)
 
    '("," . my/activate-context-key-map)
 

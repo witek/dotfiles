@@ -2,6 +2,18 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
+;;; isearch
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Incremental-Search.html
+(use-package isearch
+  :config
+  (setq isearch-repeat-on-direction-change t)
+  (setq isearch-wrap-pause 'no)
+  :bind
+  (:map global-map
+        ("C-s" . 'isearch-forward)
+        ("C-r" . 'isearch-backward))
+  )
+
 ;;; orderless
 
 (use-package orderless
@@ -45,7 +57,11 @@
   :defer t
   :config
   (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref))
+        xref-show-definitions-function #'consult-xref)
+  :bind (:map
+         vertico-map
+         ("C-, p" . consult-preview-at-point-mode)
+         ))
 
 ;;; embark
 
@@ -60,6 +76,7 @@
   :defer t
   :bind (:map
          vertico-map
+         ("C-e" . embark-export)
          ("C-, e" . embark-export)
          ("C-, a" . embark-act)
 
@@ -74,8 +91,8 @@
 (use-package smartparens
   :bind (("<backspace>" . 'sp-backward-delete-char)
 
-         ("M-l" . 'sp-forward-slurp-sexp) ; owerride: downcase-word
-         ("M-h" . 'sp-forward-barf-sexp)  ; override: mark-paragraph
+         ("C-l" . 'sp-forward-slurp-sexp)
+         ("C-h" . 'sp-forward-barf-sexp)
 
          ;; ("M-w" . 'sp-clone-sexp)         ; override: kill-ring-save
          ;; ("H-w" . 'kill-ring-save)

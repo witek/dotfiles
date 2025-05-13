@@ -94,12 +94,12 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; phi-search
 ;; https://github.com/zk-phi/phi-search
 
-(use-package phi-search
-  :bind
-  (:map global-map
-        ("C-s" . 'phi-search)
-        ("C-r" . 'phi-search-backward))
-  )
+;; (use-package phi-search
+;;   :bind
+;;   (:map global-map
+;;         ("C-s" . 'phi-search)
+;;         ("C-r" . 'phi-search-backward))
+;;   )
 
 ;;; paren-face
 ;; https://github.com/tarsius/paren-face
@@ -343,7 +343,15 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;;
 
 ;; (use-package app-launcher
-  ;; )
+;; )
+
+
+;;; multifiles
+;; https://github.com/magnars/multifiles.el
+;; !!! BUGGY !!!
+;; (use-package multifiles
+;;   :bind ("C-m" . mf/mirror-region-in-multifile)
+;;   )
 
 ;;; provide
 (provide 'my-extras)

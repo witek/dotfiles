@@ -90,6 +90,7 @@
 (add-to-list 'package-selected-packages 'ob-chatgpt-shell)
 (add-to-list 'package-selected-packages 'blamer)
 (add-to-list 'package-selected-packages 'aidermacs)
+(add-to-list 'package-selected-packages 'multifiles)
 ;; (add-to-list 'package-selected-packages 'app-launcher)
 
 ;; Install
