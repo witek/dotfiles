@@ -151,9 +151,9 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; avy
 ;; https://github.com/abo-abo/avy
 
-(use-package avy
-  :defer t
-  :bind ("C-j" . avy-goto-char-timer))
+;; (use-package avy
+;;   :defer t
+;;   :bind ("C-j" . avy-goto-char-timer))
 
 ;;; adoc-mode
 

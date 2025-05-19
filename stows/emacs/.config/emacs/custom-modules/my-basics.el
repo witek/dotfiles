@@ -2,6 +2,9 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
+(use-package emacs
+  :bind ("C-j" . join-line))
+
 ;;; isearch
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Incremental-Search.html
 (use-package isearch
