@@ -13,3 +13,5 @@ alias vi="nvim"
 alias vim="nvim"
 
 alias rscp="rsync --verbose --checksum --recursive --links --perms --executability --owner --group --times --compress --stats --progress --human-readable"
+
+alias llm="uvx llm"
