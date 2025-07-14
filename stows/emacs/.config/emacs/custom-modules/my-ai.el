@@ -41,7 +41,9 @@ Returns a list of cons cells (name . directive) for each .md file."
               (mapcar #'my/ai-gptel-load-directive-from-markdown markdown-files)))))
 
 (defun my/gptel-make-tools ()
-(gptel-make-tool
+  (gptel-make-tool
+   :name "read_url"
+   :description "Fetch and read the contents of a URL"
    :function (lambda (url)
                (with-current-buffer (url-retrieve-synchronously url)
                  (goto-char (point-min)) (forward-paragraph)
@@ -50,51 +52,42 @@ Returns a list of cons cells (name . directive) for each .md file."
                    (with-temp-buffer
                      (shr-insert-document dom)
                      (buffer-substring-no-properties (point-min) (point-max))))))
-   :name "read_url"
-   :description "Fetch and read the contents of a URL"
    :args (list '(:name "url"
                        :type "string"
                        :description "The URL to read"))
    :category "web")
 
-  (gptel-make-tool
-   :function
-   (lambda ()
-     (if-let* ((proj (project-current))
-               (root (project-root proj)))
-         (let ((root-path (expand-file-name root)))
-           (format "Project root directory: %s\nDirectory exists: %s\nIs directory: %s"
-                   root-path
-                   (file-exists-p root-path)
-                   (file-directory-p root-path)))
-       "No project found in the current context."))
-   :name "get_project_root"
-   :description "Get the root directory of the current project. This is useful for understanding the project structure and performing operations relative to the project root."
-   :args nil
-   :category "project")
+  ;; (gptel-make-tool
+  ;;  :function
+  ;;  (lambda ()
+  ;;    (if-let* ((proj (project-current))
+  ;;              (root (project-root proj)))
+  ;;        (let ((root-path (expand-file-name root)))
+  ;;          (format "Project root directory: %s\nDirectory exists: %s\nIs directory: %s"
+  ;;                  root-path
+  ;;                  (file-exists-p root-path)
+  ;;                  (file-directory-p root-path)))
+  ;;      "No project found in the current context."))
+  ;;  :name "get_project_root"
+  ;;  :description "Get the root directory of the current project. This is useful for understanding the project structure and performing operations relative to the project root."
+  ;;  :args nil
+  ;;  :category "project")
 
   (gptel-make-tool
-   :function (lambda ()
-               "End the call"
-               (message "Ending the call succesfully")
-               "Ended call succesfully")
-   :name "end_call"
-   :description "End the call after closing conversation with the customer"
-   :category "vodafone")
-
-
-  (gptel-make-tool
-   :function (lambda (filepath)
-	       (with-temp-buffer
-	         (insert-file-contents (expand-file-name filepath))
-	         (buffer-string)))
    :name "read_file"
    :description "Read and display the contents of a file"
+   :function (lambda (filepath)
+	             (with-temp-buffer
+	               (insert-file-contents (expand-file-name filepath))
+	               (buffer-string)))
    :args (list '(:name "filepath"
-	               :type "string"
-	               :description "Path to the file to read.  Supports relative paths and ~."))
+	                     :type "string"
+	                     :description "Path to the file to read.  Supports relative paths and ~."))
    :category "filesystem")
+
   (gptel-make-tool
+   :name "list_project_files"
+   :description "List programming files in the current project directory. Use this function to understand which files you want to read so you can better understand the request from the user."
    :function
    (lambda (&optional file-regex)
      (if-let* ((proj (project-current))
@@ -115,13 +108,11 @@ Returns a list of cons cells (name . directive) for each .md file."
                     matching-files
                     "\n")))
        "No project found or no matching files."))
-   :name "list_project_files"
-   :description "List programming files in the current project directory. Use this function to understand which files you want to read so you can better understand the request from the user."
    :args (list '(:name "file_regex"
                        :type "string"
                        :description "Optional regex pattern to filter files (e.g., \"\\.py$\" for Python files). If not provided, lists common programming files."))
    :category "project")
-   
+  
   )
 
 ;;; gptel
@@ -132,14 +123,21 @@ Returns a list of cons cells (name . directive) for each .md file."
   
   :init
   
-  (setq gptel-default-mode 'markdown-mode)
+  (setq gptel-default-mode 'org-mode)
 
-  (setq my-gptel-scratch-buffer-name "*gptel-scratch*")
-  (gptel my-gptel-scratch-buffer-name)
-  (defun my-gptel-scratch ()
+  (defun my/gptel-menu ()
     (interactive)
-    (switch-to-buffer my-gptel-scratch-buffer-name))
-  (my/set-custom-key "a i s" 'my-gptel-scratch)
+    (meow-insert-exit)
+    (gptel-menu)
+    )
+
+  (setq my/gptel-scratch-buffer-name "*gptel-scratch*")
+  (defun my/gptel-scratch ()
+    (interactive)
+    (if (not (get-buffer my/gptel-scratch-buffer-name))
+        (gptel my/gptel-scratch-buffer-name))
+    (switch-to-buffer my/gptel-scratch-buffer-name))
+  (my/set-custom-key "a i c" 'my/gptel-scratch)
   
   :config
 
@@ -169,23 +167,14 @@ Returns a list of cons cells (name . directive) for each .md file."
 
   (setq gptel-directives
         (let ((markdown-directives (my/ai-gptel-load-all-markdown-directives (expand-file-name "prompts" user-emacs-directory))))
-          `((default . "To assist:  Be terse.  Do not offer unprompted advice or clarifications.  Speak in specific, topic relevant terminology.  Do NOT hedge or qualify.  Speak directly and be willing to make creative guesses.
-
-Explain your reasoning.  if you don’t know, say you don’t know.  Be willing to reference less reputable sources for ideas.
-
- Never apologize.  Ask questions when unsure.")
-            (programmer . "You are a careful programmer.  Provide code and only code as output without any additional text, prompt or note.  Do NOT use markdown backticks (```) to format your response.")
-            (cliwhiz . "You are a command line helper.  Generate command line commands that do what is requested, without any additional description or explanation.  Generate ONLY the command, without any markdown code fences.")
-            (emacser . "You are an Emacs maven.  Reply only with the most appropriate built-in Emacs command for the task I specify.  Do NOT generate any additional description or explanation.")
-
-            (explain . "Explain what this code does to a novice programmer.")
+          `(
             ,@markdown-directives
             )))
 
-  ;; (my/gptel-make-tools)
+  (my/gptel-make-tools)
    
   :bind
-  ("M-<return>" . gptel-menu)
+  ("M-<return>" . my/gptel-menu)
   
   )
 
