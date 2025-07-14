@@ -56,6 +56,11 @@ button:hover {
     }
 }
 
+#cpu.working { color: orange; }
+#cpu.fighting { color: red; }
+
+#disk.full { color: red; }
+
 /****** hyprland/workspaces ******/
 
 #workspaces {

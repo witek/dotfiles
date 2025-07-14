@@ -8,15 +8,21 @@
   "format-icons": {
                    }
   },
+    
 
  "privacy":
  {},
 
+    
  "disk":
  {"interval": 30,
-  "format": " {free}",
+  // "format": " {free}",
+  "format": " {percentage_used}%",
   "path": "/",
-  "on-click": "baobab"
+  "on-click": "baobab",
+  "states": {
+      "full": 80
+  }
   },
 
  "keyboard-state":
@@ -80,7 +86,7 @@
 
  "clock":
  {
-  // "timezone": "America/New_York",
+     // "timezone": "America/New_York",
   "format": "{:%a %d.%b %H:%M}",
   "tooltip-format": "{:%A, %d. %B %Y}\n\n<tt><big>{calendar}</big></tt>"
   },
@@ -88,9 +94,14 @@
     
  "cpu":
  {
+  "interval": 3,
   "format": " {usage}%",
   "tooltip": true,
-  "on-click": "gnome-system-monitor"
+  "on-click": "gnome-system-monitor",
+  "states": {
+             "working": 10,
+             "fighting": 50
+             }
   },
 
 
