@@ -2,8 +2,8 @@
 
 export DATA_PATH=/run/media/witek/DATA
 
-read -s -p "Enter restic repo password: " RESTIC_PASSWORD
-export RESTIC_PASSWORD
+# read -s -p "Enter restic repo password: " RESTIC_PASSWORD
+export RESTIC_PASSWORD=$(pass show restic)
 
 export RESTIC_REPOSITORY=$DATA_PATH/restic/helix
 
