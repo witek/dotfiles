@@ -62,8 +62,8 @@
   (setq denote-known-keywords '("emacs" "dev" "home" "happygast" "fbst"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
-  (setq denote-file-type 'markdown-toml)
-  ;; (setq denote-file-type 'org)
+  ;; (setq denote-file-type 'markdown-toml)
+  (setq denote-file-type 'org)
   (setq denote-prompts '(title keywords))
   (setq denote-excluded-directories-regexp nil)
   (setq denote-excluded-keywords-regexp nil)
@@ -72,6 +72,9 @@
   (setq denote-backlinks-show-context t)
   (denote-rename-buffer-mode 1)
   (add-hook 'context-menu-functions #'denote-context-menu)
+  )
+
+(use-package denote-journal
   )
 
 ;;; provide

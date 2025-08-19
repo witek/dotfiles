@@ -41,8 +41,24 @@ Returns a list of cons cells (name . directive) for each .md file."
               (mapcar #'my/ai-gptel-load-directive-from-markdown markdown-files)))))
 
 (defun my/gptel-make-tools ()
+
   (gptel-make-tool
-   :name "read_url"
+   :name "emacs_eval"
+   :description "Evaluate Emacs Lisp Code inside the running Emacs"
+   :function (lambda (code)
+               (read "(progn 1 2)")
+               (eval
+                (read
+                 (concat "(progn " code ")"))))
+   :args (list '(:name "elisp_code"
+                       :type "string"
+                       :description "The Emacs Lisp Code to evaluate"))
+   :confirm t
+   :include nil
+   :category "emacs")
+
+  (gptel-make-tool
+   :name "fetch"
    :description "Fetch and read the contents of a URL"
    :function (lambda (url)
                (with-current-buffer (url-retrieve-synchronously url)
@@ -121,26 +137,22 @@ Returns a list of cons cells (name . directive) for each .md file."
 (use-package gptel
   :defer t
   
-  :init
-  
-  (setq gptel-default-mode 'org-mode)
-
-  (defun my/gptel-menu ()
-    (interactive)
-    (meow-insert-exit)
-    (gptel-menu)
-    )
-
-  (setq my/gptel-scratch-buffer-name "*gptel-scratch*")
-  (defun my/gptel-scratch ()
-    (interactive)
-    (if (not (get-buffer my/gptel-scratch-buffer-name))
-        (gptel my/gptel-scratch-buffer-name))
-    (switch-to-buffer my/gptel-scratch-buffer-name))
-  (my/set-custom-key "a i c" 'my/gptel-scratch)
-  
   :config
+  
+  (setq gptel-model `deepseek-chat)
+  (setq gptel-temperature 0.7)
+  (setq gptel-window-select t)
+  (setq gptel-window-side 'right)
+  (setq gptel-window-width 80)
 
+  (setq gptel-default-mode 'org-mode)
+  (setq gptel-org-branching-context nil)
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "# user: ")
+  (setf (alist-get 'org-mode gptel-response-prefix-alist) "# llm:\n\n")
+
+  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+  
   (setq gptel-api-key (auth-source-pass-get 'secret "openai-emacs"))
   
   (setq gptel-backend
@@ -156,27 +168,42 @@ Returns a list of cons cells (name . directive) for each .md file."
           :stream t
           :key (auth-source-pass-get 'secret "deepseek-emacs")
           :models '(deepseek-chat deepseek-coder)))
-
-  (setq gptel-model `deepseek-chat)
-
-  (setq gptel-temperature 0.7)
-  (setq gptel-window-select t)
-  (setq gptel-window-side 'right)
-  (setq gptel-window-width 80)
-  (setq gptel-org-branching-context t)
-
+  
   (setq gptel-directives
         (let ((markdown-directives (my/ai-gptel-load-all-markdown-directives (expand-file-name "prompts" user-emacs-directory))))
           `(
             ,@markdown-directives
             )))
 
+  ;; my/gptel-menu command
+  (defun my/gptel-menu ()
+    (interactive)
+    (meow-insert-exit)
+    (gptel-menu)
+    )
+
+  ;; my/gptel-scratch command
+  (setq my/gptel-scratch-buffer-name "*gptel-scratch*")
+  (defun my/gptel-scratch ()
+    (interactive)
+    (if (not (get-buffer my/gptel-scratch-buffer-name))
+        (gptel my/gptel-scratch-buffer-name))
+    (switch-to-buffer my/gptel-scratch-buffer-name))
+  
   (my/gptel-make-tools)
    
   :bind
   ("M-<return>" . my/gptel-menu)
+  ("C-c a i c" . my/gptel-scratch)
   
   )
+
+;;; elysium
+;; https://github.com/lanceberge/elysium
+
+(use-package elysium)
+
+
 
 ;;; aidermacs
 ;; https://github.com/MatthewZMD/aidermacs

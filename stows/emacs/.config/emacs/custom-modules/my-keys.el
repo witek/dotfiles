@@ -47,6 +47,7 @@
 (my/set-custom-key "w /" 'split-window-horizontally)
 (my/set-custom-key "w -" 'split-window-vertically)
 (my/set-custom-key "w d" 'delete-window)
+(my/set-custom-key "w m" 'delete-other-windows)
 
 (my/set-custom-key "s q" 'query-replace)
 

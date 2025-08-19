@@ -7,6 +7,15 @@
   (save-some-buffers t)
   )
 
+(defun witek-lsp-organize-imports ()
+  (interactive)
+  (call-interactively 'save-some-buffers)
+  (call-interactively 'lsp-organize-imports)
+  (save-some-buffers t)
+  (call-interactively 'lsp-organize-imports)
+  (save-some-buffers t)
+  )
+
 (defun witek-lsp-clojure-clean-ns ()
   (interactive)
   (call-interactively 'save-some-buffers)
