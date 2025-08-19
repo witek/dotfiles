@@ -54,6 +54,7 @@
 (add-to-list 'package-selected-packages 'wgrep)
 (add-to-list 'package-selected-packages 'treemacs)
 (add-to-list 'package-selected-packages 'adoc-mode)
+(add-to-list 'package-selected-packages 'hl-todo)
 (add-to-list 'package-selected-packages 'cider)
 (add-to-list 'package-selected-packages 'clj-refactor)
 (add-to-list 'package-selected-packages 'clojure-mode)

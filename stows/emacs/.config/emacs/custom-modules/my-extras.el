@@ -59,6 +59,13 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
    
   )
 
+;;; hl-todo
+;; https://github.com/tarsius/hl-todo
+(use-package hl-todo
+  :config
+  (global-hl-todo-mode))i
+
+
 ;;; clean-kill-ring
 
 ;; (crafted-package-install-package 'clean-kill-ring)
