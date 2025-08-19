@@ -186,9 +186,19 @@ Returns a list of cons cells (name . directive) for each .md file."
   (setq my/gptel-scratch-buffer-name "*gptel-scratch*")
   (defun my/gptel-scratch ()
     (interactive)
-    (if (not (get-buffer my/gptel-scratch-buffer-name))
-        (gptel my/gptel-scratch-buffer-name))
-    (switch-to-buffer my/gptel-scratch-buffer-name))
+    (let ((buffer-name (concat
+                        "*gptel-chat "
+                        (format-time-string "%Y-%m-%d %H:%M:%S")
+                        "*")))
+      (progn
+        (gptel buffer-name)
+        (switch-to-buffer buffer-name)
+        )
+      )
+    ;; (if (not (get-buffer my/gptel-scratch-buffer-name))
+    ;;     (gptel my/gptel-scratch-buffer-name))
+    ;; (switch-to-buffer my/gptel-scratch-buffer-name)
+    )
   
   (my/gptel-make-tools)
    
