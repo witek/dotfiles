@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+echo "Removing kernel module"
+sudo rmmod ath11k_pci
+
+echo "Waiting..."
+sleep 5
+
+echo "Installing kernel module"
+sudo modprobe ath11k_pci

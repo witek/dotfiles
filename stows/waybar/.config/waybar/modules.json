@@ -156,11 +156,11 @@
  "network":
  {
      // "interface": "wlp2*", // (Optional) To force the use of this interface
-  "format-wifi": " {essid} ({signalStrength}%)",
+     "format-wifi": " {essid} {frequency}GHz {signalStrength}%",
   "format-ethernet": "󱎔 {ipaddr}/{cidr}",
-  "tooltip-format": "󱎔 {ifname} via {gwaddr}",
   "format-linked": "󰈁 {ifname} (No IP)",
   "format-disconnected": "⚠ Disconnected",
+     "tooltip-format": "󱎔 {ifname} {frequency}GHz {ipaddr} via {gwaddr} ↓ {bandwidthDownBits} ↑ {bandwidthUpBits}",
   "on-click": "nm-connection-editor"
   },
 
