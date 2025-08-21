@@ -63,7 +63,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/tarsius/hl-todo
 (use-package hl-todo
   :config
-  (global-hl-todo-mode))i
+  (global-hl-todo-mode))
 
 
 ;;; clean-kill-ring

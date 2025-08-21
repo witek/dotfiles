@@ -17,8 +17,6 @@
 ;; Distro Installed Lisp
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 
-(require 'crafted-completion-packages)
-
 (add-to-list 'package-selected-packages 'all-the-icons)
 (add-to-list 'package-selected-packages 'elisp-demos)
 (add-to-list 'package-selected-packages 'helpful)
