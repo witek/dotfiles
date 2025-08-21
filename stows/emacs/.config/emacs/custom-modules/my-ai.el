@@ -135,6 +135,7 @@ Returns a list of cons cells (name . directive) for each .md file."
 ;; https://github.com/karthink/gptel
 
 (use-package gptel
+  :ensure t
   :defer t
   
   :config
@@ -211,7 +212,10 @@ Returns a list of cons cells (name . directive) for each .md file."
 ;;; elysium
 ;; https://github.com/lanceberge/elysium
 
-(use-package elysium)
+(use-package elysium
+  :ensure t
+  :defer t
+  )
 
 
 
@@ -219,6 +223,8 @@ Returns a list of cons cells (name . directive) for each .md file."
 ;; https://github.com/MatthewZMD/aidermacs
 
 (use-package aidermacs
+  :ensure t
+  :defer t
   ;; :bind (("C-c a" . aidermacs-transient-menu))
   
   ;; :config

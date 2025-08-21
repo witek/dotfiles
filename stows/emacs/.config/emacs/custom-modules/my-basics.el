@@ -26,7 +26,11 @@
 
 (use-package vertico
   :ensure t
-  :hook (after-init . vertico-mode)
+  :demand t
+  :bind (
+         :map vertico-map
+         ("C-, p" . consult-preview-at-point-mode)
+         )
 
   :config
   (setq vertico-cycle t)
@@ -39,6 +43,7 @@
   (fido-vertical-mode -1)
   (icomplete-mode -1)
   (icomplete-vertical-mode -1)
+  (vertico-mode 1)
   
   )
 
@@ -48,7 +53,11 @@
 
 (use-package marginalia
   :ensure t
-  :hook (after-init . marginalia-mode))
+  :after vertico
+  
+  :config
+  (marginalia-mode 1)
+  )
 
 
 ;;; consult
@@ -56,19 +65,19 @@
 
 (use-package consult
   :ensure t
+  :after vertico
   :hook (completion-list-mode . consult-preview-at-point-mode)
+  :bind (
+         :map minibuffer-local-map
+         ("C-r" . 'consult-history)     
+         )
+
 
   :config
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   
-  :bind (
-         :map vertico-map
-         ("C-, p" . consult-preview-at-point-mode)
-
-         :map minibuffer-local-map
-         ("C-r" . 'consult-history)     
-         ))
+  )
 
 
 ;;; orderless
@@ -128,7 +137,11 @@
 
 (use-package corfu
   :ensure t
-  :hook (after-init . global-corfu-mode)
+  :demand t
+  :bind (:map corfu-map
+              ("RET" . nil)
+              ("<tab>"  . 'corfu-insert)
+              ("<right>"  . 'corfu-insert))
   
   :config
   (setq corfu-cycle t)
@@ -137,12 +150,10 @@
   (setq corfu-auto-delay 0.8)
   (setq corfu-quit-no-match 'separator)
 
+  (global-corfu-mode 1)
   (corfu-popupinfo-mode 1)
   
-  :bind (:map corfu-map
-              ("RET" . nil)
-              ("<tab>"  . 'corfu-insert)
-              ("<right>"  . 'corfu-insert)))
+  )
 
 
 ;;; nerd-icons-corfu
@@ -195,9 +206,35 @@
   )
 
 
+;;; magit
+;; https://magit.vc/manual/magit/
+
+;; (use-package compat)
+;; (use-package dash)
+;; (use-package transient)
+;; (use-package with-editor)
+
+(use-package transient
+  :ensure t)
+
+(use-package magit
+  :ensure t
+  :defer t
+  :bind (("C-c g s" . 'magit-status)
+         ("C-c G s" . 'magit-status)
+
+         :map witek-context-key-map
+         ("M"       . 'magit-file-dispatch)
+
+         :map magit-status-mode-map
+         ("x"       . 'magit-discard))
+  )
+
+
 ;;; smartparens
 
 (use-package smartparens
+  :ensure t
   :bind (("<backspace>" . 'sp-backward-delete-char)
 
          ("C-l" . 'sp-forward-slurp-sexp)
@@ -232,24 +269,6 @@
 
   )
 
-;;; magit
-
-;; (use-package compat)
-;; (use-package dash)
-;; (use-package transient)
-;; (use-package with-editor)
-
-(use-package magit
-  :defer t
-  :bind (("C-c g s" . 'magit-status)
-         ("C-c G s" . 'magit-status)
-
-         :map witek-context-key-map
-         ("M"       . 'magit-file-dispatch)
-
-         :map magit-status-mode-map
-         ("x"       . 'magit-discard))
-  )
 
 ;;; provide
 (provide 'my-basics)

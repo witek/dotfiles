@@ -2,6 +2,7 @@
 
 
 ;;; org
+(require 'crafted-org)
 
 (use-package org
   :init

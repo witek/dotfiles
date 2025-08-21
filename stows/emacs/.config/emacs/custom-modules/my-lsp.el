@@ -26,9 +26,14 @@
 ;;; lsp-mode
 
 (use-package lsp-mode
+  :ensure t
   :demand t
+  :hook ((clojure-mode . lsp))
+  :bind
+  (:map witek-context-key-map
+        ("r" . 'witek-lsp-rename))
 
-  :init
+  :config
 
   (setq lsp-file-watch-threshold 5000)
   ;; (setq lsp-keymap-prefix ", r")
@@ -60,22 +65,21 @@
 
   ;; (setq lsp-headerline-breadcrumb-path-face '((t :inherit font-lock-string-face :height 0.5)))
 
-  :bind
-  (:map witek-context-key-map
-        ("r" . 'witek-lsp-rename))
-
-  :config
   (lsp-semantic-tokens--warn-about-deprecated-setting)
 
-  :hook ((clojure-mode . lsp))
-  :commands lsp)
+  )
 
 ;;; lsp-ui
 
 (use-package lsp-ui
+  :ensure t
+  :after lsp-mode
   ;; :demand t
-  :commands lsp-ui-mode
-  :init
+  ;; :commands lsp-ui-mode
+
+
+  :config
+
   (setq lsp-ui-sideline-show-hover nil)
   (setq lsp-ui-sideline-show-code-actions nil)
 
@@ -83,8 +87,7 @@
   (setq lsp-ui-doc-show-with-cursor t)
   (setq lsp-ui-doc-position 'at-point)
   (setq lsp-ui-doc-use-webkit t)
-
-  :config
+  
   ;; (custom-set-faces
   ;;  '(lsp-headerline-breadcrumb-path-face ((t :inherit font-lock-string-face :height 0.7)))
   ;;  '(lsp-headerline-breadcrumb-project-prefix-face ((t :inherit font-lock-string-face :weight bold :height 0.7)))
@@ -98,14 +101,16 @@
 ;;; lsp-treemacs
 
 (use-package lsp-treemacs
+  :ensure t
   :defer t
   :commands lsp-treemacs-errors-list)
 
 ;;; consult-lsp
 
 (use-package consult-lsp
+  :ensure t
   :defer t
-  :after lsp-mode
+  :after (consul lsp-mode)
   )
 
 ;;; provide

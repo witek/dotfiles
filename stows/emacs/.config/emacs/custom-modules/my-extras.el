@@ -9,6 +9,7 @@
 ;;; helpful
 
 (use-package helpful
+  :ensure t
   :config
   (my/set-custom-key "d v" 'helpful-variable)
   (my/set-custom-key "d k" 'helpful-key)
@@ -33,7 +34,10 @@
 ;; https://github.com/justbur/emacs-which-key
 
 (use-package which-key
+  :ensure t
+
   :init (which-key-mode)
+
   :config
   (setq which-key-show-transient-maps t)
   (setq which-key-idle-delay 0.3)
@@ -44,6 +48,8 @@
 ;; https://www.emacswiki.org/emacs/HiLock
 
 (use-package hi-lock
+  :ensure nil 
+
   :bind
   (:map witek-context-key-map
         ("h s"        . 'highlight-symbol-at-point)
@@ -62,6 +68,8 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; hl-todo
 ;; https://github.com/tarsius/hl-todo
 (use-package hl-todo
+  :ensure t
+  
   :config
   (global-hl-todo-mode))
 
@@ -78,15 +86,19 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/joaotavora/yasnippet
 
 (use-package yasnippet
+  :ensure t
   :defer t
+
   :config
   (yas-global-mode 1))
 
 ;;; dirvish
 
 (use-package dirvish
+  :ensure t
   :defer t
-  :init
+
+  :config
   (dirvish-override-dired-mode))
 
 ;;; treemacs
@@ -112,9 +124,10 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/tarsius/paren-face
 
 (use-package paren-face
-  :init
-  (global-paren-face-mode 1)
+  :ensure t
+
   :config
+  (global-paren-face-mode 1)
   (set-face-attribute 'parenthesis nil :foreground "#5f5f5f")
   )
 
@@ -122,6 +135,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/karthink/popper
 
 (use-package popper
+  :ensure t
 
   :init
   (setq popper-reference-buffers
@@ -143,11 +157,12 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/mhayashi1120/Emacs-wgrep
 
 (use-package wgrep
+  :ensure t
   :after embark-consult
-  :init
+  
+  :config
   (setq wgrep-auto-save-buffer t)
   (setq wgrep-change-readonly-file t)
-  :config
   ;; (my-local-leader-def
   ;;   :keymaps '(grep-mode-map wgrep-mode-map)
   ;;   "e" 'wgrep-change-to-wgrep-mode
@@ -165,6 +180,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; adoc-mode
 
 (use-package adoc-mode
+  :ensure t
   :defer t
    )
 
@@ -172,7 +188,9 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; clojure-mode
 
 (use-package clojure-mode
+  :ensure t
   :defer t
+
   :config
   (setq
    clojure-ident-style 'align-arguments
@@ -189,6 +207,8 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; cider
 
 (use-package cider
+  :ensure t
+
   :defer t
   :after clojure-mode
   :config
@@ -209,13 +229,17 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;; clj-refactor
 
 (use-package clj-refactor
+  :ensure t
   :after clojure-mode
+
   :config
   (setq cljr-add-ns-to-blank-clj-files t))
 
 ;;; blamer
 
 (use-package blamer
+  :ensure t
+
   ;; :bind (("s-i" . blamer-show-commit-info)
   ;;        ("C-c i" . blamer-show-posframe-commit-info))
   :defer t
@@ -234,12 +258,14 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://www.emacswiki.org/emacs/Figlet
 
 (use-package figlet
+  :ensure t
   :defer t)
 
 
 ;;; lorem-ipsum
 
 (use-package lorem-ipsum
+  :ensure t   
   :defer t)
 
 ;;; go-translate
@@ -273,34 +299,37 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/magnars/string-edit.el
 
 (use-package string-edit-at-point
+  :ensure t   
   :defer t)
 
 ;;; substitute
 ;; https://protesilaos.com/emacs/substitute
 
 (use-package substitute
+  :ensure t   
+  :bind (:map witek-context-key-map
+              ("s b" . 'substitute-target-in-buffer)
+              ("s d" . 'substitute-target-in-defun))
 
   :config
   (setq substitute-fixed-letter-case t)
 
-  :bind
-  (:map witek-context-key-map
-        ("s b" . 'substitute-target-in-buffer)
-        ("s d" . 'substitute-target-in-defun))
   )
 
 ;; server
 
-(use-package server
-  :ensure nil
-  :defer 1
-  :config (unless (server-running-p)
-            (server-start)))
+;; (use-package server
+;;   :defer 1
+
+;;   :config
+;;   (unless (server-running-p)
+;;     (server-start)))
 
 ;;; edit-server
 ;; https://github.com/stsquad/emacs_chrome
 
 (use-package edit-server
+  :ensure t
   :defer t
   :commands edit-server-start
   :init
@@ -321,12 +350,14 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;; https://github.com/Malabarba/gmail-mode
 
 (use-package gmail-message-mode
+  :ensure t
   :defer t)
 
 ;;; chatgpt-shell
 ;; https://github.com/xenodium/chatgpt-shell
 
 (use-package chatgpt-shell
+  :ensure t
   :defer t
   :custom
   ((chatgpt-shell-openai-key
@@ -340,6 +371,7 @@ The same result can also be be achieved by \\[universal-argument] \\[unhighlight
 ;;       (auth-source-pass-get 'secret "openai-frankenburg")))))
 
 (use-package ob-chatgpt-shell
+  :ensure t
   :defer t
   ;; :init
   ;; (setq org-babel-load-languages '((chatgpt-shell . t)))

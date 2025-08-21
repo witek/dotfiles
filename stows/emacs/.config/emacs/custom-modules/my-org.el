@@ -6,27 +6,16 @@
 
 ;;; org
 
-;; Return or left-click with mouse follows link
-(customize-set-variable 'org-return-follows-link t)
-(customize-set-variable 'org-mouse-1-follows-link t)
-
-;; Display links as the description provided
-(customize-set-variable 'org-link-descriptive t)
-
-;; Visually indent org-mode files to a given header level
-;; (add-hook 'org-mode-hook #'org-indent-mode)
-
-;; Hide markup markers
-(customize-set-variable 'org-hide-emphasis-markers t)
-(when (locate-library "org-appear")
-  (add-hook 'org-mode-hook 'org-appear-mode))
 
 (use-package org
-
-  :custom
-  (org-agenda-files '("~/org/inbox.org" "/home/witek/org/gtd.org"))
+  :ensure t
+  :bind (
+         :map org-src-mode-map
+              ("C-c C-c" . org-edit-src-exit)     
+         )
   
   :config
+  (setq org-agenda-files '("~/org/inbox.org" "/home/witek/org/gtd.org"))
   (setq org-directory "~/org/")
   (setq org-archive-location "~/org/archive.org")
   (setq org-default-notes-file "~/org/inbox.org")
@@ -36,15 +25,28 @@
   (setq org-enforce-todo-checkbox-dependencies t)
   (setq org-reverse-note-order t)
 
-  :hook (org-mode . (lambda ()
-                      (toggle-truncate-lines)))
+  ;; Return or left-click with mouse follows link
+  (setq org-return-follows-link t)
+  (setq org-mouse-1-follows-link t)
 
-  ;; TODO more TODO keywords
-  
-   )
+  ;; Display links as the description provided
+  (setq org-link-descriptive t)
+
+  ;; Visually indent org-mode files to a given header level
+  ;; (add-hook 'org-mode-hook #'org-indent-mode)
+
+  ;; Hide markup markers
+  (setq org-hide-emphasis-markers nil)
+  (when (locate-library "org-appear")
+    (add-hook 'org-mode-hook 'org-appear-mode))
+
+  (add-hook 'org-mode-hook (lambda () (toggle-truncate-lines)))
+  )
 
 (use-package org-modern
-  :after '(org)
+  :ensure t
+  :after org
+  
   :config
   (global-org-modern-mode))
 
@@ -56,6 +58,7 @@
 ;; https://protesilaos.com/emacs/denote#h:5d16932d-4f7b-493d-8e6a-e5c396b15fd6
 
 (use-package denote
+  :ensure t
   :defer t
 
   :hook (dired-mode . denote-dired-mode)
@@ -79,6 +82,7 @@
   )
 
 (use-package denote-journal
+  :ensure t
   )
 
 ;;; provide

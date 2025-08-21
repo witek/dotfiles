@@ -34,6 +34,7 @@
 ;;; spacious-padding
 
 (use-package spacious-padding
+  :ensure t
   :config
   (setq spacious-padding-widths
         '( :internal-border-width 15
@@ -50,6 +51,8 @@
 
 ;; (crafted-package-install-package 'ef-themes)
 (use-package ef-themes
+  :ensure t
+
   :config
   (setq ef-themes-to-toggle '(ef-eagle ef-owl))
   (setq ef-themes-headings
@@ -81,6 +84,7 @@
 ;; https://protesilaos.com/emacs/pulsar#h:96289426-8480-4ea6-9053-280348adc0ed
 
 (use-package pulsar
+  :ensure t
 
   :config
   (setq pulsar-pulse t)
@@ -112,7 +116,9 @@
 ;;; ligature
 
 (use-package ligature
+  :ensure t
   :load-path "path-to-ligature-repo"
+  
   :config
   ;; Enable the "www" ligature in every possible major mode
   (ligature-set-ligatures 't '("www"))
@@ -242,8 +248,10 @@
 ;;   )
 
 ;;; outline
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Outline-Minor-Mode.html
 
 (use-package outline
+  
   :config
   (add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
   (add-hook 'clojure-mode-hook #'outline-minor-mode))
@@ -252,6 +260,7 @@
 
 ;; (crafted-package-install-package 'outline-minor-faces)
 (use-package outline-minor-faces
+  :ensure t
   :after outline
 
   :config
