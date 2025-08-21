@@ -1,21 +1,26 @@
+;;; init.el --- Emacs Configuration -*- lexical-binding: t; -*-
+
+;; Author: Witoslaw Koczewski <wi@koczewski.de>
+
 ;; https://github.com/SystemCrafters/crafted-emacs
+
+;;; Setup Custom
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (and custom-file
            (file-exists-p custom-file))
   (load custom-file nil :nomessage))
 
+;;; Crafted Emacs
+
 (customize-set-variable 'crafted-init-auto-save-customized nil)
 (customize-set-variable 'crafted-init-auto-save-selected-packages nil)
-
 (load "~/crafted-emacs/modules/crafted-init-config")
 
 ;;; Install packages
 
 (setq use-package-compute-statistics t)
 
-;; Distro Installed Lisp
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 
 (add-to-list 'package-selected-packages 'all-the-icons)
 (add-to-list 'package-selected-packages 'elisp-demos)
@@ -101,7 +106,6 @@
 
 ;;; Crafted Configuration
 
-(require 'crafted-updates-config)
 (require 'crafted-defaults-config)
 (require 'crafted-startup-config)
 (require 'crafted-completion-config)

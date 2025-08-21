@@ -22,6 +22,10 @@
   (add-hook 'org-mode-hook 'org-appear-mode))
 
 (use-package org
+
+  :custom
+  (org-agenda-files '("~/org/inbox.org" "/home/witek/org/gtd.org"))
+  
   :config
   (setq org-directory "~/org/")
   (setq org-archive-location "~/org/archive.org")
