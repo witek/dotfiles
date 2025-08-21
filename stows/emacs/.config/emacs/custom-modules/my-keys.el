@@ -51,9 +51,6 @@
 
 (my/set-custom-key "s q" 'query-replace)
 
-(my/set-custom-key "o t" 'outline-toggle-children)
-(my/set-custom-key "o f" 'outline-hide-other)
-(my/set-custom-key "o a" 'outline-show-all)
 
 
 ;;; cusotm context key-map

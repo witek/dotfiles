@@ -58,25 +58,6 @@
   (setq native-comp-async-report-warnings-errors 'silent)
   (setq native-compile-prune-cache t))
 
-(defmacro comment (&rest body)
-  "Determine what to do with BODY.
-
-If BODY contains an unquoted plist of the form (:eval t) then
-return BODY inside a `progn'.
-
-Otherwise, do nothing with BODY and return nil, with no side
-effects."
-  (declare (indent defun))
-  (let ((eval))
-    (dolist (element body)
-      (when-let* (((plistp element))
-                  (key (car element))
-                  ((eq key :eval))
-                  (val (cadr element)))
-        (setq eval val
-              body (delq element body))))
-    (when eval `(progn ,@body))))
-
 (use-package emacs
   :ensure nil
   :demand t
@@ -302,21 +283,172 @@ effects."
   
 )
 
-(use-package recentf
-  :ensure nil
-  :hook (after-init . recentf-mode)
+(defun my/set-custom-key (kbd-string command-symbol)
+  (global-set-key (kbd (concat "C-c " kbd-string)) command-symbol))
+
+(defmacro comment (&rest body)
+  "Determine what to do with BODY.
+
+If BODY contains an unquoted plist of the form (:eval t) then
+return BODY inside a `progn'.
+
+Otherwise, do nothing with BODY and return nil, with no side
+effects."
+  (declare (indent defun))
+  (let ((eval))
+    (dolist (element body)
+      (when-let* (((plistp element))
+                  (key (car element))
+                  ((eq key :eval))
+                  (val (cadr element)))
+        (setq eval val
+              body (delq element body))))
+    (when eval `(progn ,@body))))
+
+(add-to-list 'default-frame-alist '(font . "JetBrains Mono-12"))
+
+(use-package ef-themes
+  :ensure t
 
   :config
-  (setq recentf-max-saved-items 100)
-  (setq recentf-max-menu-items 25)
-  (setq recentf-save-file-modes nil)
-  (setq recentf-keep nil)
-  (setq recentf-auto-cleanup nil)
-  (setq recentf-initialize-file-name-history nil)
-  (setq recentf-filename-handlers nil)
-  (setq recentf-show-file-shortcuts-flag nil)
-  (recentf-mode 1)
+  (setq ef-themes-to-toggle '(ef-eagle ef-owl))
+  (setq ef-themes-headings
+        '((0 variable-pitch light 1.9)
+          ;; (1 variable-pitch light 1.8)
+          ;; (2 variable-pitch regular 1.7)
+          ;; (3 variable-pitch regular 1.6)
+          ;; (4 variable-pitch regular 1.5)
+          ;; (5 variable-pitch 1.4)
+          ;; (6 variable-pitch 1.3)
+          ;; (7 variable-pitch 1.2)
+          ;; (t variable-pitch 1.1)
+          ))
+  (setq ef-themes-mixed-fonts t
+        ef-themes-variable-pitch-ui t)
+  (setq ef-themes-region '(intense no-extend neutral))
+  (mapc #'disable-theme custom-enabled-themes)
+
+  (ef-themes-select 'ef-owl)
+
   )
+
+(use-package spacious-padding
+  :ensure t
+  :config
+  (setq spacious-padding-widths
+        '( :internal-border-width 15
+           :header-line-width 4
+           :mode-line-width 6
+           :tab-width 4
+           :right-divider-width 30
+           :scroll-bar-width 8
+           :fringe-width 8))
+  (spacious-padding-mode 1)
+  )
+
+(use-package pulsar
+  :ensure t
+
+  :config
+  (setq pulsar-pulse t)
+  (setq pulsar-delay 0.10)
+  (setq pulsar-iterations 10)
+  (setq pulsar-face 'pulsar-cyan)
+  (setq pulsar-highlight-face 'pulsar-yellow)
+  
+  (setq pulsar-resolve-pulse-function-aliases t)
+
+  (add-to-list 'pulsar-pulse-functions 'meow-search)
+  (add-to-list 'pulsar-pulse-functions 'phi-search)
+  (add-to-list 'pulsar-pulse-functions 'phi-search-backward)
+  (add-to-list 'pulsar-pulse-functions 'beginning-of-defun)
+  (add-to-list 'pulsar-pulse-functions 'end-of-defun)
+
+  (add-to-list 'pulsar-pulse-region-functions 'yank)
+  (add-to-list 'pulsar-pulse-region-functions 'consult-yank-pop)  
+  
+  (pulsar-global-mode 1)
+  (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
+
+  ;; integration with the `consult' package:
+  (add-hook 'consult-after-jump-hook #'pulsar-recenter-top)
+  (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry)
+
+  )
+
+(use-package ligature
+  :ensure t
+  :load-path "path-to-ligature-repo"
+  
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia and Fira Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode
+                          '(;; == === ==== => =| =>>=>=|=>==>> ==< =/=//=// =~
+                            ;; =:= =!=
+                            ("=" (rx (+ (or ">" "<" "|" "/" "~" ":" "!" "="))))
+                            ;; ;; ;;;
+                            (";" (rx (+ ";")))
+                            ;; && &&&
+                            ("&" (rx (+ "&")))
+                            ;; !! !!! !. !: !!. != !== !~
+                            ("!" (rx (+ (or "=" "!" "\." ":" "~"))))
+                            ;; ?? ??? ?:  ?=  ?.
+                            ("?" (rx (or ":" "=" "\." (+ "?"))))
+                            ;; %% %%%
+                            ("%" (rx (+ "%")))
+                            ;; |> ||> |||> ||||> |] |} || ||| |-> ||-||
+                            ;; |->>-||-<<-| |- |== ||=||
+                            ;; |==>>==<<==<=>==//==/=!==:===>
+                            ("|" (rx (+ (or ">" "<" "|" "/" ":" "!" "}" "\]"
+                                            "-" "=" ))))
+                            ;; \\ \\\ \/
+                            ("\\" (rx (or "/" (+ "\\"))))
+                            ;; ++ +++ ++++ +>
+                            ("+" (rx (or ">" (+ "+"))))
+                            ;; :: ::: :::: :> :< := :// ::=
+                            ;; (":" (rx (or ">" "<" "=" "//" ":=" (+ ":"))))
+                            ;; // /// //// /\ /* /> /===:===!=//===>>==>==/
+                            ("/" (rx (+ (or ">"  "<" "|" "/" "\\" "\*" ":" "!"
+                                            "="))))
+                            ;; .. ... .... .= .- .? ..= ..<
+                            ("\." (rx (or "=" "-" "\?" "\.=" "\.<" (+ "\."))))
+                            ;; -- --- ---- -~ -> ->> -| -|->-->>->--<<-|
+                            ("-" (rx (+ (or ">" "<" "|" "~" "-"))))
+                            ;; *> */ *)  ** *** ****
+                            ("*" (rx (or ">" "/" ")" (+ "*"))))
+                            ;; www wwww
+                            ("w" (rx (+ "w")))
+                            ;; <> <!-- <|> <: <~ <~> <~~ <+ <* <$ </  <+> <*>
+                            ;; <$> </> <|  <||  <||| <|||| <- <-| <-<<-|-> <->>
+                            ;; <<-> <= <=> <<==<<==>=|=>==/==//=!==:=>
+                            ;; << <<< <<<<
+                            ("<" (rx (+ (or "\+" "\*" "\$" "<" ">" ":" "~"  "!"
+                                            "-"  "/" "|" "="))))
+                            ;; >: >- >>- >--|-> >>-|-> >= >== >>== >=|=:=>>
+                            ;; >> >>> >>>>
+                            (">" (rx (+ (or ">" "<" "|" "/" ":" "=" "-"))))
+                            ;; #: #= #! #( #? #[ #{ #_ #_( ## ### #####
+                            ;; ("#" (rx (or ":" "=" "!" "(" "\?" "\[" "{" "_(" "_"
+                            ;; (+ "#"))))
+                            ;; ~~ ~~~ ~=  ~-  ~@ ~> ~~>
+                            ("~" (rx (or ">" "=" "-" "@" "~>" (+ "~"))))
+                            ;; __ ___ ____ _|_ __|____|_
+                            ("_" (rx (+ (or "_" "|"))))
+                            ;; Fira code: 0xFF 0x12
+                            ("0" (rx (and "x" (+ (in "A-F" "a-f" "0-9")))))
+                            ;; Fira code:
+                            ;; "Fl"  "Tl"  "fi"  "fj"  "fl"  "ft"
+                            ;; The few not covered by the regexps.
+                            ;; "{|"  "[|"  "]#"  "(*"  "}#"  "$>"  "^="
+                            ))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
 
 (use-package meow
   :ensure t
@@ -524,11 +656,41 @@ effects."
 
   )
 
+(use-package recentf
+  :ensure nil
+  :hook (after-init . recentf-mode)
 
+  :config
+  (setq recentf-max-saved-items 100)
+  (setq recentf-max-menu-items 25)
+  (setq recentf-save-file-modes nil)
+  (setq recentf-keep nil)
+  (setq recentf-auto-cleanup nil)
+  (setq recentf-initialize-file-name-history nil)
+  (setq recentf-filename-handlers nil)
+  (setq recentf-show-file-shortcuts-flag nil)
+  (recentf-mode 1)
+  )
 
-(defun my/set-custom-key (kbd-string command-symbol)
-  (global-set-key (kbd (concat "C-c " kbd-string)) command-symbol))
+(use-package outline
+  
+  :config
 
+  (my/set-custom-key "o t" 'outline-toggle-children)
+  (my/set-custom-key "o f" 'outline-hide-other)
+  (my/set-custom-key "o a" 'outline-show-all)
+
+  (add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
+  (add-hook 'clojure-mode-hook #'outline-minor-mode)
+  )
+
+(use-package outline-minor-faces
+  :ensure t
+  :after outline
+
+  :config
+  (add-hook 'outline-minor-mode-hook
+            #'outline-minor-faces-mode))
 
 (defvar witek-context-key-map (make-sparse-keymap) "My Context Keymap")
 (defalias 'witek-context-key-map witek-context-key-map)
@@ -548,8 +710,6 @@ effects."
     (add-to-list 'load-path custom-modules)))
 
 (require 'my-commands)
-(require 'my-meow)
-(require 'my-theme)
 (require 'my-keys)
 (require 'my-basics)
 (require 'my-extras)
