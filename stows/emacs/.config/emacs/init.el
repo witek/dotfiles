@@ -2,7 +2,23 @@
 
 ;; Author: Witoslaw Koczewski <wi@koczewski.de>
 
-;; https://github.com/SystemCrafters/crafted-emacs
+
+;;; Setup Emacs Internals
+
+(setq load-prefer-newer t)
+(setq gc-cons-threshold (* 100 1024 1024))
+(setq read-process-output-max (* 1024 1024))
+(setq max-lisp-eval-depth 16000)
+(setq max-specpdl-size 25000)
+
+
+;;; My custom modules
+
+(let ((custom-modules (expand-file-name "custom-modules" user-emacs-directory)))
+  (when (file-directory-p custom-modules)
+    (message "adding custom-modules to load-path: %s" custom-modules)
+    (add-to-list 'load-path custom-modules)))
+
 
 ;;; Setup Custom
 
@@ -11,11 +27,6 @@
            (file-exists-p custom-file))
   (load custom-file nil :nomessage))
 
-;;; Crafted Emacs
-
-(customize-set-variable 'crafted-init-auto-save-customized nil)
-(customize-set-variable 'crafted-init-auto-save-selected-packages nil)
-(load "~/crafted-emacs/modules/crafted-init-config")
 
 ;;; Install packages
 
@@ -104,11 +115,6 @@
 ;; Install
 (package-install-selected-packages :noconfirm)
 
-;;; Crafted Configuration
-
-(require 'crafted-defaults-config)
-(require 'crafted-startup-config)
-(require 'crafted-completion-config)
 
 ;;; C-c custom keys (used as leader)
 

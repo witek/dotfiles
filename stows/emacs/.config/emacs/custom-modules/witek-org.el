@@ -1,8 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
 
-(require 'crafted-org)
-
 ;;; org
 
 (use-package org
@@ -47,7 +45,6 @@
 
 ;;; outshine
 
-;; (crafted-package-install-package 'outshine)
 ;; (use-package outshine
 ;;   :init
 
