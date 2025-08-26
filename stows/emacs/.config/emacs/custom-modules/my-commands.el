@@ -100,7 +100,7 @@
 
 ;;; witek-kill-other-buffers
 
-(defun witek-project-kill-other-buffers ()
+(defun my/project-kill-other-buffers ()
   "kill all other buffers."
   (interactive)
   (mapc 'kill-buffer
@@ -108,7 +108,9 @@
               (delq (current-buffer)
                     (project-buffers (project-current))))))
 
-;; *** witek-delete-file
+(my/set-custom-key "p B" 'my/project-kill-other-buffers)
+
+;;; witek-delete-file
 
 (defun witek-delete-current-file ()
   "Delete the current buffer and file."
@@ -122,12 +124,14 @@
           (message "Deleted file %s" filename)
           (kill-buffer))))))
 
-;; *** witek-save-all-buffers
+;;; witek-save-all-buffers
 
-(defun witek-save-all-buffers ()
+(defun my/save-all-buffers ()
   "Save all buffers."
   (interactive)
   (save-some-buffers t))
+
+(my/set-custom-key "f s" 'my/save-all-buffers)
 
 (defun witek-rename-file (new-name)
 

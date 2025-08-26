@@ -53,6 +53,7 @@
 
 (use-package marginalia
   :ensure t
+  :demand t
   :after vertico
   
   :config
@@ -65,6 +66,7 @@
 
 (use-package consult
   :ensure t
+  :demand t
   :after vertico
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :bind (
@@ -74,6 +76,12 @@
 
 
   :config
+
+  (my/set-custom-key "b b" 'consult-buffer)
+  (my/set-custom-key "f r" 'consult-recent-file)
+  (my/set-custom-key "p b" 'consult-project-buffer)
+  (my/set-custom-key "p s" 'consult-git-grep)
+
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   
@@ -251,6 +259,8 @@
 
   :config
 
+  (my/set-custom-key "t s" 'smartparens-strict-mode)
+  
   (require 'smartparens-config)
   (show-smartparens-global-mode 1)
 

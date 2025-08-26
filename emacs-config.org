@@ -5,6 +5,10 @@
 #+options: ':t toc:nil num:t author:t email:t
 #+startup: content indent
 
+* Templates
+
+https://github.com/protesilaos/dotfiles/blob/master/emacs/.emacs.d/prot-emacs.org
+
 * The early initialisation of Emacs (=early-init.el=)
 
 This is the first file that Emacs reads when starting up. It should
@@ -21,27 +25,28 @@ by delegating to the =init.el=.
 ** Tweaks for performance
 
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/early-init.el"
-(setq load-prefer-newer t)
-(setq read-process-output-max (* 1024 1024))
-(setq max-lisp-eval-depth 16000)
-(setq max-specpdl-size 25000)
+  (setq load-prefer-newer t)
+  (setq native-comp-speed 2)
+  (setq read-process-output-max (* 1024 1024))
+  (setq max-lisp-eval-depth 16000)
+  (setq max-specpdl-size 25000)
 
-;; Temporarily increase the garbage collection threshold.
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.5)
+  ;; Temporarily increase the garbage collection threshold.
+  (setq gc-cons-threshold most-positive-fixnum
+        gc-cons-percentage 0.5)
 
-(defvar my/--file-name-handler-alist file-name-handler-alist)
-(defvar my/--vc-handled-backends vc-handled-backends)
+  (defvar my/--file-name-handler-alist file-name-handler-alist)
+  (defvar my/--vc-handled-backends vc-handled-backends)
 
-(setq file-name-handler-alist nil
-      vc-handled-backends nil)
+  (setq file-name-handler-alist nil
+        vc-handled-backends nil)
 
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold (* 100 100 16)
-                  gc-cons-percentage 0.1
-                  file-name-handler-alist my/--file-name-handler-alist
-                  vc-handled-backends my/--vc-handled-backends)))
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq gc-cons-threshold (* 50 1024 1024) ;; 50MB
+                    gc-cons-percentage 0.1
+                    file-name-handler-alist my/--file-name-handler-alist
+                    vc-handled-backends my/--vc-handled-backends)))
 #+end_src
 
 ** Elpaca
@@ -441,6 +446,17 @@ effects."
     (when eval `(progn ,@body))))
 #+end_src
 
+*** my/backspace-dwim
+
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+  (defun my/backspace-dwim ()
+    (interactive)
+    (if (use-region-p)
+        (call-interactively 'sp-delete-region)
+      (sp-backward-delete-char))
+    )
+#+end_src
+
 ** Theme
 *** default font
 
@@ -621,6 +637,11 @@ https://github.com/meow-edit/meow
 
     :config
 
+    (my/set-custom-key "x" ctl-x-map)
+
+    (my/set-custom-key "<SPC>" 'execute-extended-command)
+    (my/set-custom-key ":" 'eval-expression)
+    
     (defun my/meow-setup-keys ()
       (meow-motion-overwrite-define-key
        '("j" . meow-next)
@@ -705,6 +726,7 @@ https://github.com/meow-edit/meow
        '("<deletechar>" . meow-delete)
        '("<del>". meow-backward-delete)
        '("C-<backspace>" . sp-raise-sexp)
+       '("<backspace>" . my/backspace-dwim)
        '("x" . meow-delete)
 
        '("u" . meow-undo)
@@ -821,7 +843,43 @@ https://github.com/meow-edit/meow
       (add-hook 'meow-insert-exit-hook 'corfu-quit))
 
     )
- 
+
+#+end_src
+
+*** for basic emacs commands
+
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+
+  (my/set-custom-key "b d" 'kill-current-buffer)
+  (my/set-custom-key "b j" 'bookmark-jump)
+  (my/set-custom-key "b J" 'bookmark-jump-other-frame)
+    
+  (my/set-custom-key "d K" 'describe-keymap)
+  (my/set-custom-key "d m" 'describe-mode)
+
+  (my/set-custom-key "e q" 'save-buffers-kill-terminal)
+  (my/set-custom-key "e Q" 'save-buffers-kill-emacs)
+  (my/set-custom-key "e e" 'eval-expression)
+  (my/set-custom-key "e l" 'eval-last-sexp)
+  (my/set-custom-key "e b" 'eval-buffer)
+  (my/set-custom-key "e f" 'eval-defun)
+  (my/set-custom-key "e r" 'restart-emacs)
+
+  (my/set-custom-key "f S" 'save-buffer)
+  (my/set-custom-key "f f" 'find-file)
+
+  (my/set-custom-key "w w" 'other-window)
+  (my/set-custom-key "w l" 'window-left)
+  (my/set-custom-key "w r" 'window-right)
+  (my/set-custom-key "w n" 'next-window-any-frame)
+  (my/set-custom-key "w p" 'previous-window-any-frame)
+  (my/set-custom-key "w /" 'split-window-horizontally)
+  (my/set-custom-key "w -" 'split-window-vertically)
+  (my/set-custom-key "w d" 'delete-window)
+  (my/set-custom-key "w m" 'delete-other-windows)
+
+  (my/set-custom-key "s q" 'query-replace)
+
 #+end_src
 
 ** Miscellaneous
@@ -871,6 +929,19 @@ https://github.com/meow-edit/meow
   (add-hook 'outline-minor-mode-hook
             #'outline-minor-faces-mode))
 #+end_src
+*** project
+
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+  (use-package project
+    :demand t
+    
+    :config
+    (my/set-custom-key "p p" 'project-switch-project)
+    (my/set-custom-key "p f" 'project-find-file)
+
+    )
+#+end_src
+
 ** Legacy config
 
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
@@ -892,7 +963,6 @@ https://github.com/meow-edit/meow
     (add-to-list 'load-path custom-modules)))
 
 (require 'my-commands)
-(require 'my-keys)
 (require 'my-basics)
 (require 'my-extras)
 (require 'my-org)

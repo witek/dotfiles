@@ -1,6 +1,7 @@
 ;;; early-init.el --- Tangeled from emacs-config.org  -*- lexical-binding: t; -*-
 
 (setq load-prefer-newer t)
+(setq native-comp-speed 2)
 (setq read-process-output-max (* 1024 1024))
 (setq max-lisp-eval-depth 16000)
 (setq max-specpdl-size 25000)
@@ -17,7 +18,7 @@
 
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (setq gc-cons-threshold (* 100 100 16)
+            (setq gc-cons-threshold (* 50 1024 1024) ;; 50MB
                   gc-cons-percentage 0.1
                   file-name-handler-alist my/--file-name-handler-alist
                   vc-handled-backends my/--vc-handled-backends)))

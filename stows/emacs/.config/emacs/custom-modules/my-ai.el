@@ -185,7 +185,7 @@ Returns a list of cons cells (name . directive) for each .md file."
 
   ;; my/gptel-scratch command
   (setq my/gptel-scratch-buffer-name "*gptel-scratch*")
-  (defun my/gptel-scratch ()
+  (defun my/ai-chat ()
     (interactive)
     (let ((buffer-name (concat
                         "*gptel-chat "
@@ -200,12 +200,47 @@ Returns a list of cons cells (name . directive) for each .md file."
     ;;     (gptel my/gptel-scratch-buffer-name))
     ;; (switch-to-buffer my/gptel-scratch-buffer-name)
     )
+
+  (defun my/ai-emacs-do ()
+    "Execute the users request in emacs"
+    (interactive)
+
+    ;; tool
+    (let ((emacs-eval-tool
+           (gptel-make-tool
+            :name "emacs_eval"
+            :function (lambda (code)
+                        (condition-case err
+                            (let ((result (eval (read code))))
+                              (format "Evaluation result: %S" result))
+                          (error (format "Error: %s" (error-message-string err)))))
+            :description "Evaluate Emacs Lisp code and return the result"
+            :args '((:name "code"
+                           :type "string"
+                           :description "Emacs Lisp code to evaluate")))))
+        
+      ;; Add tool to gptel-tools and enable tool use
+      (setq-local gptel-tools (list emacs-eval-tool))
+      (setq-local gptel-use-tools t)
+      )
+
+    ;; system prompt
+    (setq-local gptel--system-message "You are a helpful assistant living inside Emacs.
+  Use the emacs_eval tool to fullfill the request of the user.")
+    
+    ;; user prompt and execution
+    ;; (let ((prompt (gptel--read-minibuffer-prompt)))
+    ;;   (call-interactively #'gptel-menu))
+
+    (gptel--suffix-send '("m" "e"))
+    )
   
   (my/gptel-make-tools)
    
   :bind
   ("M-<return>" . my/gptel-menu)
-  ("C-c a i c" . my/gptel-scratch)
+  ("C-c a i c" . my/ai-chat)
+  ("C-c a i d" . my/ai-emacs-do)
   
   )
 

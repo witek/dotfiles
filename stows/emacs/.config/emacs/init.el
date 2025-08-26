@@ -305,6 +305,13 @@ effects."
               body (delq element body))))
     (when eval `(progn ,@body))))
 
+(defun my/backspace-dwim ()
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'sp-delete-region)
+    (sp-backward-delete-char))
+  )
+
 (add-to-list 'default-frame-alist '(font . "JetBrains Mono-12"))
 
 (use-package ef-themes
@@ -455,6 +462,11 @@ effects."
 
   :config
 
+  (my/set-custom-key "x" ctl-x-map)
+
+  (my/set-custom-key "<SPC>" 'execute-extended-command)
+  (my/set-custom-key ":" 'eval-expression)
+  
   (defun my/meow-setup-keys ()
     (meow-motion-overwrite-define-key
      '("j" . meow-next)
@@ -539,6 +551,7 @@ effects."
      '("<deletechar>" . meow-delete)
      '("<del>". meow-backward-delete)
      '("C-<backspace>" . sp-raise-sexp)
+     '("<backspace>" . my/backspace-dwim)
      '("x" . meow-delete)
 
      '("u" . meow-undo)
@@ -656,6 +669,36 @@ effects."
 
   )
 
+(my/set-custom-key "b d" 'kill-current-buffer)
+(my/set-custom-key "b j" 'bookmark-jump)
+(my/set-custom-key "b J" 'bookmark-jump-other-frame)
+  
+(my/set-custom-key "d K" 'describe-keymap)
+(my/set-custom-key "d m" 'describe-mode)
+
+(my/set-custom-key "e q" 'save-buffers-kill-terminal)
+(my/set-custom-key "e Q" 'save-buffers-kill-emacs)
+(my/set-custom-key "e e" 'eval-expression)
+(my/set-custom-key "e l" 'eval-last-sexp)
+(my/set-custom-key "e b" 'eval-buffer)
+(my/set-custom-key "e f" 'eval-defun)
+(my/set-custom-key "e r" 'restart-emacs)
+
+(my/set-custom-key "f S" 'save-buffer)
+(my/set-custom-key "f f" 'find-file)
+
+(my/set-custom-key "w w" 'other-window)
+(my/set-custom-key "w l" 'window-left)
+(my/set-custom-key "w r" 'window-right)
+(my/set-custom-key "w n" 'next-window-any-frame)
+(my/set-custom-key "w p" 'previous-window-any-frame)
+(my/set-custom-key "w /" 'split-window-horizontally)
+(my/set-custom-key "w -" 'split-window-vertically)
+(my/set-custom-key "w d" 'delete-window)
+(my/set-custom-key "w m" 'delete-other-windows)
+
+(my/set-custom-key "s q" 'query-replace)
+
 (use-package recentf
   :ensure nil
   :hook (after-init . recentf-mode)
@@ -692,6 +735,15 @@ effects."
   (add-hook 'outline-minor-mode-hook
             #'outline-minor-faces-mode))
 
+(use-package project
+  :demand t
+  
+  :config
+  (my/set-custom-key "p p" 'project-switch-project)
+  (my/set-custom-key "p f" 'project-find-file)
+
+  )
+
 (defvar witek-context-key-map (make-sparse-keymap) "My Context Keymap")
 (defalias 'witek-context-key-map witek-context-key-map)
 
@@ -710,7 +762,6 @@ effects."
     (add-to-list 'load-path custom-modules)))
 
 (require 'my-commands)
-(require 'my-keys)
 (require 'my-basics)
 (require 'my-extras)
 (require 'my-org)
