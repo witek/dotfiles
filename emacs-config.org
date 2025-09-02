@@ -690,7 +690,6 @@ https://protesilaos.com/emacs/pulsar#h:96289426-8480-4ea6-9053-280348adc0ed
 https://github.com/meow-edit/meow
 
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
-
   (use-package meow
     :ensure t
 
@@ -700,6 +699,24 @@ https://github.com/meow-edit/meow
 
     (my/set-custom-key "<SPC>" 'execute-extended-command)
     (my/set-custom-key ":" 'eval-expression)
+
+    (defun my/meow-mark-symbol ()
+      (interactive)
+      (if (use-region-p)
+          (call-interactively 'meow-next-symbol)
+        (call-interactively 'meow-mark-symbol)))
+
+    (defun my/meow-mark-word ()
+      (interactive)
+      (if (use-region-p)
+          (call-interactively 'meow-next-word)
+        (call-interactively 'meow-mark-word)))
+
+    (defun my/append-after-end-of-sexp ()
+      (interactive)
+      (sp-end-of-sexp)
+      (insert " ")
+      (call-interactively 'meow-insert))
     
     (defun my/meow-setup-keys ()
       (meow-motion-overwrite-define-key
@@ -755,8 +772,8 @@ https://github.com/meow-edit/meow
 
        ;; Selection
        '("V" . meow-line)
-       '("w" . witek-meow-mark-symbol)
-       '("W" . witek-meow-mark-word)
+       '("w" . my/meow-mark-symbol)
+       '("W" . my/meow-mark-word)
        '("b" . meow-block)
        '("B" . meow-to-block)
        '("s" . meow-inner-of-thing)
@@ -902,6 +919,10 @@ https://github.com/meow-edit/meow
       (add-hook 'meow-insert-exit-hook 'corfu-quit))
 
     )
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
 
 #+end_src
 

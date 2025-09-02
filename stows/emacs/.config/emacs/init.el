@@ -447,6 +447,24 @@ effects."
 
   (my/set-custom-key "<SPC>" 'execute-extended-command)
   (my/set-custom-key ":" 'eval-expression)
+
+  (defun my/meow-mark-symbol ()
+    (interactive)
+    (if (use-region-p)
+        (call-interactively 'meow-next-symbol)
+      (call-interactively 'meow-mark-symbol)))
+
+  (defun my/meow-mark-word ()
+    (interactive)
+    (if (use-region-p)
+        (call-interactively 'meow-next-word)
+      (call-interactively 'meow-mark-word)))
+
+  (defun my/append-after-end-of-sexp ()
+    (interactive)
+    (sp-end-of-sexp)
+    (insert " ")
+    (call-interactively 'meow-insert))
   
   (defun my/meow-setup-keys ()
     (meow-motion-overwrite-define-key
@@ -502,8 +520,8 @@ effects."
 
      ;; Selection
      '("V" . meow-line)
-     '("w" . witek-meow-mark-symbol)
-     '("W" . witek-meow-mark-word)
+     '("w" . my/meow-mark-symbol)
+     '("W" . my/meow-mark-word)
      '("b" . meow-block)
      '("B" . meow-to-block)
      '("s" . meow-inner-of-thing)
@@ -649,6 +667,8 @@ effects."
     (add-hook 'meow-insert-exit-hook 'corfu-quit))
 
   )
+
+
 
 (my/set-custom-key "b d" 'kill-current-buffer)
 (my/set-custom-key "b j" 'bookmark-jump)

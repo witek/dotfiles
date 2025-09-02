@@ -22,24 +22,6 @@
   )
 (define-key witek-context-key-map (kbd "t") 'my/hg-text-wrap)
 
-(defun witek-meow-mark-symbol ()
-  (interactive)
-  (if (use-region-p)
-      (call-interactively 'meow-next-symbol)
-    (call-interactively 'meow-mark-symbol)))
-
-(defun witek-meow-mark-word ()
-  (interactive)
-  (if (use-region-p)
-      (call-interactively 'meow-next-word)
-    (call-interactively 'meow-mark-word)))
-
-(defun my/append-after-end-of-sexp ()
-  (interactive)
-  (sp-end-of-sexp)
-  (insert " ")
-  (call-interactively 'meow-insert))
-
 (defun my/before-beginning-of-sexp ()
   (interactive)
   (sp-beginning-of-sexp)
@@ -62,9 +44,7 @@
         ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
         ))
 
-;;; witek
-
-(defun witek-make-frame-with-messages ()
+(defun my/make-frame-with-messages ()
   "Make a new frame with *Messages* buffer."
   (interactive)
   ;; (view-buffer-other-frame "*Messages*")
@@ -86,9 +66,7 @@
 
 (my/set-custom-key "p B" 'my/project-kill-other-buffers)
 
-;;; witek-delete-file
-
-(defun witek-delete-current-file ()
+(defun my/delete-current-file ()
   "Delete the current buffer and file."
   (interactive)
   (let ((filename (buffer-file-name)))
@@ -109,7 +87,7 @@
 
 (my/set-custom-key "f s" 'my/save-all-buffers)
 
-(defun witek-rename-file (new-name)
+(defun my/rename-file (new-name)
 
   "Renames both current buffer and file it's visiting to NEW-NAME." (interactive "sNew name: ")
 
@@ -127,7 +105,7 @@
 
         (progn   (rename-file filename new-name 1)   (rename-buffer new-name)   (set-visited-file-name new-name)   (set-buffer-modified-p nil)))))) ;;
 
-(defun witek-move-file (dir)
+(defun my/move-file (dir)
 
   "Moves both current buffer and file it's visiting to DIR." (interactive "DNew directory: ")
 
