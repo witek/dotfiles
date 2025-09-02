@@ -1001,6 +1001,232 @@ https://github.com/meow-edit/meow
     )
 #+end_src
 
+*** org
+**** org
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+  (use-package org
+    :ensure t
+    :bind (
+           :map org-src-mode-map
+           ("C-c C-c" . org-edit-src-exit)     
+           )
+    
+    :config
+    (setq org-agenda-files '("~/org/inbox.org" "/home/witek/org/gtd.org"))
+    (setq org-directory "~/org/")
+    (setq org-archive-location "~/org/archive.org")
+    (setq org-default-notes-file "~/org/inbox.org")
+    (setq org-return-follows-link t)
+    (setq org-blank-before-new-entry t)
+    (setq org-enforce-todo-dependencies t)
+    (setq org-enforce-todo-checkbox-dependencies t)
+    (setq org-reverse-note-order t)
+
+    ;; Return or left-click with mouse follows link
+    (setq org-return-follows-link t)
+    (setq org-mouse-1-follows-link t)
+
+    ;; Display links as the description provided
+    (setq org-link-descriptive t)
+
+    ;; Visually indent org-mode files to a given header level
+    ;; (add-hook 'org-mode-hook #'org-indent-mode)
+
+    ;; Hide markup markers
+    (setq org-hide-emphasis-markers nil)
+    (when (locate-library "org-appear")
+      (add-hook 'org-mode-hook 'org-appear-mode))
+
+    (add-hook 'org-mode-hook (lambda () (toggle-truncate-lines)))
+    )
+#+end_src
+
+**** org-modern
+
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+  (use-package org-modern
+    :ensure t
+    :after org
+    
+    :config
+    (global-org-modern-mode))
+#+end_src
+*** denote
+
+https://protesilaos.com/emacs/denote#h:5d16932d-4f7b-493d-8e6a-e5c396b15fd6
+
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+  (use-package denote
+    :ensure t
+    :defer t
+
+    :hook (dired-mode . denote-dired-mode)
+
+    :config
+    (setq denote-directory (expand-file-name "/p/orga/denote/"))
+    (setq denote-save-buffer-after-creation nil)
+    (setq denote-known-keywords '("emacs" "dev" "home" "happygast" "fbst"))
+    (setq denote-infer-keywords t)
+    (setq denote-sort-keywords t)
+    ;; (setq denote-file-type 'markdown-toml)
+    (setq denote-file-type 'org)
+    (setq denote-prompts '(title keywords))
+    (setq denote-excluded-directories-regexp nil)
+    (setq denote-excluded-keywords-regexp nil)
+    (setq denote-rename-no-confirm t)
+    (setq denote-date-prompt-use-org-read-date t)
+    (setq denote-backlinks-show-context t)
+    (denote-rename-buffer-mode 1)
+    (add-hook 'context-menu-functions #'denote-context-menu)
+    )
+#+end_src
+
+**** denote-journal
+
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+  (use-package denote-journal
+    :ensure t
+    )
+#+end_src
+*** LSP
+**** eglot (disabled)
+
+#+begin_src emacs-lisp :NO-tangle "stows/emacs/.config/emacs/init.el"
+  (defun my/eglot-rename ()
+    (interactive)
+    (call-interactively 'save-some-buffers)
+    (call-interactively 'eglot-rename)
+    (save-some-buffers t)
+    )
+
+
+  (use-package eglot
+    :demand t
+
+    :init
+    (customize-set-variable `eglot-confirm-server-initiated-edits nil)
+    (setq eglot-connect-timeout 120)
+    
+    :bind
+    (:map witek-context-key-map
+          ("r" . 'my/eglot-rename))
+
+    :config
+    (add-hook 'clojure-mode-hook #'eglot-ensure)
+
+    )
+#+end_src
+
+**** lsp-mode
+
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+  (defun my/lsp-rename ()
+    (interactive)
+    (call-interactively 'save-some-buffers)
+    (call-interactively 'lsp-rename)
+    (save-some-buffers t)
+    )
+
+  (defun my/lsp-organize-imports ()
+    (interactive)
+    (call-interactively 'save-some-buffers)
+    (call-interactively 'lsp-organize-imports)
+    (save-some-buffers t)
+    (call-interactively 'lsp-organize-imports)
+    (save-some-buffers t)
+    )
+
+  (defun my/lsp-clojure-clean-ns ()
+    (interactive)
+    (call-interactively 'save-some-buffers)
+    (call-interactively 'lsp-clojure-clean-ns)
+    (save-some-buffers t)
+    )
+
+  (use-package lsp-mode
+    :ensure t
+    :demand t
+    :hook ((clojure-mode . lsp))
+    :bind
+    (:map witek-context-key-map
+          ("r" . 'my/lsp-rename))
+
+    :config
+
+    (setq lsp-file-watch-threshold 5000)
+    ;; (setq lsp-keymap-prefix ", r")
+
+    ;; We don't want to get asked about project root
+    (setq lsp-auto-guess-root t)
+
+    ;; Because we don't use company
+    (setq lsp-completion-provider :none)
+
+    (setq lsp-enable-indentation t)
+    (setq lsp-enable-snippet t)
+    (setq lsp-enable-symbol-highlighting t)
+    (setq lsp-log-io nil)
+
+    ;; Don't underline on errors/warnings
+    (setq lsp-headerline-breadcrumb-enable-diagnostics nil)
+    (setq lsp-headerline-breadcrumb-icons-enable nil)
+
+    (setq lsp-lens-enable t)
+    ;; (setq lsp-lens-place-position 'above-line)
+
+    ;; (custom-set-faces
+    ;;  '(lsp-headerline-breadcrumb-separator-face ((t :inherit shadow :height 0.7)))
+    ;;  '(lsp-headerline-breadcrumb-path-face ((t :inherit font-lock-string-face :height 0.7)))
+    ;;  '(lsp-headerline-breadcrumb-project-prefix-face ((t :inherit font-lock-string-face :weight bold :height 0.7)))
+    ;;  '(lsp-headerline-breadcrumb-symbols-face ((t :inherit font-lock-doc-face :weight bold :height 0.7)))
+    ;;  '(lsp-lens-face ((t (:inherit lsp-details-face :height 0.7)))))
+
+    ;; (setq lsp-headerline-breadcrumb-path-face '((t :inherit font-lock-string-face :height 0.5)))
+
+    (lsp-semantic-tokens--warn-about-deprecated-setting)
+
+    )
+
+  (use-package lsp-ui
+    :ensure t
+    :after lsp-mode
+    ;; :demand t
+    ;; :commands lsp-ui-mode
+
+
+    :config
+
+    (setq lsp-ui-sideline-show-hover nil)
+    (setq lsp-ui-sideline-show-code-actions nil)
+
+    (setq lsp-ui-doc-enable nil)
+    (setq lsp-ui-doc-show-with-cursor t)
+    (setq lsp-ui-doc-position 'at-point)
+    (setq lsp-ui-doc-use-webkit t)
+    
+    ;; (custom-set-faces
+    ;;  '(lsp-headerline-breadcrumb-path-face ((t :inherit font-lock-string-face :height 0.7)))
+    ;;  '(lsp-headerline-breadcrumb-project-prefix-face ((t :inherit font-lock-string-face :weight bold :height 0.7)))
+    ;;  '(lsp-headerline-breadcrumb-separator-face ((t :inherit shadow :height 0.7)))
+    ;;  '(lsp-headerline-breadcrumb-symbols-face ((t :inherit font-lock-doc-face :weight bold :height 0.7)))
+    ;;  '(lsp-lens-face ((t (:inherit lsp-details-face :height 0.7))))
+    ;;  )
+
+    )
+
+  (use-package lsp-treemacs
+    :ensure t
+    :defer t
+    :commands lsp-treemacs-errors-list)
+
+  (use-package consult-lsp
+    :ensure t
+    :defer t
+    :after (consul lsp-mode)
+    )
+
+#+end_src
+
 *** AI
 **** Commons
 
@@ -1298,11 +1524,23 @@ https://github.com/MatthewZMD/aidermacs
 
 #+end_src
 
+*** E-Mail
+**** mu4e
+
+#+begin_src emacs-lisp :NO-tangle "stows/emacs/.config/emacs/init.el"
+
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+
+  ;; (use-package mu4easy
+    ;; :config
+    ;; (mu4easy-mode)
+           ;; )
+
+#+end_src
+
 ** Legacy config
 
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
-
-
 (let ((custom-modules (expand-file-name "custom-modules" user-emacs-directory)))
   (when (file-directory-p custom-modules)
     (message "adding custom-modules to load-path: %s" custom-modules)
@@ -1311,10 +1549,6 @@ https://github.com/MatthewZMD/aidermacs
 (require 'my-commands)
 (require 'my-basics)
 (require 'my-extras)
-(require 'my-org)
-(require 'my-lsp)
-;; (require 'my-eglot)
-;; (require 'my-email)
 #+end_src
 ** Open =emacs-config.org= on startup
 
