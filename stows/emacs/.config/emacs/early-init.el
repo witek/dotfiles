@@ -1,4 +1,8 @@
-;;; early-init.el --- Tangeled from emacs-config.org  -*- lexical-binding: t; -*-
+
+;;; Templates
+  
+  ;; https://github.com/protesilaos/dotfiles/blob/master/emacs/.emacs.d/prot-emacs.org
+
 
 ;;; Tweaks for performance
 
@@ -25,6 +29,7 @@
                   file-name-handler-alist my/--file-name-handler-alist
                   vc-handled-backends my/--vc-handled-backends)))
 
+
 ;;; package
 
 (require 'package)
@@ -32,10 +37,13 @@
 (add-to-list 'package-archives '("stable" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
+
 ;;; Frames
 
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+
+;; Disable tool-bar-mode after startup to prevent broken (too small) echo area
 (add-hook 'emacs-startup-hook
           (lambda ()
             (tool-bar-mode -1)))
@@ -53,7 +61,16 @@
       inhibit-startup-echo-area-message user-login-name ; read the docstring
       inhibit-startup-buffer-menu t)
 
+;; Open frames in fullscreen.
+;; https://www.emacswiki.org/emacs/FullScreen
 (push '(fullscreen . maximized) default-frame-alist)
 
+
 ;;; Theme
+
 (load-theme 'modus-vivendi-tinted)
+
+
+;;; Disable Emacs Custom Infrastructure
+
+(setq custom-file (make-temp-file "emacs-custom-"))
