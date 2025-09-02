@@ -268,5 +268,13 @@ Returns a list of cons cells (name . directive) for each .md file."
   (aidermacs-use-architect-mode t)
   (aidermacs-default-model "deepseek-coder"))
 
+
+;;; efrit
+;; (use-package efrit
+;;   :ensure (:repo "/p/efrit")
+;;   :init
+;;   (setq efrit-data-directory "~/.config/emacs/efrit")
+;;   )
+
 ;;; provide
 (provide 'my-ai)

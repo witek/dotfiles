@@ -226,7 +226,9 @@
   :ensure t)
 
 (use-package magit
-  :ensure t
+;;  :ensure (:branch "main"
+;;           :pre-build ("make" "info")) 
+  :ensure nil
   :defer t
   :bind (("C-c g s" . 'magit-status)
          ("C-c G s" . 'magit-status)
