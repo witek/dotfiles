@@ -1001,6 +1001,22 @@ https://github.com/meow-edit/meow
     )
 #+end_src
 
+*** AI
+**** Efrit
+
+#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+  ;;; efrit
+
+  (add-to-list 'load-path "/p/efrit/lisp")
+
+  (use-package efrit
+    ;; :ensure t
+    :init
+    (setq efrit-data-directory "~/.config/emacs/efrit")  
+    )
+
+#+end_src
+
 ** Legacy config
 
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
@@ -1023,7 +1039,7 @@ https://github.com/meow-edit/meow
 ** Open =emacs-config.org= on startup
 
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
-  (add-hook 'elpaca-after-init-hook
+  (add-hook 'after-init-hook
             (lambda ()
               (find-file "~/.dotfiles/emacs-config.org")))
 #+end_src

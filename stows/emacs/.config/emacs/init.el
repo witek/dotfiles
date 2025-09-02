@@ -725,6 +725,16 @@ effects."
 
   )
 
+;;; efrit
+
+(add-to-list 'load-path "/p/efrit/lisp")
+
+(use-package efrit
+  ;; :ensure t
+  :init
+  (setq efrit-data-directory "~/.config/emacs/efrit")  
+  )
+
 (let ((custom-modules (expand-file-name "custom-modules" user-emacs-directory)))
   (when (file-directory-p custom-modules)
     (message "adding custom-modules to load-path: %s" custom-modules)
@@ -739,7 +749,7 @@ effects."
 ;; (require 'my-eglot)
 ;; (require 'my-email)
 
-(add-hook 'elpaca-after-init-hook
+(add-hook 'after-init-hook
           (lambda ()
             (find-file "~/.dotfiles/emacs-config.org")))
 
