@@ -25,6 +25,8 @@ by delegating to the =init.el=.
 ** Tweaks for performance
 
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/early-init.el"
+  ;;; Tweaks for performance
+
   (setq load-prefer-newer t)
   (setq native-comp-speed 2)
   (setq read-process-output-max (* 1024 1024))
@@ -49,13 +51,26 @@ by delegating to the =init.el=.
                     vc-handled-backends my/--vc-handled-backends)))
 #+end_src
 
-** Elpaca
+** Elpaca (disabled)
 
 Elpaca requires to disable =package.el=.
 https://github.com/progfolio/elpaca/blob/master/doc/manual.md#installation-requirements
 
+#+begin_src emacs-lisp :NOtangle "stows/emacs/.config/emacs/early-init.el"
+  ;;; Elpaca
+  (setq package-enable-at-startup nil)
+#+end_src
+
+** Package
+
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/early-init.el"
-(setq package-enable-at-startup nil)
+  ;;; package
+
+  (require 'package)
+  (setq package-enable-at-startup t)
+  (add-to-list 'package-archives '("stable" . "https://stable.melpa.org/packages/"))
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
 #+end_src
 
 ** Frames
@@ -63,6 +78,8 @@ https://github.com/progfolio/elpaca/blob/master/doc/manual.md#installation-requi
 Disable menu, toolbars and scrollbars.
 
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/early-init.el"
+;;; Frames
+
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (add-hook 'emacs-startup-hook
@@ -97,6 +114,7 @@ https://www.emacswiki.org/emacs/FullScreen
 ** Theme
 
 #+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/early-init.el"
+;;; Theme
 (load-theme 'modus-vivendi-tinted) 
 #+end_src
 
@@ -108,11 +126,13 @@ https://www.emacswiki.org/emacs/FullScreen
 #+end_src
 
 ** Emacs behavior
-*** Elpaca
+*** Elpaca (disabled)
 
 https://github.com/progfolio/elpaca/blob/master/doc/manual.md
 
-#+begin_src emacs-lisp :tangle "stows/emacs/.config/emacs/init.el"
+#+begin_src emacs-lisp :NOtangle "stows/emacs/.config/emacs/init.el"
+  ;;; Elpaca
+
   (defvar elpaca-installer-version 0.11)
   (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
   (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))

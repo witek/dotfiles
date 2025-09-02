@@ -1,5 +1,7 @@
 ;;; early-init.el --- Tangeled from emacs-config.org  -*- lexical-binding: t; -*-
 
+;;; Tweaks for performance
+
 (setq load-prefer-newer t)
 (setq native-comp-speed 2)
 (setq read-process-output-max (* 1024 1024))
@@ -23,7 +25,14 @@
                   file-name-handler-alist my/--file-name-handler-alist
                   vc-handled-backends my/--vc-handled-backends)))
 
-(setq package-enable-at-startup nil)
+;;; package
+
+(require 'package)
+(setq package-enable-at-startup t)
+(add-to-list 'package-archives '("stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
+;;; Frames
 
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -46,4 +55,5 @@
 
 (push '(fullscreen . maximized) default-frame-alist)
 
+;;; Theme
 (load-theme 'modus-vivendi-tinted)
