@@ -1,0 +1,4 @@
+cd /p/frankenburg-services
+
+gnome-terminal -- bin/release-and-wait
+
