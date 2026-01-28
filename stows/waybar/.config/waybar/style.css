@@ -139,6 +139,16 @@ button:hover {
     text-decoration: none;
 }
 
+#battery {
+    color: red;
+}
+
+#battery.charging,
+#battery.plugged,
+#battery.full {
+    color: #cccccc;
+}
+
 
 /****** keyboard-state ******/
 
