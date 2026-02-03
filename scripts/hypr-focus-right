@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+# Get the currently focused window class
+focused_class=$(hyprctl activewindow -j | jq -r '.class')
+
+# Check if Emacs is focused
+if [[ "$focused_class" == Emacs* ]]; then
+    # notify-send "EMACS right"
+    emacsclient --eval "(my-window-right)"
+else
+    # notify-send "hypr right"
+    hyprctl dispatch movefocus r
+fi
